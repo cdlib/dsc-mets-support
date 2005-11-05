@@ -51,34 +51,22 @@ METS profile driver
   <!--
           'http://www.loc.gov/standards/mets/profiles/00000003.xml' => 505,
           'http://sunsite.berkeley.edu/GenX' => 2710,
+          'http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml' => 223,
   -->
   <mets-profile-driver>
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://sunsite.berkeley.edu/GenX</PROFILE>
+    <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/GenX.html.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
   <!--
-          'http://www.loc.gov/mets/profiles/00000002.xml' => 153,
-          'http://www.loc.gov/standards/mets/profiles/00000002.xml' => 4672,
-  -->
-  <mets-profile-driver>
-    <PROFILE>http://www.loc.gov/mets/profiles/00000002.xml</PROFILE>
-    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000002.xml</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
-    <tool type="xslt" role="toHTML">./xslt/view/4.html.xslt</tool>
-    <tool type="xslt" role="generalBPC">xslt/bpc/allMetsBPC.xsl</tool>
-  </mets-profile-driver>
-
-  <!--
-          'http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml' => 223,
   -->
   <mets-profile-driver>
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBImagedObjectProfile.xml</PROFILE>
-    <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
@@ -88,9 +76,10 @@ METS profile driver
           'http://ark.cdlib.org/ark:/13030/kt0t1nb6x7' => 8197,
   -->
   <mets-profile-driver label="EAD Finding Aid">
+  <!-- this profile is never "METS only" -->
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt0t1nb6x7</PROFILE>
-    <tool type="xslt" role="toQDC"></tool>
-    <tool type="xslt" role="toHTML"></tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/ead-dc.xsl</tool>
+    <!-- tool type="xslt" role="toHTML"></tool  -->
   </mets-profile-driver>
 
   <!--
@@ -197,9 +186,9 @@ METS profile driver
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt8s20152f</PROFILE>
     <tool type="xslt" role="toHTML">./xslt/view/kt8s20152f.html.xslt</tool>
   </mets-profile-driver>
-</profiles>
-<!-- these counts by PROFILE are for the QA process ; will be removed
+<!-- counts by PROFILE are for the QA process ; will be removed
 	before the first stable release
           'http://www.loc.gov/standards/mets/profiles/00000004.xml' => 70,
           'http://findaid.oac.cdlib.org/mets/profiles/2002/OAC-collection/' => 89
 -->
+</mets-profiles>
