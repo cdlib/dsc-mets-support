@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+ <URI LOCTYPE="OTHER">BASE-DynaXML2003</URI>
+ <title>BASE Profile for LSTA images</title>
+ <abstract>This is not a Full Profile.  It is just a BASE to build on.
+     It documents how simple/moderatly complex image
+	objects designed from LSTA are structured.
+     </abstract>
+ <date>2004-03-21T08:12:00-08:00</date>
+ <contact>
+     <address></address>
+ </contact>
+ <related_profile>list all the ones that build on this</related_profile>
+ <extension_schema><note>N/A</note></extension_schema>
+ <description_rules/>
+ <controlled_vocabularies></controlled_vocabularies>
+ <structural_requirements>
+     <fileSec>
+         <requirement>
+         <p>fileGrp/@USE and file/@GROUPID do all the groupings. 
+		The need to be set up correctly.</p>
+         </requirement>
+     </fileSec>
+     <structMap>
+         <requirement>
+         <p>strucMap does not really matter for these!</p>
+	<p>Don't copy this profile.  The way it should be, @TYPE and @ORDER on &lt;div&gt;s in
+the struct map do all the triggering. </p>
+         </requirement>
+     </structMap>
+      
+     </structural_requirements>
+ <technical_requirements>
+ </technical_requirements>
+ <tool>
+     
+ </tool>
+ <Appendix NUMBER="1">
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:mods="http://www.loc.gov/mods/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" 
+OBJID="ark:/..." 
+LABEL="Tree Planting on Masonic Avenue." 
+TYPE="Image" 
+PROFILE="http://ark.cdlib.org/ark:/13030/kt400011f8">
+   <fileSec>
+      <fileGrp USE="thumbnail">
+         <file ID="thumbnail" MIMETYPE="image/gif" GROUPID="STR_026">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/thumbs/STR_026.gif" xlink:role="thumbnail"/>
+         </file>
+         <file ID="thumbnail2" MIMETYPE="image/gif" GROUPID="STR_027">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/thumbs/STR_027.gif" xlink:role="thumbnail"/>
+         </file>
+         <file ID="thumbnail3" MIMETYPE="image/gif" GROUPID="STR_028">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/thumbs/STR_028.gif" xlink:role="thumbnail"/>
+         </file>
+      </fileGrp>
+      <fileGrp USE="hi-res">
+         <file ID="hi-res" MIMETYPE="image/jpg" GROUPID="STR_026">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/hi-res/STR_026.jpg" xlink:role="hi-res"/>
+         </file>
+         <file ID="hi-res2" MIMETYPE="image/jpg" GROUPID="STR_027">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/hi-res/STR_027.jpg" xlink:role="hi-res"/>
+         </file>
+         <file ID="hi-res3" MIMETYPE="image/jpg" GROUPID="STR_028">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/affiliates/images/calb/kt1r29p4qh/hi-res/STR_028.jpg" xlink:role="hi-res"/>
+         </file>
+      </fileGrp>
+      <fileGrp USE="archival">
+         <file ID="archival" MIMETYPE="image/tif" GROUPID="STR_026">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/archive/calb/kt1r29p4qh/archival/STR_026.tif" xlink:role="archival"/>
+         </file>
+         <file ID="archival2" MIMETYPE="image/tif" GROUPID="STR_027">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/archive/calb/kt1r29p4qh/archival/STR_027.tif" xlink:role="archival"/>
+         </file>
+         <file ID="archival3" MIMETYPE="image/tif" GROUPID="STR_028">
+            <FLocat LOCTYPE="URL" xlink:href="http://www.oac.cdlib.org/archive/calb/kt1r29p4qh/archival/STR_028.tif" xlink:role="archival"/>
+         </file>
+      </fileGrp>
+   </fileSec>
+   <structMap>
+      <div LABEL="Title">
+         <div LABEL="thumbnail">
+            <div LABEL="image1">
+               <fptr FILEID="thumbnail"/>
+            </div>
+            <div LABEL="image2">
+               <fptr FILEID="thumbnail2"/>
+            </div>
+            <div LABEL="image3">
+               <fptr FILEID="thumbnail3"/>
+            </div>
+         </div>
+         <div LABEL="hi-res">
+            <div LABEL="image1">
+               <fptr FILEID="hi-res"/>
+            </div>
+            <div LABEL="image2">
+               <fptr FILEID="hi-res2"/>
+            </div>
+            <div LABEL="image3">
+               <fptr FILEID="hi-res3"/>
+            </div>
+         </div>
+         <div LABEL="archival" TYPE="hidden">
+            <div LABEL="image1">
+               <fptr FILEID="archival"/>
+            </div>
+            <div LABEL="image2">
+               <fptr FILEID="archival2"/>
+            </div>
+            <div LABEL="image3">
+               <fptr FILEID="archival3"/>
+            </div>
+         </div>
+      </div>
+   </structMap>
+</mets>
+ </Appendix>
+</METS_Profile>

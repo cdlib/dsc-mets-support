@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd"
+xmlns:xi="http://www.w3.org/2001/XInclude" >
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt7j49p867</URI>
+    <title>DC OAC text (OAC-ETEXT)</title>
+    <abstract>Profile for OAC texts with Dublin Core metadata. Structure is optomized for dynaXML. </abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI=""/>
+    <extension_schema>
+        <URI>http://ark.cdlib.org/schemas/appqualifieddc/appqualifieddc.xsd</URI>
+        <context>xmlns="http://ark.cdlib.org/schemas/appqualifieddc/"</context>
+        <note/>
+    </extension_schema>
+   <description_rules>
+        <p>Dublin Core</p>
+        <p>dc:relation is used to create 'virtual collections'</p>
+	<p>mets/@OBJID->identifier from METS
+will override anything set here, as will mets/@TYPE, and mets/@LABEL -> title </p>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p>local ID in header</p>
+            </requirement>
+        </metsHdr>
+        
+        <dmdSec>
+            <requirement>
+                <p>ID="dc" contains an mdWrap with a qualified DC 
+                record in xmlData</p>
+            </requirement>
+        </dmdSec>
+        <amdSec>
+           <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/amdSec/requirement)"
+            />
+        </amdSec>
+        <fileSec>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/fileSec/requirement)"
+            />
+        </fileSec>
+        <structMap>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/structMap/requirement)"
+            />
+        </structMap>
+        <behaviorSec>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/behaviorSec/requirement)"
+            />
+        </behaviorSec>
+        
+        <multiSection>
+           <requirement>
+                <p>/mets/@TYPE = 'text'</p>
+            </requirement>
+        </multiSection>
+        
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p/>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p/>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency/>
+        <URI>http://ark.cdlib.org/xslt/extract-dc/OAC-TEXT-DC.qdc2.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/kt7j49p867.html.xslt</URI>
+        <description>
+            <p ID="toHTML"/>
+        </description>
+    </tool>
+    <Appendix NUMBER="1">
+        <xi:include href="http://ark.cdlib.org/raw/ark:/13030/ft7p300700/"/>
+    </Appendix>
+</METS_Profile>

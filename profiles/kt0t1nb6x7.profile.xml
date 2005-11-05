@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt0t1nb6x7</URI>
+    <title>EAD Finding Aid</title>
+    <abstract>This profile is used internally by CDL 
+    during the ingest of EAD encoded Finding Aids.
+</abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI="http://ark.cdlib.org/ark:/13030/kt3q2nb7vz">EAD* Extracted Object</related_profile>
+    <extension_schema>
+        <URI>http://findaid.oac.cdlib.org/mets/profiles/2002/OAC-extracted-image/oac-ead.xsd</URI>
+        <context>use with xmlns http://www.loc.gov/EAD/</context>
+        <note>Right now, this schema just checks that there is a &lt;c&gt; tag. The c, or
+            component from EAD, is constructed from EAD tags, but is not valid EAD. [to do,
+            construct a schema for "item level EAD", explain how it is created from EAD]</note>
+    </extension_schema>
+    <extension_schema>
+        <URI>http://ark.cdlib.org/schemas/appqualifieddc/appqualifieddc.xsd</URI>
+        <context>use with xmlns http://ark.cdlib.org/schemas/appqualifieddc/</context>
+        <note>This is a wrapper "application schema" for qualified Dublin Core. It does the schema
+            validation for xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/"</note>
+    </extension_schema>
+    <description_rules>
+        <p/>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p/>
+            </requirement>
+        </metsHdr>
+        <dmdSec>
+            <requirement>
+                <p/>
+            </requirement>
+        </dmdSec>
+        <fileSec>
+            <requirement>
+                <p/>
+            </requirement>
+        </fileSec>
+        <structMap>
+            <requirement>
+                <p/>
+            </requirement>
+            <requirement>
+                <p/>
+                <p/>
+            </requirement>
+            <requirement>
+                <p/>
+            </requirement>
+        </structMap>
+        <multiSection>
+            <requirement>
+                <p/>
+            </requirement>
+            <requirement>
+                <p>/mets/@TYPE = 'archival collection'</p>
+            </requirement>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p/>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p/>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency/>
+        <URI/>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI/>
+        <description>
+            <p ID="toHTML"/>
+        </description>
+    </tool>
+    <Appendix NUMBER="1"/>
+</METS_Profile>

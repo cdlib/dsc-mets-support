@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--=============================================-->
+<!-- CDL Error Codes for Use in analyzing METS Best Practice Checking Results -->
+<!--=============================================-->
+<Errors>
+    <profile-001>invalid profile value in mets@PROFILE</profile-001>
+    <mets-001>missing mets@OBJID attribute</mets-001>
+    <mets-002>empty mets@OBJID attribute</mets-002>
+    <mets-003>metsOBJID attribute does not contain a properly formatted ARK</mets-003>
+    <mets-010>missing mets@LABEL attribute</mets-010>
+    <mets-011>empty mets@LABEL attribute</mets-011>
+    <mets-020>missing mets@TYPE attribute</mets-020>
+    <mets-021>empty mets@TYPE attribute</mets-021>
+    <mets-030>missing mets@PROFILE attribute</mets-030>
+    <mets-031>empty mets@PROFILE attribute</mets-031>
+    <mets-032>mets@PROFILE attribute does not contain a properly formatted ARK</mets-032>
+    <hdr-001>missing metsHdr section</hdr-001>
+    <hdr-010>missing metsHdr@CREATEDATE attribute</hdr-010>
+    <hdr-011>empty metsHdr@CREATEDATE attribute</hdr-011>
+    <hdr-015>missing metsHdr@LASTMODDATE attribute</hdr-015>
+    <hdr-016>empty metsHdr@LASTMODDATE attribute</hdr-016>
+    <hdr-020>missing agent element within metsHdr</hdr-020>
+    <dmd-001>first dmdSec must be @ID\='dc'</dmd-001>
+    <dmd-002>dmdSec@ID\='dc' must have mdWrap@MDTYPE\='DC' as a child element</dmd-002>
+    <dmd-005>dmdSec@ID must be 'mods'</dmd-005>
+    <dmd-006>dmdSec@ID\='mods' must have mdWrap@MDTYPE\='OTHER' and @OTHERMDTYPE\='MODS' as a child element</dmd-006>
+    <dmd-010>second dmdSec must be @ID\='ead'</dmd-010>
+    <dmd-011>dmdSec@ID\='ead' must have mdRef@MDTYPE\='EAD' as a child element</dmd-011>
+    <dmd-012>third dmdSec must be @ID\='ead'</dmd-012>
+    <dmd-020>third dmdSec must be @ID\='repo'</dmd-020>
+    <dmd-021>dmdSec@ID\='repo' must have mdWrap@MDTYPE\='DC' as a child element</dmd-021>
+    <dmd-022>fourth dmdSec must be @ID\='repo'</dmd-022>
+    <amd-001>a METS can only have one(1) amdSec</amd-001>
+    <amd-010>a techMD section must contain xmlData that conforms to MIX</amd-010>
+    <amd-020>a rightsMD section must contain xmlData that conforms to METSRights</amd-020>
+    <file-001>file elements must have USE attributes</file-001>
+    <file-002>file@USE attributes must not be empty</file-002>
+    <file-010>file elements must have ID attributes</file-010>
+    <file-011>file@ID attributes must not be empty</file-011>
+    <file-020>file elements must have a FLocat child element</file-020>
+    <file-021>file/FLocat elements must have @xlink\:href</file-021>
+    <file-022>file/FLocat elements must not be empty</file-022>
+    <file-030>@ADMID must occur within file element</file-030>
+    <file-040>file@USE or fGrp@USE = 'archive image' must occur where the object is a TIFF</file-040>
+    <file-050>file elements must have fileGrp parent</file-050>
+    <struct-001>a METS can only have one(1) structMap</struct-001>
+    <struct-005>missing structMap@TYPE attribute</struct-005>
+    <struct-006>empty structMap@TYPE attribute</struct-006>
+    <struct-010>div element must have a @DMDID associated with it</struct-010>
+    <struct-011>empty @DMDID associated with div element</struct-011>
+    <struct-020>missing fptr@FILEID attribute</struct-020>
+    <struct-021>empty fptr@FILEID attribute</struct-021>
+</Errors>

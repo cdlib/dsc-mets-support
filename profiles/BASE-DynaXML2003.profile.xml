@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+ <URI LOCTYPE="OTHER">BASE-DynaXML2003</URI>
+ <title>BASE Profile for DynaXML 2003</title>
+ <abstract>This is not a Full Profile.  It is just a BASE to build on.
+     It documents how DynaXML 2003 (not XTF) requires METS.  This will
+     change in 2004 with XTF.
+     </abstract>
+ <date>2004-03-21T08:12:00-08:00</date>
+ <contact>
+     <address></address>
+ </contact>
+ <related_profile>list all the ones that build on this</related_profile>
+ <extension_schema><note>N/A</note></extension_schema>
+ <description_rules><p>DynaXML reads rights from ?</p></description_rules>
+ <controlled_vocabularies></controlled_vocabularies>
+ <structural_requirements>
+     <amdSec>
+            <requirement>
+                <p>access is controled by METS Rights schema</p>
+            </requirement>
+        </amdSec>
+     <fileSec>
+         <requirement>
+         <p>file/@ID = the div ID from TEI</p>
+         <p>each file and one FLocat</p>
+         <p>the 'href's in the 'FLocat's are cgi query strings.  The 
+             base URL is 'http://texts.cdlib.org/dynaxml/servlet/dynaXML'</p>
+         </requirement>
+     </fileSec>
+     <structMap>
+         <requirement>
+         <p>div structure mirrors that of TEI, but &lt;fptr&gt;s are 
+         replace the contents of the divs.</p>
+         </requirement>
+     </structMap>
+     <behaviorSec>
+         <requirement>
+             <p>behavior[@ID="disp1"]/mechanism sets the dynaxml profile
+                 (sort of realted to, but not the same as the
+                 METS Profile</p>
+         </requirement>
+         <requirement>
+             <p>behaviour[@ID="auth1"]/mechanism set the dynaxml authentication 
+                 mechanism.  Access is not restricted to the METS, only the content 
+                 it describes.</p>
+         </requirement>
+     </behaviorSec>
+      
+     </structural_requirements>
+ <technical_requirements>
+ </technical_requirements>
+ <tool>
+     
+ </tool>
+ <Appendix NUMBER="1">
+ <mets xmlns="http://www.loc.gov/METS/" 
+ xmlns:xi="http://www.w3.org/2001/XInclude" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:xlink="http://www.w3.org/TR/xlink" 
+ xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" 
+ OBJID="ark:/..." 
+ LABEL="Between Republic and Empire: Interpretations of Augustus and His Principate" 
+ TYPE="text" PROFILE="BASE-DynaXML2003">
+
+  <amdSec>
+      <rightsMD ID="rights">
+         <mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" LABEL="METS Extension Rights Schema">
+            <xmlData>
+               <RightsDeclarationMD xmlns="" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/rights/METSRights.xsd" RIGHTSCATEGORY="COPYRIGHTED">
+                  <RightsDeclaration>Copyright U.C. Regents. All Rights Reserved.</RightsDeclaration>
+                  <RightsHolder>
+
+                     <RightsHolderName>Regents of the University of California</RightsHolderName>
+                  </RightsHolder>
+                  <Context CONTEXTCLASS="GENERAL PUBLIC">
+                     <Permissions DISCOVER="true" DISPLAY="true"/>
+                     <Constraints CONSTRAINTTYPE="TRANSFERPERMISSIONS">
+                        <ConstraintDescription>Any file or element contained herein may be displayed or transmitted across a network by anyone who has signed a license agreement with the U.C. Regents.</ConstraintDescription>
+                     </Constraints>
+                     <Constraints CONSTRAINTTYPE="RE-USE">
+
+                        <ConstraintDescription>Copy and distribution of any element or file is prohibited without the express written permission of the U.C. Regents.</ConstraintDescription>
+                     </Constraints>
+                  </Context>
+               </RightsDeclarationMD>
+            </xmlData>
+         </mdWrap>
+      </rightsMD>
+   </amdSec>
+
+   <fileSec>
+   <fileGrp>
+      <file ID="top">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656"/>
+      </file>
+      <file ID="d0e27">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;doc.view=popup&amp;chunk.id=d0e27"/>
+      </file>
+
+      <file ID="d0e36">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e36"/>
+      </file>
+      <file ID="d0e850">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e850"/>
+      </file>
+      <file ID="d0e2130">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e2130"/>
+      </file>
+
+      <file ID="d0e3342">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e3342"/>
+      </file>
+      <file ID="d0e4369">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e4369"/>
+      </file>
+      <file ID="d0e4731">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e4731"/>
+      </file>
+
+      <file ID="d0e8208">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e8208"/>
+      </file>
+      <file ID="d0e9255">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e9255"/>
+      </file>
+      <file ID="d0e10163">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e10163"/>
+      </file>
+
+      <file ID="d0e11349">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e11349"/>
+      </file>
+      <file ID="d0e13168">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e13168"/>
+      </file>
+      <file ID="d0e14515">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e14515"/>
+      </file>
+
+      <file ID="d0e15511">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e15511"/>
+      </file>
+      <file ID="d0e16230">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e16230"/>
+      </file>
+      <file ID="d0e17912">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e17912"/>
+      </file>
+
+      <file ID="d0e18921">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e18921"/>
+      </file>
+      <file ID="d0e20849">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e20849"/>
+      </file>
+      <file ID="d0e21796">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e21796"/>
+      </file>
+
+      <file ID="d0e22590">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e22590"/>
+      </file>
+      <file ID="d0e24116">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e24116"/>
+      </file>
+      <file ID="d0e26696">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e26696"/>
+      </file>
+
+      <file ID="d0e36040">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e36040"/>
+      </file>
+      <file ID="d0e41869">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e41869"/>
+      </file>
+      <file ID="d0e43016">
+         <FLocat LOCTYPE="URL" xlink:href="?docId=ft55800656&amp;chunk.id=d0e43016"/>
+      </file>
+
+   </fileGrp>
+</fileSec>
+
+   <structMap>
+   <div TYPE="TEI.2" LABEL="Between Republic and Empire">
+      <fptr FILEID="top"/>
+      <div TYPE="text">
+         <div TYPE="front">
+            <div LABEL="Dedication" TYPE="dedication">
+               <fptr FILEID="d0e27"/>
+
+            </div>
+            <div LABEL="Editors' Preface" TYPE="fmsec">
+               <fptr FILEID="d0e36"/>
+            </div>
+         </div>
+         <div TYPE="body">
+            <div LABEL="1&#xA0; A Man, a Book, and a Method: Sir Ronald Syme's Roman Revolution After Fifty Years" TYPE="chapter">
+               <fptr FILEID="d0e850"/>
+            </div>
+
+            <div LABEL="2&#xA0; The Personality of Augustus: Reflections on Syme's Roman Revolution" TYPE="chapter">
+               <fptr FILEID="d0e2130"/>
+            </div>
+            <div LABEL="3&#xA0; Mommsen and Syme: Law and Power in the Principate of Augustus" TYPE="chapter">
+               <fptr FILEID="d0e3342"/>
+            </div>
+            <div LABEL="4&#xA0; C. Caesar Divi filius and the Formation of the Alternative in Rome" TYPE="chapter">
+               <fptr FILEID="d0e4369"/>
+            </div>
+
+            <div LABEL="5&#xA0; Augustus and the Power of Tradition: The Augustan Principate as Binding Link between Republic and Empire" TYPE="chapter">
+               <fptr FILEID="d0e4731"/>
+            </div>
+            <div LABEL="6&#xA0; Livy, Augustus, and the Forum Augustum" TYPE="chapter">
+               <fptr FILEID="d0e8208"/>
+            </div>
+            <div LABEL="7&#xA0; Augustus and the Evolution of Roman Historiography" TYPE="chapter">
+               <fptr FILEID="d0e9255"/>
+            </div>
+
+            <div LABEL="8&#xA0; Cassius Dio's Assessment of Augustus" TYPE="chapter">
+               <fptr FILEID="d0e10163"/>
+            </div>
+            <div LABEL="9&#xA0; The Death of Turnus: Augustan Vergil and the Political Rival1&#10;            " TYPE="chapter">
+               <fptr FILEID="d0e11349"/>
+            </div>
+            <div LABEL="10&#xA0; Horace Carm. 2.9: Augustus and the Ambiguities of Encomium" TYPE="chapter">
+               <fptr FILEID="d0e13168"/>
+            </div>
+
+            <div LABEL="11&#xA0; Tristia 2: Ovid and Augustus" TYPE="chapter">
+               <fptr FILEID="d0e14515"/>
+            </div>
+            <div LABEL="12&#xA0; Did Maecenas &quot;Fall from Favor&quot;? Augustan Literary Patronage" TYPE="chapter">
+               <fptr FILEID="d0e15511"/>
+            </div>
+            <div LABEL="13&#xA0; The City Adorned: Programmatic Display at the Aedes Concordiae Augustae" TYPE="chapter">
+               <fptr FILEID="d0e16230"/>
+            </div>
+
+            <div LABEL="14&#xA0; Augustan Building Programs in the Western Provinces" TYPE="chapter">
+               <fptr FILEID="d0e17912"/>
+            </div>
+            <div LABEL="15&#xA0; Man or God: Divine Assimilation and Imitation in the Late Republic and Early Principate" TYPE="chapter">
+               <fptr FILEID="d0e18921"/>
+            </div>
+            <div LABEL="16&#xA0; The Augustales in the Augustan Scheme" TYPE="chapter">
+               <fptr FILEID="d0e20849"/>
+            </div>
+
+            <div LABEL="17&#xA0; The Pontificate of Augustus" TYPE="chapter">
+               <fptr FILEID="d0e21796"/>
+            </div>
+            <div LABEL="18&#xA0; The Imperial Policy of Augustus" TYPE="chapter">
+               <fptr FILEID="d0e22590"/>
+            </div>
+            <div LABEL="19&#xA0; Opposition to Augustus" TYPE="chapter">
+               <fptr FILEID="d0e24116"/>
+            </div>
+
+         </div>
+         <div TYPE="back">
+            <div LABEL="Index of Subjects" TYPE="index">
+               <fptr FILEID="d0e26696"/>
+            </div>
+            <div LABEL="Index of Persons and Places" TYPE="index">
+               <fptr FILEID="d0e36040"/>
+            </div>
+            <div LABEL="Index of Scholars" TYPE="index">
+
+               <fptr FILEID="d0e41869"/>
+            </div>
+            <div LABEL="Index of Sources" TYPE="index">
+               <fptr FILEID="d0e43016"/>
+            </div>
+         </div>
+      </div>
+   </div>
+</structMap>
+
+   <behaviorSec>
+      <behavior ID="disp1" STRUCTID="top" BTYPE="display" LABEL="Display Behavior">
+         <interfaceDef LABEL="eScholarship Display Definition" LOCTYPE="URL" xlink:href="http://texts.cdlib.org/dynaxml/profiles/display/eschoDisplayDef.txt"/>
+         <mechanism LABEL="eScholarship Display Mechanism" LOCTYPE="URN" xlink:href="http://texts.cdlib.org/dynaxml/profiles/display/escholDisplayMech.xml"/>
+      </behavior>
+      <behavior ID="auth1" STRUCTID="top" BTYPE="authentication" LABEL="Authentication Behavior">
+         <interfaceDef LABEL="UC Only Authentication Definition" LOCTYPE="URL" xlink:href="http://texts.cdlib.org/dynaxml/profiles/display/uconlyAuthDef.txt"/>
+         <mechanism LABEL="UC Only Authentication Mechanism" LOCTYPE="URL" xlink:href="http://texts.cdlib.org/dynaxml/profiles/authentication/uconlyAuthMech.xml"/>
+
+      </behavior>
+   </behaviorSec>
+
+</mets>
+ 
+ </Appendix>
+</METS_Profile>

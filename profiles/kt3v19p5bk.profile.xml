@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt3v19p5bk</URI>
+    <title>UCPEE netlib book</title>
+    <abstract>Objects created by the UC Press eScholarship Editions project.
+    </abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI=""></related_profile>
+    <extension_schema>
+        <URI>http://www.loc.gov/standards/mods/mods.xsd</URI>
+        <context>xmlns="http://www.loc.gov/mods/"</context>
+        <note></note>
+    </extension_schema>
+    <extension_schema>
+        <URI>http://ark.cdlib.org/schemas/xmldata/xmldata.xsd</URI>
+        <context>xmlns="http://www.cdlib.org/schemas/xmldata"</context>
+        <note></note>
+    </extension_schema>
+    <extension_schema>
+        <URI>http://www.loc.gov/standards/rights/METSRights.xsd</URI>
+        <context>xmlns=""</context>
+    </extension_schema>
+    <description_rules>
+                <p/>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p>UC Press number goes in as an alt ID</p>
+            </requirement>
+        </metsHdr>
+        <dmdSec>
+            <requirement>
+                <p>ID="mods"</p>
+            </requirement>
+            <requirement>
+                <p>ID="ucpress"</p>
+            </requirement>
+        </dmdSec>
+            
+        <amdSec>    
+           <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/amdSec/requirement)"
+            />
+            <requirement>
+            <p>ID="rights" (does anything really depend on this?)</p>
+            <p></p>
+            </requirement>
+        </amdSec>
+        
+        <fileSec>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/fileSec/requirement)"
+            />
+            <requirement>
+                <p>note: these are generated from the TEI with XSLT</p>
+                <p>Warning, this is getting re-worked.  This documents the old/current 
+                way rather than the new/future way.  CDL reserves the right to change
+                and keep the same URI for this profile.</p>
+                <p>One fileGrp filled with file sections. </p>
+                <p>Each file has one FLocat.  Each file had and ID that is the same 
+                    as the ID of the div in the TEI.  The href just has a cgi query.
+                </p>
+                <p>The BASE to the CGI queries is ...</p>
+            </requirement>
+        </fileSec>
+        <structMap>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/structMap/requirement)"
+            />
+        </structMap>
+        <behaviorSec>
+            <xi:include href=
+            "./BASE-DynaXML2003.profile.xml#xpointer(/METS_Profile/structural_requirements/behaviorSec/requirement)"
+            />
+        </behaviorSec>
+        
+        
+        <multiSection>
+            <requirement>
+                <p>How does the "UCOnly" access work</p>
+            </requirement>
+            <requirement>
+                <p>/mets/@TYPE = text</p>
+            </requirement>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p>TEI encoded to ... guidelines</p>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p>MODS are extracted from MARC records</p>
+            </requirement>
+            <requirement>
+                <p>UC Press supplied metadata is represented by an XML
+                    dump from filemaker.  This may change to ONYX</p>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency></agency>
+        <URI>http://ark.cdlib.org/xslt/extract-dc/kt3v19p5bk.dc.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/kt3v19p5bk.html.xslt</URI>
+        <description>
+            <p ID="toHTML"></p>
+        </description>
+    </tool>
+    <Appendix NUMBER="1">
+<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="http://ark.cdlib.org/raw/ark:/13030/ft4199n900/"/>
+    </Appendix>
+</METS_Profile>

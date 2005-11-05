@@ -1,0 +1,78 @@
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URN">http://ark.cdlib.org/ark:/13030/kt1g5010zb</URI>
+    <title>DDI Table</title>
+    <abstract>DDI object for Counting California</abstract>
+    <date>2003-10-06T23:22:00</date>
+    <contact>
+        <name>Counting California Team</name>
+        <institution>California Digital LIbrary</institution>
+        <address>415 - 20th Street Oakland, California 94612-2901 </address>
+    </contact>
+    <related_profile/>
+    <extension_schema>
+        <name>DDI</name>
+        <URI>http://www.icpsr.umich.edu/DDI</URI>
+        <context/>
+        <note/>
+    </extension_schema>
+    <description_rules>
+        <p>Often records are generated from ascii format of the data dictionary</p>
+    </description_rules>
+    <controlled_vocabularies>
+        <vocabulary>
+            <name/>
+        </vocabulary>
+    </controlled_vocabularies>
+    <structural_requirements>
+        <dmdSec>
+            <requirement>
+                <p>There are two sections:</p>
+                <p>DDI sections 1 and 2 for the study</p>
+                <p>Each table's metadata marked up with CDL's version of the marked up data
+                    dictionary (mudd).</p>
+            </requirement>
+        </dmdSec>
+        <fileSec>
+            <requirement>
+                <p>http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd</p>
+                <p>The file ID fptr1 points to the Counting California web site for the numeric
+                    table object.</p>
+            </requirement>
+            <requirement>
+                <p/>
+            </requirement>
+        </fileSec>
+        <structMap>
+            <requirement>
+                <p>This refers back to the fptr1 file.</p>
+            </requirement>
+        </structMap>
+        <behaviorSec>
+            <requirement>
+                <p/>
+            </requirement>
+        </behaviorSec>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p/>
+            </requirement>
+        </content_files>
+    </technical_requirements>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/extract-dc/DDI-tbl.qdc2.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/DDI-tbl.html.xsl</URI>
+        <description>
+            <p ID="toHTML"/>
+        </description>
+    </tool>
+    <Appendix NUMBER="1"><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="http://ark.cdlib.org/raw/ark:/13030/bnhv900/"/></Appendix>
+</METS_Profile>

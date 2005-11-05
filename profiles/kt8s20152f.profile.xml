@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URN">http://ark.cdlib.org/ark:/13030/kt8s20152f</URI>
+    <title>Profile for Profiles</title>
+    <abstract>A Profile for METS documents describing profiles of METS documents</abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile/>
+    <extension_schema>
+        <name>METS_Profile</name>
+        <URI>http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd</URI>
+        <context>must set the namespace to ""</context>
+    </extension_schema>
+    <description_rules>
+        <p>use METS_Profile schmea to describe the profile.</p>
+    </description_rules>
+    <controlled_vocabularies>
+        <vocabulary/>
+    </controlled_vocabularies>
+    <structural_requirements>
+        <dmdSec>
+            <requirement>
+                <p> use METS_Profile schema for description. However, leave out the example from Appendex.</p>
+            </requirement>
+        </dmdSec>
+        <fileSec>
+            <requirement>
+                <p> must have a file/[@ID="toHTML"] that specfies an XSLT to turn the METS to HTML.</p>
+            </requirement>
+            <requirement>
+                <p> if this profile of objects should show up in the generic search, then a
+                    file/[@ID="toQDC"] must be define an XSLT to extract a DC record in a custom format.</p>
+            </requirement>
+        </fileSec>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p>The XML format for the DC extraction that the XSLT must producte is non standard</p>
+                <p>The HTML that the XSLT for HTML creates may assumes the BASE href of the page
+                    will be the URL form of the ARK for the object</p>
+            </requirement>
+        </content_files>
+    </technical_requirements>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/kt8s20152f.html.xslt</URI>
+        <description>
+            <p ID="toHTML">This XSLT is used by the ARK resolver to display the object in HTML.</p>
+        </description>
+    </tool>
+    <Appendix NUMBER="1"/>
+</METS_Profile>

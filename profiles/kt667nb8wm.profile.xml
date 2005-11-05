@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt667nb8wm</URI>
+    <title>pre MODS (crs reports)</title>
+    <abstract>This is a place holder profile to assign ARKs to these
+	Items.  Now that these have ARKs, SCP can create MARC records, 
+	and then we can create a MODS based profile for these.
+    </abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI=""></related_profile>
+    <extension_schema>
+        <URI></URI>
+        <context></context>
+        <note></note>
+    </extension_schema>
+    <extension_schema>
+        <URI></URI>
+        <context></context>
+        <note></note>
+    </extension_schema>
+    <description_rules>
+                <p/>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p></p>
+            </requirement>
+        </metsHdr>
+        <dmdSec>
+            <requirement>
+                <p></p>
+            </requirement>
+        </dmdSec>
+<fileSec>This represents what is available of the digital object.
+							<requirement>
+								<p>The file ID fptr1 points to an ascii form of the digital object.</p>
+							</requirement>
+
+							<requirement>
+								<p>The file ID fptr2 points to an pdf form of the digital object.</p>
+							</requirement>
+						</fileSec>
+						<structMap>
+							<requirement>
+							<p>This refers back to the fptr1 and fptr2 file.</p>
+							</requirement>
+
+						</structMap>
+        <multiSection>
+            <requirement>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p>/mets/@TYPE = text</p>
+            </requirement>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p></p>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p></p>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency></agency>
+        <URI>http://ark.cdlib.org/xslt/extract-dc/preMod.qdc2.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/preMod.html.xsl</URI>
+        <description>
+            <p ID="toHTML"></p>
+        </description>
+    </tool>
+    <Appendix NUMBER="1">
+<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="http://ark.cdlib.org/raw/ark:/13030/bnbx600/"/>
+    </Appendix>
+</METS_Profile>

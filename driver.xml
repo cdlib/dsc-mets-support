@@ -1,0 +1,205 @@
+<mets-profiles>
+<!-- $Id$ $Name$ -->
+<!-- 
+ This is a mets profile driver file.  Its purpose it to provide a
+ mapping of METS PROFILES to files needed to support use of the
+ profiles.
+--> 
+<!-- 
+
+Copyright (c) 2005, Regents of the University of California
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions are met:
+
+- Redistributions of source code must retain the above copyright notice, 
+  this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, 
+  this list of conditions and the following disclaimer in the documentation 
+  and/or other materials provided with the distribution.
+- Neither the name of the University of California nor the names of its
+  contributors may be used to endorse or promote products derived from this 
+  software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+-->
+<!--
+METS profile driver
+
+	<PROFILE> element holds values for PROFILE attributes that will been
+	seen by the system.
+
+	<tool> element
+		type = " xslt | java | ???"
+		role = " ...
+	the value of <tool> is a file path / uri.  If relative, 
+	they are releative to this driver.xml file, or they are
+	releative to an xml:base
+-->
+
+  <!--
+          'http://www.loc.gov/standards/mets/profiles/00000003.xml' => 505,
+          'http://sunsite.berkeley.edu/GenX' => 2710,
+  -->
+  <mets-profile-driver>
+    <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
+    <PROFILE>http://sunsite.berkeley.edu/GenX</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/GenX.html.xslt</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://www.loc.gov/mets/profiles/00000002.xml' => 153,
+          'http://www.loc.gov/standards/mets/profiles/00000002.xml' => 4672,
+  -->
+  <mets-profile-driver>
+    <PROFILE>http://www.loc.gov/mets/profiles/00000002.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000002.xml</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/4.html.xslt</tool>
+    <tool type="xslt" role="generalBPC">xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml' => 223,
+  -->
+  <mets-profile-driver>
+    <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBImagedObjectProfile.xml</PROFILE>
+    <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt0t1nb6x7?noindex=true' => 484,
+          'http://ark.cdlib.org/ark:/13030/kt0t1nb6x7' => 8197,
+  -->
+  <mets-profile-driver label="EAD Finding Aid">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt0t1nb6x7</PROFILE>
+    <tool type="xslt" role="toQDC"></tool>
+    <tool type="xslt" role="toHTML"></tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt1g5010zb' => 8977,
+  -->
+  <mets-profile-driver label="coca">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt1g5010zb</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/DDI-tbl.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/DDI-tbl.html.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+  -->
+  <mets-profile-driver label="generic MODS">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt2g5020r0</PROFILE>
+    <PROFILE>http://ark-dev.cdlib.org:8086/mets/profiles/kt2g5020r0.xml</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz?noindex=true' => 39049,
+          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz?noindex=yes' => 1,
+          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz' => 121558,
+  -->
+  <mets-profile-driver label="EAD extracted images">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt3q2nb7vz</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/kt3q2nb7vz.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt3q2nb7vz.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt3v19p5bk' => 1841,
+          'http://ark.cdlib.org/ark:/13030/kt3v19p5bk?noindex=true' => 1,
+  -->
+  <mets-profile-driver label="UCPEE">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt3v19p5bk</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/kt3v19p5bk.dc.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt3v19p5bk.html.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt400011f8' => 4968,
+  -->
+  <mets-profile-driver label="lsta MARC">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt400011f8</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt400011f8-logic-mods.xslt</tool>
+    <tool type="xslt" role="bpc">./xslt/bpc/lstaMODS_checker.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt4g5012g0' => 17604,
+  -->
+  <mets-profile-driver label="lsta DC">
+    <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/OAC-LSTA-DC.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
+    <tool type="xslt" role="bpc">./xslt/bpc/lstaDC_checker.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt5k40135s' => 309,
+  -->
+  <mets-profile-driver label="OAC texts / MODS">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt5k40135s</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt5k40135s.html.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt5z09p6zn' => 5,
+  -->
+  <mets-profile-driver label="MODS eSch text (oceans)">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt5z09p6zn</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt5z09p6zn.html.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt667nb8wm' => 224,
+  -->
+  <mets-profile-driver label="CRS reports">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt667nb8wm</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/preMod.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/preMod.html.xsl</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt7j49p867' => 1111,
+  -->
+  <mets-profile-driver label="OAC texts / DC">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt7j49p867</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/extract-dc/OAC-TEXT-DC.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt7j49p867.html.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+          'http://ark.cdlib.org/ark:/13030/kt8s20152f?index=no' => 13,
+  -->
+  <mets-profile-driver label="profile for profiles">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt8s20152f</PROFILE>
+    <tool type="xslt" role="toHTML">./xslt/view/kt8s20152f.html.xslt</tool>
+  </mets-profile-driver>
+</profiles>
+<!-- these counts by PROFILE are for the QA process ; will be removed
+	before the first stable release
+          'http://www.loc.gov/standards/mets/profiles/00000004.xml' => 70,
+          'http://findaid.oac.cdlib.org/mets/profiles/2002/OAC-collection/' => 89
+-->

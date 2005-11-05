@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt5z09p6zn</URI>
+    <title>MODS eSch text (oceans)</title>
+    <abstract>Same as the OAC MODS profile, but with different branding. 
+        We do not really want to trigger branding with a profile, so this
+        is just temporary until we have better branding. 
+    </abstract>
+    <date>2004-03-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI="http://ark.cdlib.org/ark:/13030/kt5k40135s">
+    This is really the same thing, but with OAC branding</related_profile>
+<extension_schema>
+        <URI>http://www.loc.gov/standards/marcxml/schema/mods.xsd</URI>
+        <context>xmlns="http://www.loc.gov/mods/"</context>
+        <note></note>
+    </extension_schema>
+    <extension_schema>
+        <URI>http://www.loc.gov/standards/rights/METSRights.xsd</URI>
+        <context>xmlns=""</context>
+        <note></note>
+    </extension_schema>
+    <description_rules>
+                <p>MODS from MARC</p>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p>local record ID</p>
+            </requirement>
+        </metsHdr>
+        <dmdSec>
+            <requirement>
+                <p>ID="DM1"</p>
+            </requirement>
+            
+            <requirement>
+                <p>ID="rights"</p>
+            </requirement>
+        </dmdSec>
+        <fileSec>
+            <requirement>
+                <p>DynaXML gen 1 METS</p>
+            </requirement>
+        </fileSec>
+        <structMap>
+            <requirement>
+                <p>DynaXML gen 1 METS</p>
+            </requirement>
+            <requirement>
+                <p></p>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p></p>
+            </requirement>
+        </structMap>
+        <multiSection>
+            <requirement>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p>/mets/@TYPE = text</p>
+            </requirement>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p>TEI</p>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p></p>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency></agency>
+        <URI>http://ark.cdlib.org/xslt/extract-dc/MODS.qdc2.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/kt5z09p6zn.html.xslt</URI>
+        <description>
+            <p ID="toHTML"></p>
+        </description>
+    </tool>
+    <Appendix NUMBER="1">
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="http://ark.cdlib.org/raw/ark:/13030/kt167nb66r/"/>
+    </Appendix>
+</METS_Profile>

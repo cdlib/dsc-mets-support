@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="./mets.profile.v1-b2.xsd">
+    <URI LOCTYPE="URL">http://sunsite.berkeley.edu/GenX</URI>
+    <title>Generic METS Profile</title>
+    <abstract>This profile is for "handmade" "GenX" clones that
+don't specify any other PROFILE.
+    </abstract>
+    <date>2004-05-13T09:40:00-08:00</date>
+    <contact>
+        <name>Brian Tingle</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI=""></related_profile>
+    <extension_schema>
+        <URI></URI>
+        <context></context>
+        <note></note>
+    </extension_schema>
+    <extension_schema>
+        <URI></URI>
+        <context></context>
+        <note></note>
+    </extension_schema>
+    <description_rules>
+                <p/>
+    </description_rules>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement>
+                <p></p>
+            </requirement>
+        </metsHdr>
+        <dmdSec>
+            <requirement ID="dsc">
+                <p></p>
+            </requirement>
+        </dmdSec>
+        <fileSec>
+            <requirement>
+                <p></p>
+            </requirement>
+        </fileSec>
+        <structMap>
+            <requirement>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p></p>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p></p>
+            </requirement>
+        </structMap>
+        <multiSection>
+            <requirement>
+                <p></p>
+            </requirement>
+            <requirement>
+                <p>/mets/@TYPE = image</p>
+            </requirement>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files>
+            <requirement>
+                <p></p>
+            </requirement>
+        </content_files>
+        <metadata_files>
+            <requirement>
+                <p></p>
+            </requirement>
+        </metadata_files>
+    </technical_requirements>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark-dev.cdlib.org:8086/xslt/extract-dc/GenX.qdc2.xslt</URI>
+        <description>
+            <p ID="toQDC">Ths XSLT is used <strong>to extract</strong> an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark.cdlib.org/xslt/mets-page/GenX.html.xslt</URI>
+        <description>
+            <p ID="toHTML">Page turner.</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark-dev.cdlib.org:8086/xslt/bpc-mets/allMetsBPC.xsl</URI>
+        <description>
+            <p ID="generalBPC">This generic METS Best Practice Checker XSLT is from Schematron and outputs errors as XML.</p>
+        </description>
+    </tool>
+    <Appendix NUMBER="1">
+    </Appendix>
+</METS_Profile>
