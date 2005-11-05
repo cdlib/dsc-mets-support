@@ -1,0 +1,22 @@
+METS support files
+
+driver.xml
+	main control file (see comments in file)
+build.xml 
+	todo: ant task to package as a .jar
+./profiles
+	local copies of METS_Profiles where apropos
+./xslt/mets-driver.xsl
+	todo: xslt(2) extension functions
+	(or named templates?)
+./xslt/bpc
+	schematron generated and derived xslt
+./xslt/dc
+	extraction to dublin core
+./xslt/dc/common
+	common xsl for new dublin core;
+	virtual collection data file
+./xslt/view
+	metsOnly dynaXML/docFormatter; 
+./xslt/view/extimg
+	obsolete?
