@@ -1,0 +1,11 @@
+<project default="jar">
+ <target name="jar">
+  <jar destfile="driver.jar"
+	basedir="."
+	includes="profiles/*.* xslt/*/*.* xslt/*.* driver.xml README LICENSE"
+	/>
+ </target>
+
+<!-- add to and from cvs -->
+
+</project>
