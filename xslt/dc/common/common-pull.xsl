@@ -72,7 +72,7 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 ]]></xsl:text>
 		<xsl:element name="{$element}">
 			<xsl:if test="($qualifier)">
-				<xsl:attribute name="qualifier">
+				<xsl:attribute name="q">
 					<xsl:value-of select="$qualifier"/>
 				</xsl:attribute>	
 			</xsl:if>

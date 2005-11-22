@@ -107,7 +107,7 @@ METS profile driver
   -->
   <mets-profile-driver label="EAD extracted images" pref="./profiles/kt3q2nb7vz.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3q2nb7vz</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/kt3q2nb7vz.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/ead-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3q2nb7vz.xslt</tool>
   </mets-profile-driver>
 
@@ -117,7 +117,7 @@ METS profile driver
   -->
   <mets-profile-driver label="UCPEE" pref="./profiles/kt3v19p5bk.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3v19p5bk</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/kt3v19p5bk.dc.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3v19p5bk.html.xslt</tool>
   </mets-profile-driver>
 
@@ -137,7 +137,7 @@ METS profile driver
   -->
   <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml">
     <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/OAC-LSTA-DC.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
     <tool type="xslt" role="bpc">./xslt/bpc/lstaDC_checker.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
@@ -166,7 +166,7 @@ METS profile driver
   -->
   <mets-profile-driver label="CRS reports" pref="./profiles/kt677nb8wm.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt667nb8wm</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/preMod.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/preMod-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/preMod.html.xsl</tool>
   </mets-profile-driver>
 
@@ -175,7 +175,7 @@ METS profile driver
   -->
   <mets-profile-driver label="OAC texts / DC" pref="./profiles/kt7j49p867.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt7j49p867</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/OAC-TEXT-DC.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.qdc2.xslt</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt7j49p867.html.xslt</tool>
   </mets-profile-driver>
 

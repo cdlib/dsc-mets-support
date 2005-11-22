@@ -41,11 +41,15 @@ change old MODS namespace to new MODS namespace
 
 <xsl:template match="@*[local-name()='schemaLocation'][namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']" mode="upMods">
 <!-- xsl:template match="xsi:schemaLocation" mode="upMods" -->
-<xsl:message><xsl:value-of select="name()"/><xsl:value-of select="namespace-uri()"/></xsl:message>
-	<xsl:attribute name="schemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- xsl:message><xsl:value-of select="name()"/><xsl:value-of select="namespace-uri()"/></xsl:message -->
+
+<xsl:attribute 
+	name="schemaLocation" 
+	namespace="http://www.w3.org/2001/XMLSchema-instance">
 		<xsl:value-of select="replace(.,
-					      'http://www.loc.gov/mods/ http://www.loc.gov/standards/mods/mods.xsd',
-					      'http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd'
+      'http://www.loc.gov/mods/ http://www.loc.gov/standards/mods/mods.xsd',
+      'http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd'
 				      )"/>
 	</xsl:attribute>
 </xsl:template>

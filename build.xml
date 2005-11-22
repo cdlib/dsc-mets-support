@@ -2,7 +2,7 @@
  <target name="jar">
   <jar destfile="driver.jar"
 	basedir="."
-	includes="profiles/*.* xslt/*/*.* xslt/*.* driver.xml README LICENSE"
+	includes="profiles/*.* xslt/**/*.* xslt/*.* driver.xml README LICENSE"
 	/>
  </target>
 
