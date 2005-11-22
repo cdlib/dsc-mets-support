@@ -136,8 +136,9 @@ METS profile driver
           'http://ark.cdlib.org/ark:/13030/kt4g5012g0' => 17604,
   -->
   <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt4g5012g0</PROFILE>
     <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc-dc.xsl</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
     <tool type="xslt" role="bpc">./xslt/bpc/lstaDC_checker.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
@@ -175,7 +176,7 @@ METS profile driver
   -->
   <mets-profile-driver label="OAC texts / DC" pref="./profiles/kt7j49p867.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt7j49p867</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt7j49p867.html.xslt</tool>
   </mets-profile-driver>
 
