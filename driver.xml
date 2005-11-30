@@ -56,6 +56,9 @@ METS profile driver
   <mets-profile-driver pref="./profiles/00000003.xml">
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000004.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/mets/profiles/00000002.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000002.xml</PROFILE>
     <PROFILE>http://sunsite.berkeley.edu/GenX</PROFILE>
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
