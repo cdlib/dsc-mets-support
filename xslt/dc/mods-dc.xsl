@@ -46,7 +46,7 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
 		<xsl:with-param name="node" select="/m:mets/@LABEL"/>
-		<!-- /m:mets/@LABEL | //mods:mods/mods:titleInfo"/ -->
+		<!-- /m:mets/@LABEL | (//mods:mods)[1]/mods:titleInfo"/ -->
 	</xsl:call-template>
 </xsl:template>
 
@@ -54,9 +54,9 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'creator'"/>
                 <xsl:with-param name="node" select="
-			//mods:mods/mods:name[./mods:role/mods:roleTerm='creator']/mods:namePart[1]
+			(//mods:mods)[1]/mods:name[./mods:role/mods:roleTerm='creator']/mods:namePart[1]
 		"/>
-		<!-- | 	//mods:mods/mods:recordInfo/mods:recordContentSource -->
+		<!-- | 	(//mods:mods)[1]/mods:recordInfo/mods:recordContentSource -->
         </xsl:call-template>
 </xsl:template>
 
@@ -67,7 +67,13 @@ MODS
 <xsl:template name="subject">
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:subject"/>
+                <xsl:with-param name="node" 
+		select="
+			(//mods:mods)[1]/mods:subject[mods:topic] |
+			(//mods:mods)[1]/mods:subject[mods:titleInfo] |
+			(//mods:mods)[1]/mods:subject[text()] |
+			(//mods:mods)[1]/mods:subject[mods:name]
+			"/>
         </xsl:call-template>
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
@@ -77,7 +83,7 @@ MODS
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
                 <xsl:with-param name="qualifier">series</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets//mods:mods//mods:relatedItem/mods:titleInfo/mods:title"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]//mods:relatedItem/mods:titleInfo/mods:title"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -93,39 +99,39 @@ MODS
 <xsl:template name="description">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:abstract | //mods:mods/mods:tableOfContents | //mods:mods/mods:note | //mods:mods/mods:subject/mods:name/mods:description"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:abstract | (//mods:mods)[1]/mods:tableOfContents | (//mods:mods)[1]/mods:note | (//mods:mods)[1]/mods:subject/mods:name/mods:description"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="qualifier">abstract</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:abstract"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:abstract"/>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="publisher">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:originInfo/mods:publisher | //mods:mods/mods:publicationInfo/mods:publisher"/>
-	<!-- | //mods:mods/mods:location/mods:physicalLocation -->
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:publisher | (//mods:mods)[1]/mods:publicationInfo/mods:publisher"/>
+	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="contributor">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">contributor</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:name[./mods:role/mods:roleTerm='contributor']/mods:namePart[1]"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:name[./mods:role/mods:roleTerm='contributor']/mods:namePart[1]"/>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="date">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:originInfo/mods:dateIssued | //mods:mods/mods:publicationInfo/mods:dateIssued | //mods:mods/mods:originInfo/mods:dateCaptured | //mods:mods/mods:originInfo/mods:dateOther"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:dateIssued | (//mods:mods)[1]/mods:publicationInfo/mods:dateIssued | (//mods:mods)[1]/mods:originInfo/mods:dateCaptured | (//mods:mods)[1]/mods:originInfo/mods:dateOther"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
                 <xsl:with-param name="qualifier">created</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:recordInfo/mods:recordCreationDate | //mods:mods/mods:originInfo/mods:dateCreated |//mods:mods/mods:recordInfo/mods:recordChangeDate"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:recordInfo/mods:recordCreationDate | (//mods:mods)[1]/mods:originInfo/mods:dateCreated |(//mods:mods)[1]/mods:recordInfo/mods:recordChangeDate"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -137,12 +143,12 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">type</xsl:with-param>
                 <xsl:with-param name="qualifier">mods</xsl:with-param>
-		<xsl:with-param name="node" select="//mods:mods/mods:typeOfResource"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:typeOfResource"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">type</xsl:with-param>
                 <xsl:with-param name="qualifier">genreform</xsl:with-param>
-                <xsl:with-param name="node" select="//mods:mods/mods:genre"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:genre"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -150,14 +156,19 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'format'"/>
                 <xsl:with-param name="qualifier" select="'medium'"/>
-		<xsl:with-param name="node" select="//mods:mods/mods:physicalDescription/mods:extent | //mods:mods/mods:physicalDescription/mods:form | //mods:mods/mods:physicalDescription/mods:internetMediaType | //mods:mods/mods:physicalDescription/mods:digitalOrigin | /mods:mods/mods:physicalDescription/mods:note"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:physicalDescription/mods:extent | (//mods:mods)[1]/mods:physicalDescription/mods:form | (//mods:mods)[1]/mods:physicalDescription/mods:internetMediaType | (//mods:mods)[1]/mods:physicalDescription/mods:digitalOrigin | /mods:mods/mods:physicalDescription/mods:note"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="identifier">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'identifier'"/>
-		<xsl:with-param name="node" select="/m:mets/@OBJID | //mods:mods/mods:identifier"/>
+		<xsl:with-param name="prependString" select="'http://ark.cdlib.org/'"/>
+		<xsl:with-param name="node" select="/m:mets/@OBJID"/>
+	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'identifier'"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:identifier"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -168,7 +179,7 @@ MODS
 <xsl:template name="language">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'language'"/>
-		<xsl:with-param name="node" select="//mods:mods/mods:language"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:language"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -176,7 +187,7 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'ispartof'"/>
-		<xsl:with-param name="node" select="//mods:mods/mods:relatedItem//mods:url | //mods:mods/mods:relatedItem/mods:identifier"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
@@ -189,14 +200,25 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
 		<xsl:with-param name="qualifier" select="'spatial'"/>
-		<xsl:with-param name="node" select="//mods:mods/mods:subject/mods:geographic | //mods:mods/mods:subject/mods:cartographic"/>
+		<xsl:with-param name="node" 
+			select="
+		(//mods:mods)[1]/mods:subject[mods:geographic] | 
+		(//mods:mods)[1]/mods:subject[mods:cartographic]  |
+		(//mods:mods)[1]/mods:subject[mods:hierarchialGeographic]  |
+		(//mods:mods)[1]/mods:subject[mods:geographicCode]  
+		"/>
+	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'coverage'"/>
+		<xsl:with-param name="qualifier" select="'temporal'"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:subject[mods:temporal]"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="rights">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'rights'"/>
-		<xsl:with-param name="node" select="//mods:mods/mods:accessCondition"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:accessCondition"/>
 	</xsl:call-template>
 </xsl:template>
 
