@@ -63,6 +63,7 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 <xsl:param name="element"/>
 <xsl:param name="qualifier"/>
 <xsl:param name="node"/>
+<xsl:param name="prependString"/>
 <!-- xsl:param name="mode" in the future? -->
 
 <xsl:if test="$node">
@@ -75,6 +76,9 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 				<xsl:attribute name="q">
 					<xsl:value-of select="$qualifier"/>
 				</xsl:attribute>	
+			</xsl:if>
+			<xsl:if test="($prependString)">
+				<xsl:value-of select="$prependString"/>
 			</xsl:if>
 			<xsl:apply-templates select="."/>
 		</xsl:element>

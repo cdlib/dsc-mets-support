@@ -90,7 +90,7 @@ METS profile driver
   -->
   <mets-profile-driver label="coca" pref="./profiles/kt1g5010zb.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt1g5010zb</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/extract-dc/DDI-tbl.qdc2.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/ddi-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/DDI-tbl.html.xsl</tool>
   </mets-profile-driver>
 

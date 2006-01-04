@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Dublic Core to Dublin Core translation: CMS migration to XTF
+DDI to Dublin Core translation: CMS migration to XTF
 supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 -->
 
@@ -15,6 +15,9 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 	xmlns:vc="http://www.cdlib.org/collections/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:n1="http://www.loc.gov/METS/"
+xmlns:n2="http://www.icpsr.umich.edu/DDI"
+xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 	exclude-result-prefixes="#all"
 >
 
@@ -38,14 +41,14 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="title">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
-		<xsl:with-param name="node" select="/m:mets/@LABEL"/>
+		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:labl"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="creator">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'creator'"/>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:creator"/>
+                <xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:citation/n2:prodStmt/n2:producer"/>
 
         </xsl:call-template>
 </xsl:template>
@@ -53,7 +56,8 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="subject">
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:subject"/>
+                <xsl:with-param name="qualifier">concept</xsl:with-param>
+                <xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:concept"/>
         </xsl:call-template>
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
@@ -65,14 +69,21 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="description">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:description"/>
+                <xsl:with-param name="node">
+			<xsl:value-of select="n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:hdg"/>
+		</xsl:with-param>
+		<xsl:with-param name="prependString">
+			<xsl:text>TABLE HEADERS - </xsl:text>
+		</xsl:with-param>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="publisher">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:publisher"/>
+                <xsl:with-param name="node">
+			<xsl:text>California Digital Library</xsl:text>
+		</xsl:with-param>
         </xsl:call-template>
 </xsl:template>
 
@@ -86,8 +97,35 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="date">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:date"/>
+                <xsl:with-param name="node" select="n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:timePrd"/>
         </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="n2:timePrd">
+<xsl:choose>
+	<xsl:when test="@event='start'">
+		<xsl:choose>
+			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
+			<xsl:otherwise> <xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:when>
+	<xsl:when test="@event='end'">
+		to
+		<xsl:choose>
+			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:when>
+	<xsl:when test='@event="single"'>
+		<xsl:choose>
+			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:when>
+	<xsl:otherwise>
+		<xsl:value-of select="."/>
+	</xsl:otherwise>
+</xsl:choose>   
 </xsl:template>
 
 <xsl:template name="type">
@@ -139,35 +177,35 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="relation">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:relation"/>
+		<xsl:with-param name="qualifier" select="'ispartof'"/>
+		<xsl:with-param name="node" select="/n1:mets/n1:metsHdr/n1:altRecordID[@TYPE='CDLstudy']"/>
+		<xsl:with-param name="prependString">http://countingcalifornia.cdlib.org/title/</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'ispartof'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='ead']/m:mdRef/@*[local-name(.)='href'] | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:isPartOf"/>
-	</xsl:call-template>
-	<xsl:call-template name="element">
-		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="qualifier" select="'vc'"/>
-		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec[@ID='ead']/m:mdRef/@*[local-name(.)='href'])"/>
-	</xsl:call-template>
-	<xsl:call-template name="element">
-		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="node">http://oac.cdlib.org/</xsl:with-param>
+		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/@id"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="coverage">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:coverage"/>
+		<xsl:with-param name="qualifier" select="'spatial'"/>
+		<xsl:with-param name="node" select="n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:geogUnit"/>
 	</xsl:call-template>
+
+	<!-- xsl:call-template name="element">
+		<xsl:with-param name="element" select="'coverage'"/>
+		<xsl:with-param name="qualifier" select="'temporal'"/>
+		<xsl:with-param name="node" select=""/>
+	</xsl:call-template -->
 </xsl:template>
 
 <xsl:template name="rights">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'rights'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:rights"/>
+		<xsl:with-param name="node" select="/n1:mets/n1:amdSec/n1:rightsMD[@ID='access_restriction']/n1:mdWrap/n1:xmlData/n1:access"/>
 	</xsl:call-template>
 </xsl:template>
 

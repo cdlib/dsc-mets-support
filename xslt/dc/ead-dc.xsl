@@ -70,14 +70,16 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title"/>
         </xsl:call-template>
-	<xsl:for-each
-select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:custodhist">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="qualifier">custodhist</xsl:with-param>
-                <xsl:with-param name="node" select="."/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:custodhist"/>
         </xsl:call-template>
-        </xsl:for-each>
+	<xsl:call-template name="element">
+                <xsl:with-param name="element">publisher</xsl:with-param>
+                <xsl:with-param name="qualifier">repository</xsl:with-param>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:repository/e:corpname"/>
+        </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="contributor">
@@ -108,7 +110,7 @@ select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate"
 <xsl:template name="format">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'format'"/>
-                <xsl:with-param name="qualifier" select="'medium'"/>
+                <xsl:with-param name="qualifier" select="'physdesc'"/>
 		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:physdesc"/>
 	</xsl:call-template>
 </xsl:template>
@@ -116,6 +118,7 @@ select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate"
 <xsl:template name="identifier">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'identifier'"/>
+		<xsl:with-param name="prependString" select="'http://ark.cdlib.org/'"/>
 		<xsl:with-param name="node" select="/m:mets/@OBJID"/>
 	</xsl:call-template>
 </xsl:template>
@@ -130,12 +133,12 @@ select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate"
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'ispartof'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier "/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:metsHdr/m:altRecordID[@TYPE='CDL path']"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'vc'"/>
-		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent)"/>
+		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent) | vc:lookParent(/m:mets/@OBJID)"/>
 	</xsl:call-template>
 </xsl:template>
 
