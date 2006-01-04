@@ -41,14 +41,14 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 <xsl:template name="title">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
-		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:labl"/>
+		<xsl:with-param name="node" select="n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="creator">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'creator'"/>
-                <xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:citation/n2:prodStmt/n2:producer"/>
+                <xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:creator"/>
 
         </xsl:call-template>
 </xsl:template>
@@ -70,7 +70,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="node">
-			<xsl:value-of select="n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:hdg"/>
+			<xsl:value-of select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title/"/>
 		</xsl:with-param>
 		<xsl:with-param name="prependString">
 			<xsl:text>TABLE HEADERS - </xsl:text>
@@ -90,14 +90,14 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 <xsl:template name="contributor">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element">contributor</xsl:with-param>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:contributor"/>
+		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:contributor"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="date">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
-                <xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:timePrd"/>
+                <xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:date"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -192,7 +192,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
 		<xsl:with-param name="qualifier" select="'spatial'"/>
-		<xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:geogUnit"/>
+		<xsl:with-param name="node" select="n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:geogUnit"/>
 	</xsl:call-template>
 
 	<!-- xsl:call-template name="element">
