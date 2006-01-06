@@ -6,7 +6,7 @@ MODS
 
 <xsl:stylesheet version="2.0" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:xlink="http://www.w3.org/TR/xlink" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
 	xmlns:m="http://www.loc.gov/METS/"
 	xmlns:e="http://www.loc.gov/EAD/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -108,12 +108,20 @@ MODS
         </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="publisher">
+<xsl:template name="publisher" 
+	xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:publisher | (//mods:mods)[1]/mods:publicationInfo/mods:publisher"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:publisher | (//mods:mods)[1]/mods:publicationInfo/mods:publisher | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc"/>
 	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
         </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="cdl:qualifieddc"
+	xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/">
+	<xsl:value-of select="dc:title"/>
+	<xsl:text> </xsl:text>
+	<xsl:value-of select="dc:identifier[starts-with(.,'http://')][1]"/>
 </xsl:template>
 
 <xsl:template name="contributor">
@@ -186,13 +194,12 @@ MODS
 <xsl:template name="relation">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="qualifier" select="'ispartof'"/>
-		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier | (//mods:mods)[1]/mods:extension/dc:relation | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/*/dc:identifier"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'vc'"/>
-		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent)"/>
+		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href)"/>
 	</xsl:call-template>
 </xsl:template>
 
