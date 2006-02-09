@@ -53,7 +53,7 @@ METS profile driver
           'http://sunsite.berkeley.edu/GenX' => 2710,
           'http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml' => 223,
   -->
-  <mets-profile-driver pref="./profiles/00000003.xml">
+  <mets-profile-driver pref="./profiles/00000003.profile.xml">
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000004.xml</PROFILE>
