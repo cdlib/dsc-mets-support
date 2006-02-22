@@ -41,7 +41,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 <xsl:template name="title">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
-		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:labl"/>
+		<xsl:with-param name="node" select="/m:mets/n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:labl/text()"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -70,7 +70,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="node">
-			<xsl:value-of select="n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:hdg"/>
+			<xsl:value-of select="n1:dmdSec[@ID='datadictionary-tbl']/n1:mdWrap/n1:xmlData/n3:tbl/n3:hdg/text()"/>
 		</xsl:with-param>
 		<xsl:with-param name="prependString">
 			<xsl:text>TABLE HEADERS - </xsl:text>
@@ -97,35 +97,33 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 <xsl:template name="date">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
-                <xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:timePrd"/>
+                <xsl:with-param name="node" select="(/n1:mets/n1:dmdSec[@ID='DDI1-2']/n1:mdWrap/n1:xmlData/n2:codeBook/n2:stdyDscr/n2:stdyInfo/n2:sumDscr/n2:timePrd)[1]"/>
         </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="n2:timePrd">
-<xsl:choose>
-	<xsl:when test="@event='start'">
+<xsl:template match="n2:timePrd[1]">
+	<xsl:if test="@event='start'">
 		<xsl:choose>
 			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
 			<xsl:otherwise> <xsl:value-of select="."/></xsl:otherwise>
 		</xsl:choose>
-	</xsl:when>
-	<xsl:when test="@event='end'">
+	</xsl:if>
+	<xsl:if test="../n2:timePrd[@event='end']">
 		to
 		<xsl:choose>
-			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+			<xsl:when test="../n2:timePrd[@event='end'][@date]"><xsl:value-of select="../n2:timePrd[@event='end']/@date"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="../n2:timePrd[@event='end']"/></xsl:otherwise>
 		</xsl:choose>
-	</xsl:when>
-	<xsl:when test='@event="single"'>
+	</xsl:if>
+	<xsl:if test='@event="single"'>
 		<xsl:choose>
 			<xsl:when test="@date"><xsl:value-of select="@date"/></xsl:when>
 			<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
 		</xsl:choose>
-	</xsl:when>
-	<xsl:otherwise>
+	</xsl:if>
+	<xsl:if test="not(@event='start') and not(../n2:timePrd[@event='end']) and not(@event='single')">
 		<xsl:value-of select="."/>
-	</xsl:otherwise>
-</xsl:choose>   
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="type">
@@ -180,6 +178,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 		<xsl:with-param name="qualifier" select="'ispartof'"/>
 		<xsl:with-param name="node" select="/n1:mets/n1:metsHdr/n1:altRecordID[@TYPE='CDLstudy']"/>
 		<xsl:with-param name="prependString">http://countingcalifornia.cdlib.org/title/</xsl:with-param>
+		<xsl:with-param name="postpendString">.html</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>

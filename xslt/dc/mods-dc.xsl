@@ -54,14 +54,15 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'creator'"/>
                 <xsl:with-param name="node" select="
-			(//mods:mods)[1]/mods:name[./mods:role/mods:roleTerm='creator']/mods:namePart[1]
+			(//mods:mods)[1]/mods:name[1]/mods:namePart
 		"/>
 		<!-- | 	(//mods:mods)[1]/mods:recordInfo/mods:recordContentSource -->
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="mods:name[./mods:role/mods:roleTerm]">
-	<xsl:value-of select="mods:namePart"/>
+	<xsl:value-of select="mods:namePart"/>,
+	<xsl:value-of select="mods:role/mods:roleTerm"/>
 </xsl:template>
 
 <xsl:template name="subject">
@@ -71,9 +72,11 @@ MODS
 		select="
 			(//mods:mods)[1]/mods:subject[mods:topic] |
 			(//mods:mods)[1]/mods:subject[mods:titleInfo] |
-			(//mods:mods)[1]/mods:subject[text()] |
+			(//mods:mods)[1]/mods:subject[not(mods:*)][text()] |
 			(//mods:mods)[1]/mods:subject[mods:name]
 			"/>
+<!--
+-->
         </xsl:call-template>
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
@@ -108,11 +111,18 @@ MODS
         </xsl:call-template>
 </xsl:template>
 
+  <!-- mods:location>
+      <mods:physicalLocation -->
+
 <xsl:template name="publisher" 
 	xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:publisher | (//mods:mods)[1]/mods:publicationInfo/mods:publisher | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc"/>
+                <xsl:with-param name="node" select="
+ 	  (//mods:mods)[1]/mods:originInfo/mods:publisher 
+	| (//mods:mods)[1]/mods:publicationInfo/mods:publisher 
+	| (//mods:mods)[1]/mods:location/mods:physicalLocation
+	| /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc"/>
 	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
         </xsl:call-template>
 </xsl:template>
@@ -127,7 +137,7 @@ MODS
 <xsl:template name="contributor">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">contributor</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:name[./mods:role/mods:roleTerm='contributor']/mods:namePart[1]"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:name"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -163,7 +173,7 @@ MODS
 <xsl:template name="format">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'format'"/>
-                <xsl:with-param name="qualifier" select="'medium'"/>
+                <!-- xsl:with-param name="qualifier" select="'medium'"/ -->
 		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:physicalDescription/mods:extent | (//mods:mods)[1]/mods:physicalDescription/mods:form | (//mods:mods)[1]/mods:physicalDescription/mods:internetMediaType | (//mods:mods)[1]/mods:physicalDescription/mods:digitalOrigin | /mods:mods/mods:physicalDescription/mods:note"/>
 	</xsl:call-template>
 </xsl:template>
@@ -176,6 +186,7 @@ MODS
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'identifier'"/>
+		<xsl:with-param name="qualifier" select="'mods'"/>
 		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:identifier"/>
 	</xsl:call-template>
 </xsl:template>

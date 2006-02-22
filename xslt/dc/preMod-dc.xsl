@@ -41,7 +41,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 <xsl:template name="title">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
-		<xsl:with-param name="node" select="n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title"/>
+		<xsl:with-param name="node" select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -70,7 +70,7 @@ xmlns:n3="http://countingcalifornia.cdlib.org/mudd.service"
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="node">
-			<xsl:value-of select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title/"/>
+			<xsl:value-of select="/n1:mets/n1:dmdSec[@ID='CDLXML']/n1:mdWrap/n1:xmlData/n2:dcFlds/n2:digObj/n2:title"/>
 		</xsl:with-param>
 		<xsl:with-param name="prependString">
 			<xsl:text>TABLE HEADERS - </xsl:text>
