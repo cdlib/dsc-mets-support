@@ -133,7 +133,13 @@ select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate"
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'ispartof'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:metsHdr/m:altRecordID[@TYPE='CDL path']"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent"/>
+		<xsl:with-param name="prependString" select="'http://oac.cdlib.org/findaid/'"/>
+	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'relation'"/>
+		<xsl:with-param name="qualifier" select="'ispartof'"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:metsHdr/m:altRecordID[@TYPE='CDL path']"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>

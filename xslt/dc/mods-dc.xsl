@@ -205,7 +205,7 @@ MODS
 <xsl:template name="relation">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier | (//mods:mods)[1]/mods:extension/dc:relation | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/*/dc:identifier"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier | (//mods:mods)[1]/mods:extension/dc:relation | /m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']/@xlink:href | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/*/dc:identifier"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
