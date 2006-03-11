@@ -54,7 +54,7 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'creator'"/>
                 <xsl:with-param name="node" select="
-			(//mods:mods)[1]/mods:name[1]/mods:namePart
+			(//mods:mods)[1]/mods:name[1]
 		"/>
 		<!-- | 	(//mods:mods)[1]/mods:recordInfo/mods:recordContentSource -->
         </xsl:call-template>
