@@ -21,10 +21,25 @@ MODS + filemaker from ucpress
 
 <xsl:import href="mods-dc.xsl"/>
 
+<xsl:import href="common/common-pull.xsl"/>
+
 <xsl:output method="xml" />
 
+<xsl:template match="/">
+        <xsl:apply-imports />
+</xsl:template>
+
 <xsl:template name="title">
-<Title><v><xsl:value-of select="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.TitleMain"/><xsl:if test="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.TitleSub">: <xsl:value-of select="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.TitleSub"/></xsl:if></v></Title>
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">title</xsl:with-param>
+                <xsl:with-param name="node">
+ 	<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleMain"/>
+	   	<xsl:if test="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub/fm:DATA[text()]">
+			<xsl:text>: </xsl:text>
+<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub"/>
+   		</xsl:if>
+		</xsl:with-param>
+        </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="subject">
@@ -70,22 +85,35 @@ MODS + filemaker from ucpress
 </xsl:template>
 
 <xsl:template name="creator">
-<Creator>
-<v><xsl:value-of select="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.AUTHOR_CITATION_FWD"/></v></Creator>
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">creator</xsl:with-param>
+                <xsl:with-param name="node" 	
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.AUTHOR_CITATION_FWD"/>
+        </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="description">
-<Description><v><xsl:apply-templates select="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.Copy"/></v></Description>
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">description</xsl:with-param>
+                <xsl:with-param name="node" 	
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Copy"/>
+        </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="date">
-<Date><v><xsl:value-of select="dmdSec[@ID='ucpress']/mdWrap/xmlData/ROW/UCPnum.Pub_Date"/></v>
-</Date>
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">date</xsl:with-param>
+                <xsl:with-param name="node" 	
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Pub_Date"/>
+        </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="rights">
-<Rights><v><xsl:value-of select="amdSec/rightsMD[@ID='access_restriction']/mdWrap/xmlData/access"/></v>
-</Rights>
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">date</xsl:with-param>
+                <xsl:with-param name="node" 	
+			select="/m:mets/m:amdSec/rightsMD[@ID='access_restriction']/mdWrap/xmlData/access"/>
+        </xsl:call-template>
 </xsl:template>
 
 

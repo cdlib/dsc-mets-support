@@ -23,12 +23,12 @@ MODS
 	indexing record with -->
 <xsl:import href="common/collections.xslt"/>
 
+<!-- upgrade MODS2 to MODS3; normalize xlink namespace -->
+<xsl:import href="common/upMods.xsl"/>
+
 <!-- common-pull.xsl define template match for m:mets mode="map"
 	plus defines the "element" named template -->
 <xsl:import href="common/common-pull.xsl"/>
-
-<!-- upgrade MODS2 to MODS3; normalize xlink namespace -->
-<xsl:import href="common/upMods.xsl"/>
 
 <xsl:output method="xml" />
 
@@ -220,7 +220,7 @@ MODS
 		<xsl:with-param name="qualifier" select="'spatial'"/>
 		<xsl:with-param name="node" 
 			select="
-		(//mods:mods)[1]/mods:subject[mods:geographic] | 
+		(//mods:mods)[1]/mods:subject/mods:geographic | 
 		(//mods:mods)[1]/mods:subject[mods:cartographic]  |
 		(//mods:mods)[1]/mods:subject[mods:hierarchialGeographic]  |
 		(//mods:mods)[1]/mods:subject[mods:geographicCode]  
@@ -229,7 +229,7 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
 		<xsl:with-param name="qualifier" select="'temporal'"/>
-		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:subject[mods:temporal]"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:subject/mods:temporal"/>
 	</xsl:call-template>
 </xsl:template>
 

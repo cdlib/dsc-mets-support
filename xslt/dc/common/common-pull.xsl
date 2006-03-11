@@ -81,7 +81,15 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 			<xsl:if test="($prependString)">
 				<xsl:value-of select="$prependString"/>
 			</xsl:if>
-			<xsl:apply-templates select="."/>
+			<xsl:choose>
+			   <xsl:when test="name()"> 
+				<xsl:apply-templates select="."/>
+			   </xsl:when> 
+			   <xsl:otherwise> 
+				<xsl:value-of select="."/> 
+			   </xsl:otherwise> 
+			</xsl:choose>
+			<!-- xsl:copy-of select="."/ -->
 			<xsl:if test="($postpendString)">
 				<xsl:value-of select="$postpendString"/>
 			</xsl:if>
