@@ -213,6 +213,13 @@ MODS
 		<xsl:with-param name="qualifier" select="'vc'"/>
 		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href)"/>
 	</xsl:call-template>
+	 <xsl:if
+          test="(/m:mets/@PROFILE != 'http://ark.cdlib.org/ark:/13030/kt5z09p6zn')">
+          <xsl:call-template name="element">
+                <xsl:with-param name="element" select="'relation'"/>
+                <xsl:with-param name="node">http://calisphere.universityofcalifornia.edu/</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
 </xsl:template>
 
 <xsl:template name="coverage">
@@ -221,7 +228,7 @@ MODS
 		<xsl:with-param name="qualifier" select="'spatial'"/>
 		<xsl:with-param name="node" 
 			select="
-		(//mods:mods)[1]/mods:subject/mods:geographic | 
+		(//mods:mods)[1]/mods:subject[mods:geographic] | 
 		(//mods:mods)[1]/mods:subject[mods:cartographic]  |
 		(//mods:mods)[1]/mods:subject[mods:hierarchialGeographic]  |
 		(//mods:mods)[1]/mods:subject[mods:geographicCode]  
@@ -230,7 +237,7 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
 		<xsl:with-param name="qualifier" select="'temporal'"/>
-		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:subject/mods:temporal"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:subject[mods:temporal]"/>
 	</xsl:call-template>
 </xsl:template>
 
