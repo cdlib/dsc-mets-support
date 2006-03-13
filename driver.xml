@@ -120,7 +120,7 @@ METS profile driver
   -->
   <mets-profile-driver label="UCPEE" pref="./profiles/kt3v19p5bk.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3v19p5bk</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/ucpress-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3v19p5bk.html.xslt</tool>
   </mets-profile-driver>
 
