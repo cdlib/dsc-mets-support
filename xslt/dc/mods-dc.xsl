@@ -78,6 +78,7 @@ MODS
 <!--
 -->
         </xsl:call-template>
+	<xsl:variable name="parent.label" select="/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']/@LABEL"/>
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
                 <xsl:with-param name="qualifier">series</xsl:with-param>
@@ -86,7 +87,7 @@ MODS
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
                 <xsl:with-param name="qualifier">series</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]//mods:relatedItem/mods:titleInfo/mods:title"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]//mods:relatedItem/mods:titleInfo/mods:title[not(text() = $parent.label)]"/>
         </xsl:call-template>
 </xsl:template>
 
