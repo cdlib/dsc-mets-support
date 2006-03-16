@@ -103,7 +103,7 @@ MODS
 <xsl:template name="description">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:abstract | (//mods:mods)[1]/mods:tableOfContents | (//mods:mods)[1]/mods:note | (//mods:mods)[1]/mods:subject/mods:name/mods:description"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:tableOfContents | (//mods:mods)[1]/mods:note | (//mods:mods)[1]/mods:subject/mods:name/mods:description"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
