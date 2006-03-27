@@ -33,11 +33,11 @@ MODS + filemaker from ucpress
         <xsl:call-template name="element">
                 <xsl:with-param name="element">title</xsl:with-param>
                 <xsl:with-param name="node">
- 	<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleMain"/>
-	   	<xsl:if test="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub/fm:DATA[text()]">
+			<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleMain/fm:DATA"/>
+			<xsl:if test="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub/fm:DATA[text()]">
 			<xsl:text>: </xsl:text>
-<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub"/>
-   		</xsl:if>
+				<xsl:value-of select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.TitleSub/fm:DATA"/>
+			</xsl:if>
 		</xsl:with-param>
         </xsl:call-template>
 </xsl:template>
@@ -88,7 +88,7 @@ MODS + filemaker from ucpress
         <xsl:call-template name="element">
                 <xsl:with-param name="element">creator</xsl:with-param>
                 <xsl:with-param name="node" 	
-			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.AUTHOR_CITATION_FWD"/>
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.AUTHOR_CITATION_FWD/fm:DATA"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -96,7 +96,7 @@ MODS + filemaker from ucpress
         <xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="node" 	
-			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Copy"/>
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Copy/fm:DATA"/>
         </xsl:call-template>
 </xsl:template>
 
@@ -104,7 +104,7 @@ MODS + filemaker from ucpress
         <xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
                 <xsl:with-param name="node" 	
-			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Pub_Date"/>
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:UCPnum.Pub_Date/fm:DATA"/>
         </xsl:call-template>
 </xsl:template>
 
