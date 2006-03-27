@@ -110,11 +110,19 @@ MODS + filemaker from ucpress
 
 <xsl:template name="rights">
         <xsl:call-template name="element">
-                <xsl:with-param name="element">date</xsl:with-param>
+                <xsl:with-param name="element">rights</xsl:with-param>
                 <xsl:with-param name="node" 	
-			select="/m:mets/m:amdSec/rightsMD[@ID='access_restriction']/mdWrap/xmlData/access"/>
+			select="/m:mets/m:dmdSec[@ID='ucpress']/m:mdWrap/m:xmlData/fm:ROW/fm:public_nonPublic"/>
         </xsl:call-template>
 </xsl:template>
+
+<xsl:template name="relation">
+        <xsl:call-template name="element">
+                <xsl:with-param name="element" select="'relation'"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem//mods:url | (//mods:mods)[1]/mods:relatedItem/mods:identifier | (//mods:mods)[1]/mods:extension/dc:relation | /m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']/@xlink:href | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/*/dc:identifier"/>
+        </xsl:call-template>
+</xsl:template>
+
 
 
 </xsl:stylesheet>
