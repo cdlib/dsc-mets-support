@@ -1,354 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xlink="http://www.w3.org/TR/xlink"
                 xmlns:mets="http://www.loc.gov/METS/"
+                xmlns:m="http://www.loc.gov/METS/"
                 xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/"
+                xmlns:cdl2="http://www.cdlib.org/"
+		xmlns:cdlview="http://www.cdlib.org/view"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:mods="http://www.loc.gov/mods/"
+                xmlns:mods="http://www.loc.gov/mods/v3"
                 xmlns:dcterms="http://purl.org/dc/terms/"
-                version="1.0"
-                exclude-result-prefixes="xlink mets mods xsl cdl dc dcterms">
-  <xsl:import href="brandCommon.xsl"/>
+		xmlns:xtf="http://cdlib.org/xtf"
+                version="2.0"
+		xmlns:exslt="http://exslt.org/common"
+                extension-element-prefixes="exslt"
+                exclude-result-prefixes="#all">
+<xsl:import href="brandCommon.xsl"/>
+<xsl:import href="scaleImage.xsl"/>
+<xsl:import href="MODS-view.xsl"/>
+<xsl:include href="multi-use.xsl"/>
+<xsl:include href="structMap.xsl"/>
+<xsl:include href="insert-print-link.xsl"/>
+<xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
+<xsl:param name="debug"/>
+<xsl:param name="brand" select="'oacui'"/>
+<!-- temporary for oac -> oacui transition -->
+  <xsl:param name="brand.file">
+    <xsl:choose>
+      <xsl:when test="$brand = 'oac'">
+        <xsl:copy-of select="document('../../../../brand/oacui.xml')"/>
+      </xsl:when>
+      <xsl:when test="$brand = 'eqf'">
+        <xsl:copy-of select="document('../../../../brand/eqfui.xml')"/>
+      </xsl:when>
+      <xsl:when test="$brand != ''">
+        <xsl:copy-of select="document(concat('../../../../brand/',$brand,'.xml'))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="document('../../brand/default.xml')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
+  <!-- end temp -->
 
-  <xsl:output method="html"/>
+<xsl:key name="absPos" match="m:div[@ORDER][m:div]">
+	<xsl:value-of select="count( preceding::m:div[@ORDER][m:div] | ancestor::m:div[@ORDER][m:div])+1"/>
+</xsl:key>
+<xsl:key name="absPosItem" match="m:div[m:div/m:fptr]">
+	<!-- xsl:value-of select="count( preceding::m:div[m:div/m:fptr] | ancestor::m:div[m:div/m:fptr])+1" -->
+	<xsl:value-of select="count( preceding::m:div[@ORDER][m:div] | ancestor::m:div[@ORDER][m:div])+1"/>
+</xsl:key>
+<xsl:key name="md" match="*" use="@ID"/>
+<xsl:param name="rico"/>
+<xsl:param name="structMap"/>
+<xsl:param name="size"/>
+<xsl:param name="this.base" select="$page/m:mets/@OBJID"/>
+<xsl:variable name="MOA2"/>
+  <xsl:variable name="brandCgi">
+    <xsl:choose>
+	<xsl:when test="$brand">
+	  <xsl:text>&amp;brand=</xsl:text>
+	  <xsl:value-of select="$brand"/>
+	</xsl:when>
+	<xsl:otherwise/>
+    </xsl:choose>
+  </xsl:variable>
+<xsl:variable name="focusDiv" select="key('absPos',$order)"/>
 
-  <xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+	<xsl:variable name="lsize">
+	<xsl:choose>
+		<xsl:when test="$size"><xsl:value-of select="$size"/></xsl:when>
+		<xsl:otherwise>1</xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
 
-  <xsl:param name="brand" select="'oac'"/>
   <xsl:variable name="page" select="/"/>
-  <xsl:variable name="layout" select="document('imageDisplayStructure.xml')"/>
+<!-- template specifies .xhtml template file -->
+<xsl:param name="layout">
+   <xsl:choose>
+ 	<xsl:when test="count(
+                $page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file |
+                $page/m:mets/m:fileSec//m:fileGrp/m:file[starts-with(@USE,'thumbnail')][1]
+                ) = 1">
+          <xsl:text>image-simple</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>image-complex</xsl:text>
+        </xsl:otherwise>
+   </xsl:choose>
+</xsl:param>
+
+
+<!-- xsl:output method="html"/ -->
+
+<!-- xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/ -->
+
+<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" omit-xml-declaration="yes" cdata-section-elements="script style" indent="yes" method="xhtml"/>
+
+
+  <!-- $page has the METS, $template has HTML and template tags -->
+
+<xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
+<xsl:variable name="layoutXML" select="document(concat($fLayout,'.xhtml'))"/>
 
   <xsl:template match="/">
-    <xsl:apply-templates select="$layout/html"/>
+<xsl:comment> dynaXML xtf.sf.net
+xml: <xsl:value-of select="base-uri($page)"/>
+PROFILE: <xsl:value-of select="$page/m:mets/@PROFILE"/>
+xslt: <xsl:value-of select="static-base-uri()"/>
+layout: <xsl:value-of select="base-uri($layoutXML)"/>
+brand: <xsl:value-of select="$brand"/> 
+</xsl:comment>
+
+  <xsl:apply-templates 
+	select="($layoutXML)//*[local-name()='html']"/>
   </xsl:template>
 
-  <xsl:template match="@*|*">
+  <!-- default match identity transform -->
+  <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="nbsp"><xsl:text disable-output-escaping='yes'><![CDATA[&nbsp;]]></xsl:text></xsl:template>
+
+<xsl:template match="insert-metadataPortion">
+<xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
+
+<xsl:choose>
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='printable-details')">
+        <xsl:comment>@xtf:meta found</xsl:comment>
+        <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
+	<p><h2>Owning Institution:</h2>
+        <xsl:call-template name="insert-institution-name"/>
+        </p>
+  </xsl:when>
+  <xsl:when test="$layout = 'printable-details'">
+        <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
+  </xsl:when>
+  <xsl:otherwise>
+        <xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+        <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
+	<p><h2>Owning Institution:</h2>
+        <xsl:call-template name="insert-institution-url"/>
+        </p>
+  </xsl:otherwise>
+ </xsl:choose>
+
+</xsl:template>
+
 <xsl:template match="insert-brand-links">
+<xsl:comment>insert-brand-links</xsl:comment>
  <xsl:copy-of select="$brand.links"/>
+<xsl:if test="$rico='rico'">
+    <script type="text/javascript" src="/js3p/prototype.js"></script>
+    <script type="text/javascript" src="/js3p/rico.js"></script>
+    <script type="text/javascript">
+        window.onload=function(){new Rico.Accordion( $('ricoStructMap') )}
+    </script>
+</xsl:if>
+<xsl:if test="$structMap='alt1'">
+    <script type="text/javascript" src="/js3p/aqlists/aqtree3clickable.js"></script>
+	<link rel="stylesheet" href="/js3p/aqlists/aqtree3clickable.css"/>
+</xsl:if>
 </xsl:template>
 
 <xsl:template match="insert-brand-head">
+<xsl:comment>insert-brand-head</xsl:comment>
  <xsl:copy-of select="$brand.header"/>
 </xsl:template>
 
 <xsl:template match="insert-brand-footer">
+<xsl:comment>insert-brand-footer</xsl:comment>
  <xsl:copy-of select="$brand.footer"/>
 </xsl:template>
 
+<xsl:template match="@*" mode="attrComments">
+@<xsl:value-of select="name()"/> <xsl:value-of select="."/>
+</xsl:template>
 
   <xsl:template match="insert-head-title">
-    <title>OAC: <xsl:value-of select="$page/mets:mets/@LABEL"/></title>
+<xsl:comment>insert-head-title</xsl:comment>
+    <title><xsl:value-of select="$page/mets:mets/@LABEL"/></title>
   </xsl:template>
 
-  <xsl:template match="insert-breadcrumb">
-    <a href="http://findaid.oac.cdlib.org/search.image.html">Images</a>&#160;&#160;&gt;&#160; 
-    <a>
-      <xsl:attribute name="href">
-        <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='ead']/mets:mdRef/@*[local-name()='href']"/>
-      </xsl:attribute>
-      <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='ead']/mets:mdRef/@LABEL"/>
-    </a>
+  <xsl:template match="insert-main-title">
+<xsl:comment>insert-main-title</xsl:comment>
+ <a href="/{$page/m:mets/@OBJID}">
+    <xsl:value-of select="$page/m:mets/@LABEL"/>
+ </a>
   </xsl:template>
 
-  <xsl:template match="insert-pagetitle">
-    <xsl:value-of select="$page/mets:mets/@LABEL"/>
-  </xsl:template>
-    
-  <xsl:template match="insert-imagePortion">
-    <xsl:choose>
-      <xsl:when test="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE]">
-        <xsl:for-each select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file/mets:FLocat[@xlink:role='thumbnail']">
-          <xsl:variable name="imageGroup">
-            <xsl:value-of select="parent::mets:file/@GROUPID"/>
-          </xsl:variable>
-          <a>
-            <xsl:attribute name="href">
-              <xsl:choose>
-                <xsl:when test="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='med-res']">
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='med-res']/mets:file[@GROUPID=$imageGroup]/@ID"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='hi-res']/mets:file[@GROUPID=$imageGroup]/@ID"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <img>
-              <xsl:attribute name="src">
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="parent::mets:file/@ID"/>
-              </xsl:attribute>
-              <xsl:attribute name="alt">
-                <xsl:text>Thumbnail Image: </xsl:text>
-                <xsl:value-of select="$page/mets:mets/@LABEL"/>
-              </xsl:attribute>
-              <xsl:attribute name="border">
-                <xsl:text>0</xsl:text>
-              </xsl:attribute>
-            </img>
-          </a>
-          <p>
-            <span class="listingTitle">View Options:</span><br/>
-            <xsl:if test="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='med-res']">
-              <a class="listing">
-                <xsl:attribute name="href">
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='med-res']/mets:file[@GROUPID=$imageGroup]/@ID"/>
-                </xsl:attribute>
-                <xsl:text>Medium Image</xsl:text>
-              </a>
-              <br/>
-            </xsl:if>
-            <a class="listing">
-              <xsl:attribute name="href">
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp[@USE='hi-res']/mets:file[@GROUPID=$imageGroup]/@ID"/>
-              </xsl:attribute>
-              <xsl:text>Large Image</xsl:text>
-            </a></p>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <a>
-            <xsl:attribute name="href">
-              <xsl:choose>
-                <xsl:when test="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='med-res']">
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='med-res']/@ID"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='hi-res']/@ID"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <img>
-              <xsl:attribute name="src">
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='thumbnail']/@ID"/>
-              </xsl:attribute>
-              <xsl:attribute name="border">
-                <xsl:text>0</xsl:text>
-              </xsl:attribute>
-            </img>
-          </a>
-          <p>
-            <span class="listingTitle">View Options:</span><br/>
-            <xsl:if test="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='med-res']">
-              <a class="listing">
-                <xsl:attribute name="href">
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                  <xsl:text>/</xsl:text>
-                  <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='med-res']/@ID"/>
-                </xsl:attribute>
-                <xsl:text>Medium Image</xsl:text>
-              </a>
-              <br/>
-          </xsl:if>
-            <a class="listing">
-              <xsl:attribute name="href">
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/@OBJID"/>
-                <xsl:text>/</xsl:text>
-                <xsl:value-of select="$page/mets:mets/mets:fileSec/mets:fileGrp/mets:file[@ID='hi-res']/@ID"/>
-              </xsl:attribute>
-              <xsl:text>Large Image</xsl:text>
-            </a></p>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+<xsl:template match="insert-image-simple">
+<xsl:comment>
+	<xsl:text>insert-image-simple @use=</xsl:text>
+	<xsl:value-of select="@use"/>
+	<xsl:text> @maxX=</xsl:text>
+	<xsl:value-of select="@maxX"/>
+	<xsl:text> @maxY=</xsl:text>
+	<xsl:value-of select="@maxY"/>
+</xsl:comment>
+<xsl:variable name="use">
+  <xsl:choose>
+   <xsl:when test="@use = 'thumbnail'">
+	<xsl:value-of select="@use"/>
+   </xsl:when>
+   <xsl:when test="@use = 'reference'">
+      <xsl:choose>
+	<xsl:when test="$focusDiv/m:div/m:fptr[@FILEID='med-res'] and not ($focusDiv/m:div/m:fptr[@FILEID='hi-res'])">
+		<xsl:text>med-res</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+		<xsl:text>hi-res</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+   </xsl:when>
+   <xsl:otherwise/>
+  </xsl:choose>
+</xsl:variable>
+  <xsl:variable name="xy">
+    <xsl:call-template name="scale-maxXY">
+      <xsl:with-param name="maxX" select="@maxX"/>
+      <xsl:with-param name="maxY" select="@maxY"/>
+      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:X)"/>
+      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
+    </xsl:call-template>
+  </xsl:variable>
+<a href="/{$page/m:mets/@OBJID}/hi-res">
+  <img  border="0"
+	src="/{$page/m:mets/@OBJID}/{$use}" 
+	width="{$xy/xy/@width}"
+	height="{$xy/xy/@height}"
+  /></a>
+</xsl:template>
 
-  <xsl:template match="insert-metadataPortion">
-    <xsl:for-each select="$page/mets:mets/mets:dmdSec[@ID = 'dc']">
-      <!-- Creator Metadata -->
-      <xsl:if test="//dc:creator">
-        <p><span class="listingTitle">Creator:</span><br/>
-        <span class="listing"><xsl:value-of select="//dc:creator"/></span></p>
-      </xsl:if>
-      <!-- Date Metadata -->
-      <xsl:if test="//dc:date | //dcterms:created | //dcterms:valid | //dcterms:available | //dcterms:issued | dcterms:modified">
-        <p><span class="listingTitle">Date:</span><br/>
-        <span class="listing">
-          <xsl:for-each select="//dc:date | //dcterms:created | //dcterms:valid | //dcterms:available | //dcterms:issued | dcterms:modified">
-            <xsl:value-of select="."/>
-          </xsl:for-each>
-        </span></p>
-      </xsl:if>
-      <!-- Physical Description Metadata -->
-      <xsl:if test="//dc:format | //dcterms:extent | //dc:format.extent | //dcterms:medium | //dc:format.medium | //dc:type | //dc:Type">
-        <p><span class="listingTitle">Physical Description:</span><br/>
-        <span class="listing">
-          <xsl:for-each select="//dc:format | //dcterms:extent | //dc:format.extent | //dcterms:medium | //dc:format.medium | //dc:type | //dc:Type">
-            <xsl:value-of select="."/><br/>
-          </xsl:for-each>
-        </span></p>
-      </xsl:if>
-      <!-- Notes Metadata -->
-      <xsl:if test="//dc:description | //dcterms:abstract | //dc:description.abstract">
-        <p><span class="listingTitle">Notes:</span><br/>
-        <span class="listing">
-          <xsl:for-each select="//dc:description | //dcterms:abstract | //dc:description.abstract">
-            <xsl:value-of select="."/><br/>
-          </xsl:for-each>
-        </span></p>
-      </xsl:if>
-      <!-- Subjects Metadata -->
-      <xsl:if test="//dc:subject">
-        <p><span class="listingTitle">Subjects:</span><br/>
-        <span class="listing">
-          <xsl:for-each select="//dc:subject">
-            <xsl:value-of select="."/><br/>
-          </xsl:for-each>
-        </span></p>
-      </xsl:if>
-      <!-- Place of Origin Metadata -->
-      <xsl:if test="//dc:coverage">
-        <p><span class="listingTitle">Place of Origin:</span><br/>
-        <span class="listing"><xsl:value-of select="//dc:coverage"/></span></p>
-      </xsl:if>
-      <!-- Language Metadata -->
-      <xsl:if test="//dc:language">
-        <p><span class="listingTitle">Language:</span><br/>
-        <span class="listing">
-          <xsl:choose>
-            <xsl:when test="//dc:language='eng'">
-              <xsl:text>English</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='spa'">
-              <xsl:text>Spanish</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='ger'">
-              <xsl:text>German</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='fre'">
-              <xsl:text>French</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='ita'">
-              <xsl:text>Italian</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='rus'">
-              <xsl:text>Russian</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='por'">
-              <xsl:text>Portuguese</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='gre'">
-              <xsl:text>Greek</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='ara'">
-              <xsl:text>Arabic</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='chi'">
-              <xsl:text>Chinese</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='dut'">
-              <xsl:text>Dutch</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='heb'">
-              <xsl:text>Hebrew</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='jpn'">
-              <xsl:text>Japanese</xsl:text>
-            </xsl:when>
-            <xsl:when test="//dc:language='kor'">
-              <xsl:text>Korean</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="//dc:language"/>
-            </xsl:otherwise>
-          </xsl:choose></span></p>
-      </xsl:if>
-      <!-- Identifier Metadata -->
-      <xsl:if test="//mets:dmdSec[@ID='dc']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:identifier | //mets:dmdSec[@ID='dc']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:Identifier">
-        <p><span class="listingTitle">Identifier(s):</span><br/>
-        <span class="listing">
-        <xsl:for-each select="//mets:dmdSec[@ID='dc']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:identifier | //mets:dmdSec[@ID='dc']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:Identifier">
-        <xsl:value-of select="."/><br/>
-        </xsl:for-each>
-        </span></p>
-      </xsl:if>
-      <!-- Source Metadata -->
-      <xsl:if test="//dc:source | //dc:Source">
-        <p><span class="listingTitle">Source:</span><br/>
-        <span class="listing"><xsl:value-of select="//dc:source | //dc:Source"/></span></p>
-      </xsl:if>
-      <!-- From Metadata -->
-      <p><span class="listingTitle">From:</span><br/>
-      <span class="listing">
-      <xsl:for-each select="//dcterms:isPartOf | //dc:relation | //dc:relation.isPartOf | //dc:Relation | //dc:Relation.IsPartOf">
-         <xsl:value-of select="."/><br/>
-      </xsl:for-each>
-        <xsl:for-each select="//mets:mets/mets:dmdSec[@ID='ead']">
-          <a>
-            <xsl:attribute name="href">
-              <xsl:value-of select="//mets:mets/mets:dmdSec[@ID='ead']/mets:mdRef/@*[local-name()='href']"/>
-            </xsl:attribute>
-            <xsl:value-of select="//mets:mets/mets:dmdSec[@ID='ead']/mets:mdRef/@LABEL"/>
-          </a>
-        </xsl:for-each>
-      </span></p>
-     <!-- Publisher Metadata -->
-     <xsl:if test="//dc:publisher | //dc:Publisher">
-		<p><span class="listingTitle">Originally Published By:</span><br/>
-     		<span class="listing"><xsl:value-of select="//dc:publisher | //dc:Publisher"/></span></p>
-     </xsl:if>
-     <!-- Contributor Metadata -->
-     <xsl:if test="//dc:contributor | //dc:Contributor">
-       <p><span class="listingTitle">Contributor(s):</span><br/>
-       <span class="listing">
-         <xsl:for-each select="//dc:publisher | //dc:Publisher">
-           <xsl:value-of select="."/><br/>
-         </xsl:for-each>
-       </span></p>
-     </xsl:if>
-      <!-- Repository Metadata -->
-      <p><span class="listingTitle">Repository:</span><br/>
-      <span class="listing">
-        <a>
-          <xsl:attribute name="href">
-            <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:identifier[2]"/>
-          </xsl:attribute>
-          <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
-        </a>      
-      </span></p>
-      <!-- Suggested Citation Metadata -->
-      <p><span class="listingTitle">Suggested Citation:</span><br/>
-      <span class="listing">[Identification of Item].&#160;Available from the Online Archive of California;&#160;<xsl:text>http://ark.cdlib.org/</xsl:text>
-      <xsl:value-of select="$page/mets:mets/@OBJID"/>
-      <xsl:text>.</xsl:text>
-    </span></p>
-      <!-- Terms and Conditions of Use Metadata -->
-      <xsl:if test="//dc:rights">
-        <p><span class="listingTitle">Terms and Conditions of Use:</span><br/>
-        <span class="listing"><xsl:value-of select="//dc:rights"/></span></p>
-      </xsl:if>
-    </xsl:for-each>
-  </xsl:template>
 
-  <xsl:template match="insert-institution-url">
+<xsl:template match="insert-institution-url" name="insert-institution-url">
     <xsl:for-each select="$page/mets:mets/mets:dmdSec[@ID='repo']">
       <a>
         <xsl:attribute name="href">
@@ -358,5 +246,41 @@
       </a>
     </xsl:for-each>
   </xsl:template>
-  
-  </xsl:stylesheet>
+
+<xsl:template match="insert-institution-name" name="insert-institution-name">
+    <xsl:for-each select="$page/mets:mets/mets:dmdSec[@ID='repo']">
+        <xsl:value-of select="mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
+    </xsl:for-each>
+  </xsl:template>
+
+<!-- calisphere design -->
+
+<xsl:template match="insert-sitesearch">
+<xsl:comment>insert-sitesearch</xsl:comment>
+<!-- set up variables, fill out template  -->
+<xsl:copy-of select="$brand.search.box"/>
+</xsl:template>
+
+<xsl:template match="insert-inner-metadata">
+<xsl:comment>insert-inner-metadata</xsl:comment>
+<div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
+            <div class="metadata-text">
+        <xsl:if test="not($order = '1')">
+		<p><h2>Title:</h2>
+		<xsl:value-of select="$focusDiv/@LABEL"/>
+		</p>
+		<p><h2>From:</h2>
+                <a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
+		</p>
+                <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
+        </xsl:if>
+        <xsl:if test="$order = '1'">
+                <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
+        </xsl:if>
+                <h2>Owning Institution:</h2><xsl:call-template name="insert-institution-url"/>
+            </div>
+</div>
+</xsl:template>
+
+
+</xsl:stylesheet>

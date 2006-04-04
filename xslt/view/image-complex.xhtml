@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!-- !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <insert-head-title xmlns=""/>
+    <insert-brand-links xmlns=""/>
+    <!-- rico and prototype are well documented, if you read java script -->
+    <!-- script type="text/javascript" src="/js3p/prototype.js"></script>
+    <script type="text/javascript" src="/js3p/rico.js"></script>
+    <script type="text/javascript">
+	window.onload=function(){new Rico.Accordion( $('ricoStructMap') )}
+    </script -->
+  </head>
+<!--	window.onload=function(){new Rico.Accordion('ricoStructMap', {onLoadShowTab:null})}  -->
+  <body>
+    <a class="jump-to-content" href="#content">Jump to Content</a>
+<!-- BEGIN PAGE ID -->
+    <div id="image-complex">
+<!-- BEGIN HEADER ROW-->
+        <insert-brand-head xmlns=""/>
+<!-- END HEADER ROW-->
+<!-- BEGIN SECONDARY HEADER ROW-->
+      <div id="header-secondary">
+        <div id="multi-use">
+<!-- BEGIN BREADCRUMBS-->
+          <insert-multi-use xmlns=""/>
+<!-- END BREADCRUMBS-->
+<!-- BEGIN BASKET CONTROLS -->
+<!-- END BASKET CONTROLS -->
+        </div>
+<!-- BEGIN SITE-SEARCH -->
+	<insert-sitesearch xmlns="">todo</insert-sitesearch>
+<!--END SITE-SEARCH -->
+        <br clear="all" />
+      </div>
+<!-- END SECONDARY HEADER ROW-->
+<!-- BEGIN CONTENT ROW -->
+      <a name="content"></a>
+      <div id="content">
+<!-- BEGIN CONTENT NAVIGATION -->
+        <div id="content-nav" class="nifty4">
+          <div class="box4">
+            <insert-structMap xmlns=""/>
+            <insert-structMap-pagination xmlns="">
+            <div class="pagination">insert-structMap-pagination
+              <a href="">previous</a>
+              <span class="bullet">.</span>
+              <a href="">next 15</a>
+            </div>
+            </insert-structMap-pagination>
+          </div>
+        </div>
+<!-- END CONTENT NAVIGATION -->
+<!-- BEGIN CONTENT PRIMARY -->
+<insert-inner-content css-id="content-primary" xmlns="">
+<!-- BEGIN PAGINATION -->
+          <p class="pagination">
+<insert-inner-paging xmlns=""/>
+          </p>
+<!-- END PAGINATION -->
+<!-- BEGIN CONTROLS -->
+          <div class="all-controls">
+            <table border="0"><tr><td align="left" valign="bottom">
+<!-- BEGIN PRINT PREVIEW BOX -->
+<insert-print-links xmlns="" shape="wide">
+</insert-print-links>
+<!-- END PRINT PREVIEW BOX -->
+                </td><!-- BEGIN SAVE IMAGE --><!--<td align="left" valign="bottom">
+<div class="save-image nifty6">
+<div class="box6">
+<a href="">save image</a>
+</div>
+</div>
+</td>--><!-- END SAVE IMAGE --></tr></table>
+          </div>
+<!-- END CONTROLS -->
+
+</insert-inner-content>
+
+<!-- BEGIN METADATA BOX -->
+<insert-inner-metadata css-id="content-secondary" xmlns=""> 
+        <div id="content-secondary">
+          <div class="nifty1">
+            <div class="metadata-text">to do insert inner metadata
+              <h2>Title:</h2>
+              <p>Centerville, Calif - Japanese field laborers packing cauliflower in feild on large-scale ranch owned by white operator (L.E. Bailey).</p>
+              <h2>Photographer:</h2>
+              <p>Lange, Dorthea - Centerville, Calif. 04/09/1942.</p>
+              <h2>From:</h2>
+              <p>War Relocationn Authority Photographs of Japanese-American Evacuation and Resettlement.</p>
+              <h2>Owning Institution:</h2>
+              <p>The Bancroft Library. University of California, Berkeley.</p>
+              <h2>Suggested Citation:</h2>
+              <p>Available from the Online Archive of California; http://ark.cdlib.org/ark:<br />
+/13030/ft8x0nb5tc.</p>
+              <p>
+                <a href="">more information about this image...</a>
+              </p>
+              <p>
+                <a href="#">Rights and Permissions</a>
+              </p>
+            </div>
+          </div>
+<!-- END METADATA BOX -->
+        </div>
+</insert-inner-metadata>
+<!-- END CONTENT RIGHT -->
+        <br clear="all" />
+      </div>
+<!-- END CONTENT ROW -->
+      <insert-brand-footer xmlns=""/>
+<!-- END PAGE ID -->
+    </div>
+  </body>
+</html>
