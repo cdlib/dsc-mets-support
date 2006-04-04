@@ -62,7 +62,7 @@ METS profile driver
     <PROFILE>http://sunsite.berkeley.edu/GenX</PROFILE>
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
-    <tool type="xslt" role="toHTML">./xslt/view/GenX.html.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
