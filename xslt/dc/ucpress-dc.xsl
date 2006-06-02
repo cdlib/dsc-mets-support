@@ -123,6 +123,16 @@ MODS + filemaker from ucpress
         </xsl:call-template>
 </xsl:template>
 
-
+<xsl:template name="publisher"
+        xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/">
+        <xsl:call-template name="element">
+                <xsl:with-param name="element">publisher</xsl:with-param>
+                <xsl:with-param name="node" select="
+          (//mods:mods)[1]/mods:originInfo/mods:publisher
+        | (//mods:mods)[1]/mods:publicationInfo/mods:publisher
+        | /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc"/>
+        <!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
+        </xsl:call-template>
+</xsl:template>
 
 </xsl:stylesheet>
