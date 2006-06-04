@@ -168,7 +168,7 @@ METS profile driver
   <!--
           'http://ark.cdlib.org/ark:/13030/kt667nb8wm' => 224,
   -->
-  <mets-profile-driver label="CRS reports" pref="./profiles/kt677nb8wm.profile.xml">
+  <mets-profile-driver label="CRS reports" pref="./profiles/kt667nb8wm.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt667nb8wm</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/preMod-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/preMod.html.xsl</tool>
@@ -190,6 +190,14 @@ METS profile driver
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt8s20152f</PROFILE>
     <tool type="xslt" role="toHTML">./xslt/view/kt8s20152f.html.xslt</tool>
   </mets-profile-driver>
+
+  <mets-profile-driver label="removed" pref="./profiles/Removed.profile.xml">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt4199q42g</PROFILE>
+    <tool type="xslt" role="toHTML">./xslt/view/removed.html.xslt</tool>
+  </mets-profile-driver>
+
+
+
 <!-- counts by PROFILE are for the QA process ; will be removed
 	before the first stable release
           'http://www.loc.gov/standards/mets/profiles/00000004.xml' => 70,
