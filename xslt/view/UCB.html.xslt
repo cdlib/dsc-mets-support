@@ -20,7 +20,7 @@
                 exclude-result-prefixes="#all">
 <xsl:import href="./common/scaleImage.xsl"/>
 <xsl:import href="./common/brandCommon.xsl"/>
-<xsl:import href="MODS-view.xsl"/>
+<xsl:import href="./common/MODS-view.xsl"/>
 <xsl:include href="structMap.xsl"/>
 <xsl:include href="multi-use.xsl"/>
 <xsl:include href="insert-print-link.xsl"/>
