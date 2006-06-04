@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xlink="http://www.w3.org/TR/xlink"
@@ -17,30 +18,31 @@
 		xmlns:exslt="http://exslt.org/common"
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
-<xsl:import href="scaleImage.xsl"/>
-<xsl:import href="brandCommon.xsl"/>
+<xsl:import href="./common/scaleImage.xsl"/>
+<xsl:import href="./common/brandCommon.xsl"/>
 <xsl:import href="MODS-view.xsl"/>
 <xsl:include href="structMap.xsl"/>
 <xsl:include href="multi-use.xsl"/>
 <xsl:include href="insert-print-link.xsl"/>
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
 <xsl:param name="debug"/>
-<xsl:param name="brand" select="'oacui'"/>
+<xsl:param name="brand" select="'oac'"/>
+<xsl:param name="servlet.dir"/>
 
-  <!-- temporary for oac -> oacui transition -->
+<!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
     <xsl:choose>
       <xsl:when test="$brand = 'oac'">
-        <xsl:copy-of select="document('../../../../brand/oacui.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/oacui.xml'))"/>
       </xsl:when>
       <xsl:when test="$brand = 'eqf'">
-        <xsl:copy-of select="document('../../../../brand/eqfui.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/eqfui.xml'))"/>
       </xsl:when>
       <xsl:when test="$brand != ''">
-        <xsl:copy-of select="document(concat('../../../../brand/',$brand,'.xml'))"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/',$brand,'.xml'))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="document('../../brand/default.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/default.xml'))"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:param>
@@ -93,7 +95,7 @@
 
 <!-- xsl:output method="html"/ -->
 
-<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" omit-xml-declaration="yes" cdata-section-elements="script style" indent="yes" method="xhtml"/>
+<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script style" indent="yes" method="xhtml"/>
 
   <!-- $page has the METS, $template has HTML and template tags -->
 <xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
@@ -112,10 +114,10 @@
 </xsl:template>
 
   <!-- default match identity transform -->
-  <xsl:template match="@*|node()|*">
+  <xsl:template match="@*|node()">
     <xsl:namespace name="http://www.w3.org/1999/xhtml"/>
-    <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*[name()!='xmlns']|node()"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 

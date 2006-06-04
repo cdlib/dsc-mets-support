@@ -15,29 +15,30 @@
 		xmlns:exslt="http://exslt.org/common"
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
-<xsl:import href="brandCommon.xsl"/>
-<xsl:import href="scaleImage.xsl"/>
+<xsl:import href="./common/brandCommon.xsl"/>
+<xsl:import href="./common/scaleImage.xsl"/>
 <xsl:import href="MODS-view.xsl"/>
 <xsl:include href="multi-use.xsl"/>
 <xsl:include href="structMap.xsl"/>
 <xsl:include href="insert-print-link.xsl"/>
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
+<xsl:param name="servlet.dir"/>
 <xsl:param name="debug"/>
-<xsl:param name="brand" select="'oacui'"/>
+<xsl:param name="brand" select="'oac'"/>
 <!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
     <xsl:choose>
       <xsl:when test="$brand = 'oac'">
-        <xsl:copy-of select="document('../../../../brand/oacui.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/oacui.xml'))"/>
       </xsl:when>
       <xsl:when test="$brand = 'eqf'">
-        <xsl:copy-of select="document('../../../../brand/eqfui.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/eqfui.xml'))"/>
       </xsl:when>
       <xsl:when test="$brand != ''">
-        <xsl:copy-of select="document(concat('../../../../brand/',$brand,'.xml'))"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/',$brand,'.xml'))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="document('../../brand/default.xml')"/>
+        <xsl:copy-of select="document(concat($servlet.dir,'/brand/default.xml'))"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:param>

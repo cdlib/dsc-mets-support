@@ -30,7 +30,8 @@ xmlns:mets="http://www.loc.gov/METS/"
   <xsl:variable name="brand.file">
     <xsl:choose>
       <xsl:when test="$brand != ''">
-        <xsl:copy-of select="document(concat('../../brand/',$brand,'.xml'))"/>
+        <xsl:copy-of select="document('/texts/xtf/brand/oac.xml')"/>
+        <!-- xsl:copy-of select="document(concat('/texts/xtf/brand/',$brand,'.xml'))"/ -->
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="document('../../brand/default.xml')"/>

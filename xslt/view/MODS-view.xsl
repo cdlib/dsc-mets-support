@@ -293,8 +293,15 @@
 </xsl:template>
 
 <xsl:template match="mods:accessCondition[1]" mode="viewMODS">
-	<h2>Access Condition:</h2>
-	<xsl:apply-templates mode="viewMODS"/>
+	<h2>Copyright Note:</h2>
+	<p><xsl:apply-templates mode="viewMODS"/></p>
+</xsl:template>
+
+<xsl:template match="mods:accessCondition[@displayLabel][position() &gt; 1]" mode="viewMODS">
+	<xsl:comment><xsl:value-of select="name()"/></xsl:comment>
+	<p><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/>
+	<xsl:text> </xsl:text>
+	<xsl:apply-templates mode="viewMODS"/></p>
 </xsl:template>
 
 <xsl:template match="mods:part[1]" mode="viewMODS">
@@ -306,7 +313,7 @@
 </xsl:template>
 
 <!-- magic to link things that end in http://a.link -->
-<xsl:template match="*[substring-after(text(),'http://')]" mode="viewMODS">
+<xsl:template priority="-0.25" match="*[substring-after(text(),'http://')]" mode="viewMODS">
 	<xsl:comment>magic <xsl:value-of select="name()"/></xsl:comment>
 	<xsl:variable name="string">
                 <xsl:value-of select="text()"/>

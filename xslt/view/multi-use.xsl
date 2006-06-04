@@ -8,6 +8,10 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	 exclude-result-prefixes="#all"	>
 
+<xsl:param name="http.Referer"/>
+<xsl:param name="root.path"/>
+<xsl:variable name="theHost" select="replace($root.path , ':[0-9]+.+' , '')"/> 
+
 <xsl:template match="insert-metadataLink">
 <xsl:comment>insert-metadataLink</xsl:comment>
 <p class="more-info"><a href="/{$page/m:mets/@OBJID}/?layout=metadata{$brandCgi}">More information about this image</a></p>
@@ -126,7 +130,34 @@
 <xsl:template match="insert-multi-use">
 <xsl:variable name="multi-use" select="$brand.file/brand/@multi-use"/>
 <xsl:comment>insert-multi-use: <xsl:value-of select="$multi-use"/></xsl:comment>
-<xsl:comment>insert-multi-use: <xsl:value-of select="session:getData('queryURL')"/></xsl:comment>
+<xsl:comment>session:getData <xsl:value-of select="session:getData('queryURL')"/>
+referer: 
+<xsl:value-of select="$http.Referer"/> 
+</xsl:comment>
+  
+<!-- referer madness; off-site (not matches...) referers
+cause the queryURL to be set to the referer -->
+
+<xsl:if test="session:isEnabled() 
+		and 
+			(not (matches($http.Referer, $theHost))
+			 or (matches($http.Referer, '/test/qa.html$'))
+			)
+		and (normalize-space($http.Referer) != '')
+	     ">
+          <xsl:value-of select="session:setData('queryURL',$http.Referer)"/>
+<xsl:comment>session queryURL reset</xsl:comment>
+</xsl:if>
+
+<!-- offsite queryURLs are cleared if they are from offsite
+and the referer is on-site -->
+<xsl:if test="session:isEnabled() 
+		and matches($http.Referer,$theHost)
+		and not ( matches(session:getData('queryURL'),$theHost) )
+             ">
+          <xsl:value-of select="session:setData('queryURL','')"/>
+<xsl:comment>session queryURL erased</xsl:comment>
+</xsl:if>
 
 <xsl:choose>
 	<xsl:when test="$multi-use='hotdog'">
