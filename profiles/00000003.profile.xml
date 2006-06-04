@@ -7,7 +7,7 @@
 																									       http://www.loc.gov/mods/v3
 																									       http://www.loc.gov/standards/mods/v3/mods-3-0.xsd">
   <URI LOCTYPE="URL">http://www.loc.gov/standards/mets/profiles/00000003.xml</URI>
-  <title>UCB Paged Text Object Profile</title>
+  <title>UCB Paged Text/Image Object Profile</title>
   <abstract>This profile represents a specific subset of the Model Paged Text Object Profile.  UC Berkeley Library  METS objects with associated text content files, or with both image content files and text content files implement this profile. </abstract>
   <date>2004-04-27T08:00:00</date>
   <contact>

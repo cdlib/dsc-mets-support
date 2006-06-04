@@ -2,7 +2,7 @@
 <METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
     <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt667nb8wm</URI>
-    <title>pre MODS (crs reports)</title>
+    <title>CRS Reports (pre MODS)</title>
     <abstract>This is a place holder profile to assign ARKs to these
 	Items.  Now that these have ARKs, SCP can create MARC records, 
 	and then we can create a MODS based profile for these.
