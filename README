@@ -10,7 +10,6 @@ build.xml
 	xslt extension functions to look up PROFILE info
 	xmlns:mets-profiles="http://www.cdlib.org/mets/profiles"
 	mets-profiles:URItoDisplayXslt( PROFILE )
-
 ./xslt/bpc
 	schematron generated and derived xslt
 ./xslt/dc
@@ -20,5 +19,5 @@ build.xml
 	virtual collection data file
 ./xslt/view
 	metsOnly dynaXML/docFormatter; 
-./xslt/view/extimg
-	obsolete?
+./xslt/view/common
+	xtf-sf/style/common  (should be ./xslt/common ?)
