@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 DDI to Dublin Core translation: CMS migration to XTF
-supports profiles that are based on DC, including LSTA images and OAC TEXT DC
+supports counting california DDI	
 -->
 
 <xsl:stylesheet version="2.0" 
