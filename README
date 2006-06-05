@@ -3,12 +3,14 @@ METS support files
 driver.xml
 	main control file (see comments in file)
 build.xml 
-	todo: ant task to package as a .jar
+	ant task to package as a .jar
 ./profiles
 	local copies of METS_Profiles where apropos
-./xslt/mets-driver.xsl
-	todo: xslt(2) extension functions
-	(or named templates?)
+./xslt/mets-profile.xsl
+	xslt extension functions to look up PROFILE info
+	xmlns:mets-profiles="http://www.cdlib.org/mets/profiles"
+	mets-profiles:URItoDisplayXslt( PROFILE )
+
 ./xslt/bpc
 	schematron generated and derived xslt
 ./xslt/dc

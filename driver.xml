@@ -4,10 +4,21 @@
  This is a mets profile driver file.  Its purpose it to provide a
  mapping of METS PROFILES to files needed to support use of the
  profiles.
---> 
-<!-- 
+--> <!--
+METS profile driver
 
-Copyright (c) 2005, Regents of the University of California
+	<PROFILE> element holds values for PROFILE attributes that will been
+	seen by the system.
+
+	<tool> element
+		type = " xslt | java | ???"
+		role = " ...
+	the value of <tool> is a file path / uri.  If relative, 
+	they are releative to this driver.xml file, or they are
+	releative to an xml:base
+--> <!-- 
+
+Copyright (c) 2006, Regents of the University of California
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 
@@ -34,25 +45,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 POSSIBILITY OF SUCH DAMAGE.
 -->
-<!--
-METS profile driver
 
-	<PROFILE> element holds values for PROFILE attributes that will been
-	seen by the system.
-
-	<tool> element
-		type = " xslt | java | ???"
-		role = " ...
-	the value of <tool> is a file path / uri.  If relative, 
-	they are releative to this driver.xml file, or they are
-	releative to an xml:base
--->
-
-  <!--
-          'http://www.loc.gov/standards/mets/profiles/00000003.xml' => 505,
-          'http://sunsite.berkeley.edu/GenX' => 2710,
-          'http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml' => 223,
-  -->
   <mets-profile-driver pref="./profiles/00000003.profile.xml">
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
@@ -66,18 +59,12 @@ METS profile driver
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <!--
-  -->
   <mets-profile-driver pref="./profiles/UCBImagedObjectProfile.xml">
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBImagedObjectProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <!--
-          'http://ark.cdlib.org/ark:/13030/kt0t1nb6x7?noindex=true' => 484,
-          'http://ark.cdlib.org/ark:/13030/kt0t1nb6x7' => 8197,
-  -->
   <mets-profile-driver label="EAD Finding Aid" pref="./profiles/kt0t1nb6x7.profile.xml">
   <!-- this profile is never "METS only" -->
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt0t1nb6x7</PROFILE>
@@ -86,7 +73,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt1g5010zb' => 8977,
   -->
   <mets-profile-driver label="coca" pref="./profiles/kt1g5010zb.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt1g5010zb</PROFILE>
@@ -104,9 +90,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz?noindex=true' => 39049,
-          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz?noindex=yes' => 1,
-          'http://ark.cdlib.org/ark:/13030/kt3q2nb7vz' => 121558,
   -->
   <mets-profile-driver label="EAD extracted images" pref="./profiles/kt3q2nb7vz.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3q2nb7vz</PROFILE>
@@ -115,8 +98,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt3v19p5bk' => 1841,
-          'http://ark.cdlib.org/ark:/13030/kt3v19p5bk?noindex=true' => 1,
   -->
   <mets-profile-driver label="UCPEE" pref="./profiles/kt3v19p5bk.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3v19p5bk</PROFILE>
@@ -125,7 +106,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt400011f8' => 4968,
   -->
   <mets-profile-driver label="lsta MARC" pref="./profiles/kt400011f8.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt400011f8</PROFILE>
@@ -136,7 +116,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt4g5012g0' => 17604,
   -->
   <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4g5012g0</PROFILE>
@@ -148,7 +127,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt5k40135s' => 309,
   -->
   <mets-profile-driver label="OAC texts / MODS" pref="./profiles/kt5k40135s.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt5k40135s</PROFILE>
@@ -157,7 +135,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt5z09p6zn' => 5,
   -->
   <mets-profile-driver label="MODS eSch text (oceans)" pref="./profiles/kt5z09p6zn.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt5z09p6zn</PROFILE>
@@ -166,7 +143,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt667nb8wm' => 224,
   -->
   <mets-profile-driver label="CRS reports" pref="./profiles/kt667nb8wm.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt667nb8wm</PROFILE>
@@ -175,7 +151,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt7j49p867' => 1111,
   -->
   <mets-profile-driver label="OAC texts / DC" pref="./profiles/kt7j49p867.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt7j49p867</PROFILE>
@@ -184,7 +159,6 @@ METS profile driver
   </mets-profile-driver>
 
   <!--
-          'http://ark.cdlib.org/ark:/13030/kt8s20152f?index=no' => 13,
   -->
   <mets-profile-driver label="profile for profiles" pref="./profiles/kt8s20152f.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt8s20152f</PROFILE>
@@ -196,11 +170,4 @@ METS profile driver
     <tool type="xslt" role="toHTML">./xslt/view/removed.html.xslt</tool>
   </mets-profile-driver>
 
-
-
-<!-- counts by PROFILE are for the QA process ; will be removed
-	before the first stable release
-          'http://www.loc.gov/standards/mets/profiles/00000004.xml' => 70,
-          'http://findaid.oac.cdlib.org/mets/profiles/2002/OAC-collection/' => 89
--->
 </mets-profiles>
