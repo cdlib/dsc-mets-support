@@ -7,20 +7,16 @@
 <xsl:function name="mets-profiles:URItoDisplayXslt">
  <xsl:param name="profile"/>
 
-<xsl:variable name="file" select="document('../driver.xml')/mets-profiles/mets-profile-driver[PROFILE = $profile]/
+<xsl:variable name="driver" select="document('../driver.xml')"/>
+
+<xsl:variable name="file" select="$driver/mets-profiles/mets-profile-driver[PROFILE = $profile]/
 					tool[@type='xslt'][@role='toHTML']"/>
+
+
 <xsl:if test="$file">
-
-<xsl:analyze-string 
-	select="$file"
-	regex=".*/(.*)$">
-
-  <xsl:matching-substring>
-	<xsl:text>style/dynaXML/docFormatter/mets/</xsl:text><xsl:value-of select="regex-group(1)"/>
-  </xsl:matching-substring>
-
-</xsl:analyze-string>
-
+<!-- xsl:value-of select="base-uri($driver)"/ -->
+<xsl:text>mets-support/</xsl:text>
+<xsl:value-of select="$file"/>
 </xsl:if>
 
 </xsl:function>
