@@ -120,10 +120,10 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="node" select="
+	 /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title,
  	  (//mods:mods)[1]/mods:originInfo/mods:publisher 
 	| (//mods:mods)[1]/mods:publicationInfo/mods:publisher 
-	| (//mods:mods)[1]/mods:location/mods:physicalLocation
-	| /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc"/>
+	| (//mods:mods)[1]/mods:location/mods:physicalLocation"/>
 	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
         </xsl:call-template>
 </xsl:template>
