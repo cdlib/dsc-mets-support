@@ -121,12 +121,31 @@ MODS
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="node" select="
 	 /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title,
- 	  (//mods:mods)[1]/mods:originInfo/mods:publisher 
-	| (//mods:mods)[1]/mods:publicationInfo/mods:publisher 
-	| (//mods:mods)[1]/mods:location/mods:physicalLocation"/>
+	  (//mods:mods)[1]/mods:location/mods:physicalLocation,
+ 	  (//mods:mods)[1]/mods:originInfo[mods:publisher or mods:place] 
+"/>
 	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
         </xsl:call-template>
 </xsl:template>
+
+<xsl:template match="mods:originInfo">
+ <xsl:choose>
+        <xsl:when test="mods:place/mods:placeTerm[@type='text'] and mods:publisher">
+                <xsl:value-of select="mods:place/mods:placeTerm[@type='text']"/>
+                <xsl:text> : </xsl:text>
+                <xsl:value-of select="mods:publisher"/>
+        </xsl:when>
+        <xsl:when test="mods:publisher">
+                <xsl:value-of select="mods:publisher"/>
+        </xsl:when>
+        <xsl:when test="not(mods:publisher) and mods:place/mods:placeTerm[@type='text']">
+                <xsl:text>Published in: </xsl:text>
+                <xsl:value-of select="mods:place/mods:placeTerm[@type='text']"/>
+        </xsl:when>
+        <xsl:otherwise/>
+  </xsl:choose>
+</xsl:template>
+
 
 <xsl:template match="cdl:qualifieddc"
 	xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/">
