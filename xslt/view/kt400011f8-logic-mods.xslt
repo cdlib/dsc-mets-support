@@ -251,7 +251,8 @@ brand: <xsl:value-of select="$brand"/>
 	<xsl:text> @maxY=</xsl:text>
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
-
+<xsl:choose>
+   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
 <xsl:variable name="use">
   <xsl:choose>
    <xsl:when test="@use = 'thumbnail'">
@@ -277,6 +278,7 @@ brand: <xsl:value-of select="$brand"/>
       <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:X)"/>
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
     </xsl:call-template>
+
   </xsl:variable>
 
   <xsl:choose>
@@ -293,6 +295,28 @@ brand: <xsl:value-of select="$brand"/>
 		height="{$xy/xy/@height}"
   	/></a>
     </xsl:otherwise>
+  </xsl:choose>
+ </xsl:when>
+   <xsl:otherwise><!-- page in a complex object -->
+
+        <xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]"/>
+
+  <xsl:variable name="xy">
+    <xsl:call-template name="scale-maxXY">
+      <xsl:with-param name="maxX" select="'512'"/>
+      <xsl:with-param name="maxY" select="'800'"/>
+      <xsl:with-param name="x" select="number($thisImage/m:fptr/@cdl2:X)"/>
+      <xsl:with-param name="y" select="number($thisImage/m:fptr/@cdl2:Y)"/>
+    </xsl:call-template>
+  </xsl:variable>
+  <a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}">
+  <img
+        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]/m:fptr/@FILEID}"
+        width="{$xy/xy/@width}"
+        height="{$xy/xy/@height}"
+        border="0"
+  /></a>
+   </xsl:otherwise>
   </xsl:choose>
 
 </xsl:template>
