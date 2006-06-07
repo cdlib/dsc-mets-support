@@ -199,7 +199,7 @@ and the referer is on-site -->
     <a href="{$url}"><xsl:value-of select="$oactype"/></a>
 &#160;&#160;&gt;&#160; 
  <a href="http://www.oac.cdlib.org/findaid/ark:/{substring-after(($page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD'])[1]/@*[local-name()='href'],'ark:/')}">
-<xsl:value-of select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']/@LABEL"/></a>
+<xsl:value-of select="($page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD'])[1]/@LABEL"/></a>
 <!-- img src="http://www.oac.cdlib.org/images/text_icon.gif"/ --> 
 <!-- crumb 2 -->
   <xsl:choose>

@@ -138,7 +138,8 @@
 	<xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
 	<xsl:copy-of 
 	  select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
-	<xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
+	<!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
+                <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
 	<p><h2>Owning Institution:</h2>
 	<xsl:call-template name="insert-institution-url"/></p>
   </xsl:otherwise>
@@ -328,12 +329,21 @@
         <xsl:if test="$order = '1'">
                 <xsl:copy-of select="$thisMODS"/>
         </xsl:if>
-                <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
+                <!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
+hey!
+                <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
                 <p><h2>Owning Institution:</h2>
 		<xsl:call-template name="insert-institution-url"/>
 		</p>
             </div>
 </div>
+</xsl:template>
+
+<xsl:template match="m:mdRef" mode="link">
+<p>
+	<xsl:if test="position()=1"><h2>Collection:</h2></xsl:if>
+	<a href="{@*[local-name()='href']}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
+</p>
 </xsl:template>
 
 
