@@ -130,7 +130,7 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='printable-details')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
 	<!-- mini MD -->
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
