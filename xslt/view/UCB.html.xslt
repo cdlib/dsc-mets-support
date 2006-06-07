@@ -330,7 +330,6 @@
                 <xsl:copy-of select="$thisMODS"/>
         </xsl:if>
                 <!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
-hey!
                 <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
                 <p><h2>Owning Institution:</h2>
 		<xsl:call-template name="insert-institution-url"/>
