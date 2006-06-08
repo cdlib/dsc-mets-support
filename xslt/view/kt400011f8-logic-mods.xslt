@@ -252,7 +252,9 @@ brand: <xsl:value-of select="$brand"/>
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
 <xsl:choose>
-   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
+   <!-- xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1" -->
+   <xsl:when test="count($page/m:mets/m:fileSec/m:fileGrp//m:file[@USE='thumbnail']) = 1">
+<!-- simple object -->
 <xsl:variable name="use">
   <xsl:choose>
    <xsl:when test="@use = 'thumbnail'">
@@ -293,7 +295,7 @@ brand: <xsl:value-of select="$brand"/>
 		src="/{$page/m:mets/@OBJID}/{$use}" 
 		width="{$xy/xy/@width}"
 		height="{$xy/xy/@height}"
-  	/></a>
+  	/></a>!!!!!!!
     </xsl:otherwise>
   </xsl:choose>
  </xsl:when>
