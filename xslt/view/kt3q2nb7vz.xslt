@@ -279,7 +279,7 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:variable name="par">
 <xsl:value-of select="../@parent"/>
 </xsl:variable>
-<xsl:variable name="link">http://www.oac.cdlib.org/findaid/<xsl:value-of select="$par"/>
+<xsl:variable name="link">http://www.oac.cdlib.org/findaid/<xsl:value-of select="$par"/>/?<xsl:value-of select="$brandCgi"/>
 </xsl:variable>
 <a href="{$link}"><xsl:value-of select="ead:unittitle[1]"/></a>
 <xsl:text> </xsl:text>
