@@ -211,12 +211,7 @@ brand: <xsl:value-of select="$brand"/>
 
 
 <xsl:template match="ead:c">
-	<xsl:if test="ead:did">
-		<p>
-		<h2>Item Identification:</h2>
-		<xsl:apply-templates select="ead:did"/>
-		</p>
-	</xsl:if>
+		<xsl:apply-templates select="ead:did" mode="did"/>
 		<xsl:apply-templates select="ead:*[local-name() != 'series'][local-name() !='did']"/>
 	<xsl:if test="ead:series">
 		<p><h2>Collection:</h2><xsl:text> </xsl:text>
@@ -228,45 +223,33 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="ead:repository">
 </xsl:template>
 
-<xsl:template match="ead:did">
-        <xsl:apply-templates mode="dscdid"/>
+<xsl:template match="ead:did" mode="did">
+        <xsl:apply-templates select="ead:unittitle, ead:unitdate, ead:unitid" mode="did"/>
+<!-- abstract, container, dao, daogrp, head, langmaterial, materialspec, note, origination, physdesc, physloc, repository, unitdate, unitid, unittitle -->
 </xsl:template>
 
-<xsl:template match="*" mode="dscdid">
-        <!-- xsl:value-of select="name()"/ -->
-<xsl:variable name="biteMe">
-        <xsl:value-of select="preceding-sibling::node()"/>
-</xsl:variable>
-<xsl:variable name="youSuck">
-        <xsl:if test="
-                preceding-sibling::node()
-                and
-                not(local-name(preceding-sibling::node()[1]) = 'container')
-                and
-                not(local-name(preceding-sibling::node()[1]) = 'dao' )
-                and
-                not(local-name(preceding-sibling::node()[1]) = 'daogrp' )
-                ">
-                <xsl:if test="
-                        not(matches($biteMe,'.*[.:;,]+\s*$'))
-                        and
-                        not(matches((text())[1],'^\s*[.:;,]'))
-                ">
-                <xsl:text>.</xsl:text>
-                </xsl:if>
-        </xsl:if>
-<xsl:text> </xsl:text>
-</xsl:variable>
-        <xsl:value-of select="$youSuck"/>
-        <xsl:choose>
-                <xsl:when test="local-name()='unittitle' and not(@label)">
-                        <b><xsl:apply-templates/></b>
-                </xsl:when>
-                <xsl:otherwise>
-                        <xsl:apply-templates mode="dscdid"/>
-                </xsl:otherwise>
-        </xsl:choose>
+<xsl:template match="*" mode="did">
+	<p><xsl:apply-templates/></p>
 </xsl:template>
+
+<xsl:template match="ead:unitdate" mode="did">
+<p><h2>Date:</h2>
+<xsl:value-of select="."/>
+</p>
+</xsl:template>
+
+<xsl:template match="ead:unitid" mode="did">
+<p><h2>Identifier:</h2>
+<xsl:value-of select="."/>
+</p>
+</xsl:template>
+
+<xsl:template match="ead:unittitle" mode="did">
+<p><h2>Title:</h2>
+<xsl:value-of select="."/>
+</p>
+</xsl:template>
+
 
 
 <xsl:template match="text()" mode="dscdid">
@@ -299,6 +282,7 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:variable name="link">http://www.oac.cdlib.org/findaid/<xsl:value-of select="$par"/>
 </xsl:variable>
 <a href="{$link}"><xsl:value-of select="ead:unittitle[1]"/></a>
+<xsl:text> </xsl:text>
 <xsl:value-of select="ead:unittitle[position() &gt; 1]"/>
 </xsl:template>
                                                                                                                                                 
