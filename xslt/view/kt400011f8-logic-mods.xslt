@@ -295,7 +295,7 @@ brand: <xsl:value-of select="$brand"/>
 		src="/{$page/m:mets/@OBJID}/{$use}" 
 		width="{$xy/xy/@width}"
 		height="{$xy/xy/@height}"
-  	/></a>!!!!!!!
+  	/></a>
     </xsl:otherwise>
   </xsl:choose>
  </xsl:when>
