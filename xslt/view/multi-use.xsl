@@ -221,7 +221,16 @@ and the referer is on-site -->
     <xsl:if test="normalize-space($queryURL) != ''">
       <p>
         <a class="highlight" href="{$queryURL}">
-          <xsl:text>Return to Search Results</xsl:text>
+          <xsl:text>Back</xsl:text>
+		<xsl:if test="not (session:isEnabled()
+                and
+                        (not (matches($http.Referer, $theHost))
+                         or (matches($http.Referer, '/test/qa.html$'))
+                        )
+                and (normalize-space($http.Referer) != ''))
+		">
+ 		<xsl:text> to Search Results</xsl:text>
+		</xsl:if>
         </a>
       </p>
     </xsl:if>
