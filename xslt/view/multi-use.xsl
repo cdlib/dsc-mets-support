@@ -151,13 +151,16 @@ cause the queryURL to be set to the referer -->
 
 <!-- offsite queryURLs are cleared if they are from offsite
 and the referer is on-site -->
-<xsl:if test="session:isEnabled() 
+<!-- xsl:if test="session:isEnabled() 
 		and matches($http.Referer,$theHost)
 		and not ( matches(session:getData('queryURL'),$theHost) )
              ">
           <xsl:value-of select="session:setData('queryURL','')"/>
+<xsl:comment><xsl:value-of select="boolean(matches($http.Referer,$theHost))"/></xsl:comment>
+<xsl:comment><xsl:value-of select="boolean(not ( matches(session:getData('queryURL'),$theHost) ))"/></xsl:comment>
+<xsl:comment><xsl:value-of select="session:setData('queryURL','')"/></xsl:comment>
 <xsl:comment>session queryURL erased</xsl:comment>
-</xsl:if>
+</xsl:if -->
 
 <xsl:choose>
 	<xsl:when test="$multi-use='hotdog'">
