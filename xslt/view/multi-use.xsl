@@ -225,7 +225,7 @@ and the referer is on-site -->
           <xsl:text>Back</xsl:text>
 		<xsl:if test="not (session:isEnabled()
                 and
-                        (not (matches($http.Referer, $theHost))
+                        (not (matches($http.Referer, concat($theHost,'/search')))
                          or (matches($http.Referer, '/test/qa.html$'))
                         )
                 and (normalize-space($http.Referer) != ''))
