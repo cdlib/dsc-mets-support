@@ -164,11 +164,9 @@ and the referer is on-site -->
 
 <xsl:choose>
 	<xsl:when test="$multi-use='hotdog'">
-<img>
-  <xsl:for-each select="$brand.file/brand/hotdog.img/@*">
-	<xsl:copy-of select="."/>
-  </xsl:for-each>
-</img>
+<a href="{$brand.file/brand/hotdog.img/@href}">
+<img src="{$brand.file/brand/hotdog.img/@src}" border="0"/>
+</a>
 	</xsl:when>
 	<xsl:when test="$multi-use='oac-breadcrumb'">
 		<!-- breadcrumb variables -->
