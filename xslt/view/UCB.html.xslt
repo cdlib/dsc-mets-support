@@ -128,7 +128,7 @@
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
 	<p><h2>Owning Institution:</h2>
-	<xsl:call-template name="insert-institution-url"/></p>
+	<xsl:call-template name="insert-institution-name"/></p>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
@@ -260,8 +260,8 @@
   <xsl:otherwise>
  	<xsl:value-of
 	  select="
-		replace(
-($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1] , 'http://.*$' , '')" 
+		replace(normalize-space(
+($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) , 'http://.*$' , '')" 
 	/>
   </xsl:otherwise>
 </xsl:choose>
