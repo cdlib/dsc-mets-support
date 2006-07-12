@@ -50,7 +50,7 @@
 <xsl:template match="*" mode="briefMeta">
 </xsl:template>
 
-<xsl:template match="title[1][text()]| creator[1][text()]| subject[not(@q='series')][1][text()]| description[1][text()]| publisher[1][text()]| contributor[1][text()]| date[1][text()]| type[@q][1][text()]| format[1][text()]| identifier[1][text()]| source[1][text()]| language[1][text()]| coverage[1][text()]| rights[1][text()]"
+<xsl:template match="title[1][text()]| creator[1][text()]| subject[not(@q='series')][1][text()]| description[1][text()]| publisher[1][text()]| contributor[1][text()]| date[1][text()]| type[@q][1][text()]| format[1][text()]| identifier[not(starts-with(text(),'http://ark')) and text()][1]| source[1][text()]| language[1][text()]| coverage[1][text()]| rights[1][text()]"
 	mode="fullDC">
 <p>
 	<h2>
@@ -64,7 +64,9 @@
 <xsl:template match="title| creator| description| contributor| date| 
 	format| identifier| source| language| coverage| rights| subject"
 	mode="fullDC">
+  <xsl:if test="not(name()='identifier' and starts-with(.,'http://ark'))">
 	<p><xsl:apply-templates mode="magic"/></p>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="subject[@q='series']" mode="fullDC">
