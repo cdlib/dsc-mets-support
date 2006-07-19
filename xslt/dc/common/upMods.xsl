@@ -160,7 +160,7 @@ convert it.
 								</xsl:when>
 								<xsl:otherwise><xsl:text>uri</xsl:text></xsl:otherwise>
 							</xsl:choose>
-				<!--			<xsl:copy-of select="."/> -->
+			<!--				<xsl:copy-of select="."/> 	-->
 							</xsl:attribute>
 							<xsl:value-of select="."/> 
 						</identifier>
@@ -173,7 +173,12 @@ convert it.
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
-			<xsl:otherwise><xsl:apply-templates select="identifier" mode="upMods"/></xsl:otherwise>
+			<xsl:otherwise>
+				<identifier>
+				<xsl:copy-of select="@*"/>				
+				<xsl:value-of select="."/>		
+				</identifier>
+			</xsl:otherwise>
 		</xsl:choose>		
 	</xsl:template>
 
