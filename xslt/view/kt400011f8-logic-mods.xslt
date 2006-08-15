@@ -253,7 +253,7 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:comment>
 <xsl:choose>
    <!-- xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1" -->
-   <xsl:when test="count($page/m:mets/m:fileSec/m:fileGrp//m:file[@USE='thumbnail']) = 1">
+   <xsl:when test="count($page/m:mets/m:fileSec/m:fileGrp//m:file[@USE='thumbnail'] | $page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1">
 <!-- simple object -->
 <xsl:variable name="use">
   <xsl:choose>
