@@ -28,7 +28,7 @@
               <table cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="left" valign="middle">
-                    <img src="http://dali.cdlib.org/~esatzman/calisphere/dev/images/headings_text/printable_version.gif" width="110" height="16" alt="Printable Version" title="Printable Version" />
+<xsl:copy-of select="$brand.print.img"/>
                   </td>
                   <td align="left" valign="middle">
                     <div class="button nifty6">
