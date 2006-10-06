@@ -59,7 +59,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver pref="00000010.xml">
+  <mets-profile-driver pref="./profiles/00000010.xml">
     <PROFILE>http://www.loc.gov/mets/profiles/00000010.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
