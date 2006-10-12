@@ -64,7 +64,7 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
                 <xsl:with-param name="qualifier">abstract</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:abstract"/>
         </xsl:call-template>
-   <xsl:if test="not(/m:mets[@TYPE='archival collection']">
+   <xsl:if test="not(/m:mets[@TYPE='archival collection'])">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:odd"/>
@@ -75,18 +75,19 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
 <xsl:template name="publisher">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title"/>
+                <xsl:with-param name="node" select="(/m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title, /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:repository/e:corpname)[1]
+"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="qualifier">custodhist</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:custodhist"/>
         </xsl:call-template>
-	<xsl:call-template name="element">
+	<!-- xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
                 <xsl:with-param name="qualifier">repository</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:repository/e:corpname"/>
-        </xsl:call-template>
+        </xsl:call-template -->
 </xsl:template>
 
 <xsl:template name="contributor">
