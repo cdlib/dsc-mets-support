@@ -114,7 +114,7 @@
 
   <!-- default match identity transform -->
   <xsl:template match="@*|node()">
-    <xsl:namespace name="http://www.w3.org/1999/xhtml"/>
+    <!-- xsl:namespace name="" select="'http://www.w3.org/1999/xhtml'"/ -->
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
