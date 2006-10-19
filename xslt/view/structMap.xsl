@@ -350,7 +350,7 @@
            <xsl:text>/</xsl:text>
            <xsl:value-of select="$page/m:mets/@OBJID"/>
            <xsl:text>/</xsl:text>
-           <xsl:value-of select="$node/m:div[starts-with(@TYPE,'thumbnail')][1]/m:fptr/@FILEID"/>
+           <xsl:value-of select="$node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@FILEID"/>
         </xsl:variable>
 
  	<xsl:variable name="nailref">
@@ -412,7 +412,7 @@
 
 <xsl:template match="insert-inner-content">
 <xsl:comment>insert-inner-content @css-id:<xsl:value-of select="@css-id"/></xsl:comment>
-<xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]"/>
+<xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]"/>
 <xsl:choose>
  <xsl:when test="$thisImage">
 <div id="{@css-id}" xmlns="http://www.w3.org/1999/xhtml">
@@ -426,9 +426,10 @@
       <xsl:with-param name="y" select="number($thisImage/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+
   <img
-        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]/m:fptr/@FILEID}"
+        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID}"
         width="{$xy/xy/@width}"
         height="{$xy/xy/@height}"
 	border="0"
@@ -469,7 +470,7 @@
 		<xsl:copy-of select="$thisMODS"/>
 	</xsl:if>
 		<xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
-		<h2>Owning Institution:</h2><xsl:call-template name="insert-institution-url"/>
+		<h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
 </xsl:template>

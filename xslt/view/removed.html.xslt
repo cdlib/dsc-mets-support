@@ -278,7 +278,7 @@ removed.
         <xsl:if test="$order = '1'">
                 <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
-                <h2>Owning Institution:</h2><xsl:call-template name="insert-institution-url"/>
+                <h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
 </xsl:template>
