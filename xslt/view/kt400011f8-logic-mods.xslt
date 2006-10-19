@@ -134,7 +134,7 @@ brand: <xsl:value-of select="$brand"/>
 	<!-- mini MD -->
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-name"/>
         </p>
   </xsl:when>
@@ -146,7 +146,7 @@ brand: <xsl:value-of select="$brand"/>
         <xsl:copy-of
           select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
         <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
         </p>
   </xsl:otherwise>
@@ -421,7 +421,7 @@ brand: <xsl:value-of select="$brand"/>
                 <xsl:copy-of select="$thisMODS"/>
         </xsl:if>
                 <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
-                <h2>Owning Institution:</h2><xsl:call-template name="insert-institution-url"/>
+                <h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
 </xsl:template>

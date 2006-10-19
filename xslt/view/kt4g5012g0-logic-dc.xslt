@@ -133,7 +133,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-name"/>
         </p>
   </xsl:when>
@@ -143,7 +143,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:otherwise>
         <xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
         </p>
   </xsl:otherwise>
@@ -304,7 +304,7 @@ brand: <xsl:value-of select="$brand"/>
         <xsl:if test="$order = '1'">
                 <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
-                <h2>Owning Institution:</h2><xsl:call-template name="insert-institution-url"/>
+                <h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
 </xsl:template>

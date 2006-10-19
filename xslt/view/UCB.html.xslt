@@ -127,7 +127,7 @@
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-name"/></p>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
@@ -139,7 +139,7 @@
 	  select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
 	<!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
                 <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-url"/></p>
   </xsl:otherwise>
  </xsl:choose>
@@ -330,7 +330,7 @@
         </xsl:if>
                 <!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
                 <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
-                <p><h2>Owning Institution:</h2>
+                <p><h2>Contributing Institution:</h2>
 		<xsl:call-template name="insert-institution-url"/>
 		</p>
             </div>

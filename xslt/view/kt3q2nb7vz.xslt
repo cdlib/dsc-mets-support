@@ -151,7 +151,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-name"/>
 	</p>
   </xsl:when>
@@ -163,7 +163,7 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:comment>from an EAD snippet</xsl:comment>
 
 <xsl:apply-templates select="$page/m:mets/m:dmdSec[@ID='dsc']/m:mdWrap/m:xmlData/ead:c"/>
-	<p><h2>Owning Institution:</h2>
+	<p><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-url"/>
 	</p>
 
