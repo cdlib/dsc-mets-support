@@ -232,11 +232,20 @@ MODS
 		<xsl:with-param name="qualifier" select="'vc'"/>
 		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href)"/>
 	</xsl:call-template>
-	 <xsl:if
+	<xsl:if
           test="(/m:mets/@PROFILE != 'http://ark.cdlib.org/ark:/13030/kt5z09p6zn')">
           <xsl:call-template name="element">
                 <xsl:with-param name="element" select="'relation'"/>
                 <xsl:with-param name="node">http://calisphere.universityofcalifornia.edu/</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
+	<xsl:if test="substring-after(normalize-space((//mods:mods)[1]/mods:location/mods:physicalLocation),'http://')">
+          <xsl:call-template name="element">
+                <xsl:with-param name="element" select="'relation'"/>
+                <xsl:with-param name="node">
+		<xsl:text>http://</xsl:text>
+		<xsl:value-of select="substring-after(normalize-space((//mods:mods)[1]/mods:location/mods:physicalLocation),'http://')"/>
+		</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
 </xsl:template>
