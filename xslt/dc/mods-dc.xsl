@@ -239,12 +239,16 @@ MODS
                 <xsl:with-param name="node">http://calisphere.universityofcalifornia.edu/</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
-	<xsl:if test="substring-after(normalize-space((//mods:mods)[1]/mods:location/mods:physicalLocation),'http://')">
+	<!-- should match https as well ... -->
+	<xsl:if test="substring-after(
+			((//mods:mods)[1]/mods:location/mods:physicalLocation)[1], 
+	'http://'
+			)">
           <xsl:call-template name="element">
                 <xsl:with-param name="element" select="'relation'"/>
                 <xsl:with-param name="node">
 		<xsl:text>http://</xsl:text>
-		<xsl:value-of select="substring-after(normalize-space((//mods:mods)[1]/mods:location/mods:physicalLocation),'http://')"/>
+		<xsl:value-of select="substring-after(normalize-space(((//mods:mods)[1]/mods:location/mods:physicalLocation)[1]),'http://')"/>
 		</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
