@@ -21,8 +21,6 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 >
 
 <xsl:template match="/m:mets" mode="map">
-		<xsl:text><![CDATA[
-]]></xsl:text>
 <qdc>
 <!--
      Title Creator Subject Description Publisher Contributor Date
