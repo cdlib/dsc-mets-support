@@ -269,12 +269,6 @@
 
 <!-- calisphere design -->
 
-<xsl:template match="insert-sitesearch">
-<xsl:comment>insert-sitesearch</xsl:comment>
-<!-- set up variables, fill out template  -->
-<xsl:copy-of select="$brand.search.box"/>
-</xsl:template>
-
 <!-- calisphere image-simple -->
 <xsl:template match="insert-largerImageLink">
 <!-- saving this for 500x400 1200x1000 type image size options -->
@@ -300,41 +294,6 @@
 <xsl:if test="$imageIsNext = 'true'">
 	<a href="/{$page/m:mets/@OBJID}/?order={number($order) + 1}{$brandCgi}">next</a>
 </xsl:if>
-</xsl:template>
-
-<xsl:template match="insert-inner-metadata">
-<xsl:comment>insert-inner-metadata</xsl:comment>
-<xsl:variable name="thisMODS">
-                <xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
-                        <xsl:variable name="why" select="."/>
-                        <xsl:copy-of select="cdlview:MODS($page/key('md', $why )//mods:mods, '')"/>
-                </xsl:for-each>
-</xsl:variable>
-<div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
-            <div class="metadata-text">
-        <xsl:if test="not($order = '1')">
-           <xsl:choose>
-                        <xsl:when test="normalize-space($thisMODS) != ''">
-                                <xsl:copy-of select="$thisMODS"/><h2>From:</h2>
-                        </xsl:when>
-                <xsl:otherwise>
-                        <h2>Title:</h2>
-                        <p><xsl:value-of select="$focusDiv/@LABEL"/></p>
-                        <h2>From:</h2>
-                </xsl:otherwise>
-           </xsl:choose>
-                <a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
-        </xsl:if>
-        <xsl:if test="$order = '1'">
-                <xsl:copy-of select="$thisMODS"/>
-        </xsl:if>
-                <!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
-                <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
-                <p><h2>Contributing Institution:</h2>
-		<xsl:call-template name="insert-institution-url"/>
-		</p>
-            </div>
-</div>
 </xsl:template>
 
 <xsl:template match="m:mdRef" mode="link">
