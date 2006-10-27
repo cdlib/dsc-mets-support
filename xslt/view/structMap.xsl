@@ -25,7 +25,13 @@
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
-
+  <xsl:variable name="focusDivIsPreggers">
+    <xsl:if test="($focusDiv/m:div/m:div/m:fptr) and not ($focusDiv/m:div/m:div/m:div/m:fptr)">true</xsl:if> 
+  </xsl:variable>
+  <xsl:variable name="focusDivIsImage">
+    <xsl:if test="$focusDiv/m:div/m:fptr">true</xsl:if> 
+  </xsl:variable>
+  
 <xsl:template match="insert-structMap">
 <xsl:comment>insert-structMap <xsl:apply-templates select="@*" mode="attrComments"/></xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/m:structMap[1]" mode="divNavAlt2"/>
@@ -50,12 +56,6 @@
 
 <!-- creates the inner table (AJAXify the paging here somehow?) -->
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
-<xsl:variable name="focusDivIsPreggers">
-	<xsl:if test="$focusDiv/m:div/m:div/m:fptr">true</xsl:if> 
-</xsl:variable>
-<xsl:variable name="focusDivIsImage">
-	<xsl:if test="$focusDiv/m:div/m:fptr">true</xsl:if> 
-</xsl:variable>
 <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- I am the parent of the focus div, and -->
@@ -177,13 +177,8 @@
 </xsl:template>
 
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div">
-<xsl:variable name="focusDivIsPreggers">
-	<xsl:if test="$focusDiv/m:div/m:div/m:fptr">true</xsl:if> 
-</xsl:variable>
-<xsl:variable name="focusDivIsImage">
-	<xsl:if test="$focusDiv/m:div/m:fptr">true</xsl:if> 
-</xsl:variable>
-<xsl:variable name="selfAction">
+
+  <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- xsl:when test="$order = '1'">tableIsNext</xsl:when -->
 	<!-- I am the parent of the focus div, and -->
