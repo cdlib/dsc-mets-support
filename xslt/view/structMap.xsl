@@ -25,7 +25,7 @@
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="focusDivIsPreggers">
+  <xsl:variable name="focusDivShowsChild">
     <xsl:if test="($focusDiv/m:div/m:div/m:fptr) and not ($focusDiv/m:div/m:div/m:div/m:fptr)">true</xsl:if> 
   </xsl:variable>
   <xsl:variable name="focusDivIsImage">
@@ -56,30 +56,34 @@
 
 <!-- creates the inner table (AJAXify the paging here somehow?) -->
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
-<xsl:variable name="selfAction">
+<!-- xsl:message>datl2-table</xsl:message -->
+  <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
+  <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>
+  
+  <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- I am the parent of the focus div, and -->
-	<xsl:when test="(. is $focusDiv/..) 
-		and not ($focusDivIsPreggers = 'true')
+	<xsl:when test="($iAmParentOfFocusDiv) 
+		and not ($focusDivShowsChild = 'true')
 		and ($focusDivIsImage = 'true')">AtableIsNext</xsl:when>
 	<!-- I am the focus div, and I have kids with pictures -->
-	<xsl:when test="(. is $focusDiv)
-		and ($focusDivIsPreggers = 'true')">BtableIsNext</xsl:when>
+	<xsl:when test="($iAmFocusDiv)
+		and ($focusDivShowsChild = 'true')">BtableIsNext</xsl:when>
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
-		and not ($focusDivIsPreggers = 'true')">CtableIsNext</xsl:when>
+		and not ($focusDivShowsChild = 'true')">CtableIsNext</xsl:when>
 	<!-- follow the focus with recursion -->
 	<xsl:when test=".//m:div[. is $focusDiv]">Drecurse</xsl:when>
 	<!-- I am the focus div -->
-	<xsl:when test=". is $focusDiv">Erecurse</xsl:when>
-	<!-- one of my kids has teh focus -->
-	<xsl:when test="not ($focusDivIsImage ='true')
-		and not ($focusDivIsPreggers = 'true')">Fheadings</xsl:when>
+	<xsl:when test="$iAmFocusDiv">Erecurse</xsl:when>
+     <!-- one of my kids has teh focus -->
+     <xsl:when test="not ($focusDivIsImage ='true')
+       and not ($focusDivShowsChild = 'true')">Fheadings</xsl:when>
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-
+<!-- xsl:message><xsl:value-of select="$selfAction"></xsl:value-of></xsl:message -->
 <xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
 <xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div/m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>
@@ -116,7 +120,7 @@
 
 
 	<xsl:choose>
-           <xsl:when test="ends-with($selfAction , 'tableIsNext')">
+    <xsl:when test="ends-with($selfAction , 'tableIsNext')">
 		<table border="0">
 		  <xsl:apply-templates 
 			select="for $x in $startOfPage to $endOfPage return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
@@ -177,44 +181,53 @@
 </xsl:template>
 
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div">
-
+<!-- xsl:message>atl2-div</xsl:message -->
+  <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
+  <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>
+  <xsl:variable name="focusDecendsFromMe" select="
+    if ($iAmFocusDiv or $iAmParentOfFocusDiv)
+      then
+        if ($iAmFocusDiv) then boolean(false) else boolean(true)
+      else .//m:div[. is $focusDiv]"
+  />
+  
   <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- xsl:when test="$order = '1'">tableIsNext</xsl:when -->
 	<!-- I am the parent of the focus div, and -->
-	<xsl:when test="(. is $focusDiv/..) 
-		and not ($focusDivIsPreggers = 'true')
+	<xsl:when test="($iAmParentOfFocusDiv) 
+		and not ($focusDivShowsChild = 'true')
 		and ($focusDivIsImage = 'true')">AtableIsNext</xsl:when>
 	<!-- I am the focus div, and I have kids with pictures -->
-	<xsl:when test="(. is $focusDiv)
-		and ($focusDivIsPreggers = 'true')">BtableIsNext</xsl:when>
+	<xsl:when test="($iAmFocusDiv)
+		and ($focusDivShowsChild = 'true')">BtableIsNext</xsl:when>
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
-		and not ($focusDivIsPreggers = 'true')">CtableIsNext</xsl:when>
+		and not ($focusDivShowsChild = 'true')">CtableIsNext</xsl:when>
 	<!-- follow the focus with recursion -->
 	<xsl:when test=".//m:div[. is $focusDiv]">Drecurse</xsl:when>
 	<!-- I am the focus div -->
-	<xsl:when test=". is $focusDiv">Erecurse</xsl:when>
+	<xsl:when test="$iAmFocusDiv">Erecurse</xsl:when>
 	<!-- one of my kids has teh focus -->
 	<xsl:when test="not ($focusDivIsImage ='true')
-		and not ($focusDivIsPreggers = 'true')">Fheadings</xsl:when>
+		and not ($focusDivShowsChild = 'true')">Fheadings</xsl:when>
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
-</xsl:variable>
-
-
+  </xsl:variable>
+  
+ 
 <xsl:choose>
-  <xsl:when test=". is $focusDiv or .//m:div[. is $focusDiv] or ends-with($selfAction , 'headings')">
+  <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
 <div class="structMap">
 
 <xsl:choose>
-    	<xsl:when test=". is $focusDiv">
+    	<xsl:when test="$iAmFocusDiv">
 		<xsl:copy-of select="$brand.arrow.up"/>
 		<xsl:value-of select="@LABEL"/>
     	</xsl:when>
-	<xsl:when test=".//m:div[. is $focusDiv]">
+	<xsl:when test="$focusDecendsFromMe">
 <a href="/{$this.base}/?order={count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1}{$brandCgi}">
 <xsl:copy-of select="$brand.arrow.dn"/>
 <xsl:value-of select="@LABEL"/>
@@ -234,7 +247,7 @@
 
 	<xsl:choose>
            <xsl:when test="ends-with($selfAction , 'tableIsNext')">
-		<xsl:if test="not(. is $focusDiv)">
+		<xsl:if test="not($iAmFocusDiv)">
 			<div class="structMap">
 <xsl:copy-of select="$brand.arrow.up"/>
 			<xsl:value-of select="$focusDiv/@LABEL"/>
@@ -521,3 +534,4 @@
 
  
 </xsl:stylesheet>
+
