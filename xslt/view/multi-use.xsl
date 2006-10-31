@@ -132,10 +132,6 @@
 <xsl:template match="insert-multi-use">
 <xsl:variable name="multi-use" select="$brand.file/brand/@multi-use"/>
 <xsl:comment>insert-multi-use: <xsl:value-of select="$multi-use"/></xsl:comment>
-<xsl:comment>session:getData <xsl:value-of select="session:getData('queryURL')"/>
-referer: 
-<xsl:value-of select="$http.Referer"/> 
-</xsl:comment>
   
 <!-- referer madness; off-site (not matches...) referers
 cause the queryURL to be set to the referer -->
@@ -145,24 +141,14 @@ cause the queryURL to be set to the referer -->
 			(not (matches($http.Referer, $theHost))
 			 or (matches($http.Referer, '/test/qa.html$'))
 			)
-		and (normalize-space($http.Referer) != '')
-	     ">
+		and (normalize-space($http.Referer) != '')"
+	     use-when="function-available('session:setData')">
           <xsl:value-of select="session:setData('queryURL',$http.Referer)"/>
 <xsl:comment>session queryURL reset</xsl:comment>
 </xsl:if>
 
 <!-- offsite queryURLs are cleared if they are from offsite
 and the referer is on-site -->
-<!-- xsl:if test="session:isEnabled() 
-		and matches($http.Referer,$theHost)
-		and not ( matches(session:getData('queryURL'),$theHost) )
-             ">
-          <xsl:value-of select="session:setData('queryURL','')"/>
-<xsl:comment><xsl:value-of select="boolean(matches($http.Referer,$theHost))"/></xsl:comment>
-<xsl:comment><xsl:value-of select="boolean(not ( matches(session:getData('queryURL'),$theHost) ))"/></xsl:comment>
-<xsl:comment><xsl:value-of select="session:setData('queryURL','')"/></xsl:comment>
-<xsl:comment>session queryURL erased</xsl:comment>
-</xsl:if -->
 
 <xsl:choose>
 	<xsl:when test="$multi-use='hotdog'">
@@ -219,7 +205,7 @@ and the referer is on-site -->
   
   <!-- Added by KVH, 2/15/06 -->
   <!-- retrieve search -->
-  <xsl:if test="session:isEnabled()">
+  <xsl:if test="session:isEnabled()" use-when="function-available('session:setData')">
     <xsl:variable name="queryURL" select="session:getData('queryURL')"/>
     <xsl:if test="normalize-space($queryURL) != ''">
       <p>
