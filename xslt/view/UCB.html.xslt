@@ -55,8 +55,15 @@
 	<xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
 </xsl:key>
 <xsl:key name="md" match="*" use="@ID"/>
-  <xsl:key name="divIsImage" match="m:div[m:div/m:fptr]" use="@ID"/>
-  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr][not(m:div/m:div/m:div/m:fptr)]" use="@ID"/>
+  <xsl:key name="divIsImage" match="m:div[m:div/m:fptr]">
+    <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
+  </xsl:key>
+  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
+    <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
+  </xsl:key>
+  <xsl:key name="divChildShowsChild"  match="m:div[m:div/m:div/m:div/m:fptr]">
+    <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
+  </xsl:key>
   
   
 <xsl:param name="smLinkStyle"/>

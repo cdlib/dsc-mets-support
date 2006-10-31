@@ -26,7 +26,8 @@
    </xsl:choose>
   </xsl:variable>
   <xsl:variable name="focusDivShowsChild">
-    <xsl:if test="key('divShowsChild',$focusDiv/@ID)">true</xsl:if> 
+    <xsl:if test="key('divShowsChild',$order) and not(key('divChildShowsChild',$order))">true</xsl:if> 
+    <!-- xsl:if test="($focusDiv/m:div/m:div/m:fptr) and not ($focusDiv/m:div/m:div/m:div/m:fptr)">true</xsl:if -->
   </xsl:variable>
   <xsl:variable name="focusDivIsImage">
     <xsl:if test="key('divIsImage', $focusDiv/@ID)">true</xsl:if> 
@@ -50,6 +51,10 @@
 
 <!-- this is the div structure for DaylightSavings2006 release -->
 <xsl:template match="m:structMap" mode="divNavAlt2">
+  wwww<xsl:value-of select="$focusDivShowsChild"/>kkkk
+  <xsl:value-of select="boolean(key('divShowsChild',$order))"/>
+  <xsl:value-of select="boolean(key('divChildShowsChild',$order))"/>
+  <xsl:value-of select="$order"></xsl:value-of>
 	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div"/>
 	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/>
 </xsl:template>
