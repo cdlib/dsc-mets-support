@@ -26,10 +26,10 @@
    </xsl:choose>
   </xsl:variable>
   <xsl:variable name="focusDivShowsChild">
-    <xsl:if test="($focusDiv/m:div/m:div/m:fptr) and not ($focusDiv/m:div/m:div/m:div/m:fptr)">true</xsl:if> 
+    <xsl:if test="key('divShowsChild',$focusDiv/@ID)">true</xsl:if> 
   </xsl:variable>
   <xsl:variable name="focusDivIsImage">
-    <xsl:if test="$focusDiv/m:div/m:fptr">true</xsl:if> 
+    <xsl:if test="key('divIsImage', $focusDiv/@ID)">true</xsl:if> 
   </xsl:variable>
   
 <xsl:template match="insert-structMap">
@@ -56,7 +56,7 @@
 
 <!-- creates the inner table (AJAXify the paging here somehow?) -->
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
-<!-- xsl:message>datl2-table</xsl:message -->
+<!-- xsl:message>atl2-table</xsl:message -->
   <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
   <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>
   
@@ -83,7 +83,7 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-<!-- xsl:message><xsl:value-of select="$selfAction"></xsl:value-of></xsl:message -->
+<xsl:message><xsl:value-of select="$selfAction"></xsl:value-of></xsl:message >
 <xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
 <xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div/m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>

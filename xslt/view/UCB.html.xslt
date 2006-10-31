@@ -55,8 +55,12 @@
 	<xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
 </xsl:key>
 <xsl:key name="md" match="*" use="@ID"/>
+  <xsl:key name="divIsImage" match="m:div[m:div/m:fptr]" use="@ID"/>
+  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr][not(m:div/m:div/m:div/m:fptr)]" use="@ID"/>
+  
+  
 <xsl:param name="smLinkStyle"/>
-<xsl:param name="rico"/>
+
 <xsl:param name="structMap"/>
 <xsl:param name="size"/>
 <xsl:param name="this.base" select="$page/m:mets/@OBJID"/>
@@ -72,6 +76,7 @@
 	</xsl:if>
   </xsl:variable>
 <xsl:variable name="focusDiv" select="key('absPos',$order)"/>
+
 	<xsl:variable name="lsize">
 	<xsl:choose>
 		<xsl:when test="$size"><xsl:value-of select="$size"/></xsl:when>
@@ -148,13 +153,7 @@
 <xsl:template match="insert-brand-links">
 <xsl:comment>insert-brand-links</xsl:comment>
  <xsl:apply-templates select="$brand.links"/>
-<xsl:if test="$rico='rico'">
-    <script type="text/javascript" src="/js3p/prototype.js"></script>
-    <script type="text/javascript" src="/js3p/rico.js"></script>
-    <script type="text/javascript">
-        window.onload=function(){new Rico.Accordion( $('ricoStructMap') )}
-    </script>
-</xsl:if>
+
 <xsl:if test="$structMap='alt1'">
     <script type="text/javascript" src="/js3p/aqlists/aqtree3clickable.js"></script>
 	<link rel="stylesheet" href="/js3p/aqlists/aqtree3clickable.css"/>
