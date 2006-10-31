@@ -187,7 +187,7 @@
   <xsl:variable name="focusDecendsFromMe" select="
     if ($iAmFocusDiv or $iAmParentOfFocusDiv)
       then
-        if ($iAmFocusDiv) then boolean(false) else boolean(true)
+        if ($iAmFocusDiv) then boolean(0) else boolean(1)
       else .//m:div[. is $focusDiv]"
   />
   
