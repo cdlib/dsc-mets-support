@@ -76,7 +76,7 @@
 	<!-- follow the focus with recursion -->
 	<xsl:when test=".//m:div[. is $focusDiv]">Drecurse</xsl:when>
 	<!-- I am the focus div -->
-	<xsl:when test="$iAmFocusDiv">Erecurse</xsl:when>
+	<xsl:when test="$iAmFocusDiv">ErecurseXXX</xsl:when>
      <!-- one of my kids has teh focus -->
      <xsl:when test="not ($focusDivIsImage ='true')
        and not ($focusDivShowsChild = 'true')">Fheadings</xsl:when>
@@ -175,7 +175,7 @@
 	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/>
+	<!-- xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/ -->
 	  </xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
