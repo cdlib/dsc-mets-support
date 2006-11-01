@@ -25,7 +25,7 @@
 <xsl:include href="insert-print-link.xsl"/>
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
 <xsl:param name="debug"/>
-<xsl:param name="brand" select="'oac'"/>
+<xsl:param name="brand" select="'calisphere'"/>
 <xsl:param name="servlet.dir"/>
 
 <!-- temporary for oac -> oacui transition -->
@@ -55,16 +55,15 @@
 	<xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
 </xsl:key>
 <xsl:key name="md" match="*" use="@ID"/>
-  <xsl:key name="divIsImage" match="m:div[m:div/m:fptr]">
+  <!-- xsl:key name="divIsImage" match="m:div[m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
-  </xsl:key>
-  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
+  </xsl:key -->
+  <!-- xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
   <xsl:key name="divChildShowsChild"  match="m:div[m:div/m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
-  </xsl:key>
-  
+  </xsl:key -->
   
 <xsl:param name="smLinkStyle"/>
 
@@ -95,7 +94,7 @@
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
-	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"> 
+	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"> 
 	  <xsl:text>image-simple</xsl:text>
         </xsl:when>
 	<xsl:otherwise>
@@ -196,26 +195,26 @@
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
    <xsl:choose>
-   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
+   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
   <xsl:variable name="use" select="@use"/>
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">
       <xsl:with-param name="maxX" select="@maxX"/>
       <xsl:with-param name="maxY" select="@maxY"/>
-      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)])[1]/m:fptr/@cdl2:X)"/>
-      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
+      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:X)"/>
+      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
    </xsl:when>
    <xsl:otherwise><!-- page in a complex object -->
 
-	<xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]"/>
+	<xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]"/>
 
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">
@@ -225,9 +224,9 @@
       <xsl:with-param name="y" select="number($thisImage/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-  <a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}">
+  <a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}">
   <img
-        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]/m:fptr/@FILEID}"
+        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID}"
         width="{$xy/xy/@width}"
         height="{$xy/xy/@height}"
         border="0"
@@ -281,26 +280,6 @@
 </xsl:template>
 
 <!-- calisphere image-complex -->
-
-<xsl:template match="insert-inner-paging">
-<xsl:comment>insert-inner-paging</xsl:comment>
-<xsl:variable name="imageIsNext">
-	<xsl:if test="$page/key('absPos',number($order) +1)/m:div/m:fptr">true</xsl:if>
-</xsl:variable>
-<xsl:variable name="imageIsBefore">
-	<xsl:if test="$page/key('absPos',number($order) -1)/m:div/m:fptr">true</xsl:if>
-</xsl:variable>
-
-<xsl:if test="$imageIsBefore = 'true'">
-	<a href="/{$page/m:mets/@OBJID}/?order={number($order) - 1}{$brandCgi}">previous</a>
-</xsl:if>
-<xsl:if test="$imageIsBefore = 'true' and $imageIsNext = 'true'">
-	<span class="bullet">|</span>
-</xsl:if>
-<xsl:if test="$imageIsNext = 'true'">
-	<a href="/{$page/m:mets/@OBJID}/?order={number($order) + 1}{$brandCgi}">next</a>
-</xsl:if>
-</xsl:template>
 
 <xsl:template match="m:mdRef" mode="link">
 <p>
