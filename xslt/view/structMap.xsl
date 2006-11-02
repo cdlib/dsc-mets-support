@@ -58,7 +58,7 @@
 
 <!-- this is the div structure for DaylightSavings2006 release -->
 <xsl:template match="m:structMap" mode="divNavAlt2">
-<!--
+<!-- 
   <xsl:value-of select="boolean(key('divShowsChild',$order))"/>
   <xsl:value-of select="boolean(key('divChildShowsChild',$order))"/>
   <xsl:value-of select="$order"></xsl:value-of>
@@ -101,6 +101,7 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
+<!-- xsl:value-of select="$selfAction"/ -->
 <xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
 <xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div/m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>
@@ -135,8 +136,9 @@
   </xsl:choose>
 </xsl:variable>
 
-<xsl:variable name="countImg" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
+<xsl:variable name="countImg" select="count(m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
 <xsl:variable name="countKid" select="count(m:div[@ORDER or @LABEL][m:div])"/>
+
 	<xsl:choose>
     <xsl:when test="ends-with($selfAction , 'tableIsNext')
 		and ($countKid = $countImg)">
@@ -220,7 +222,7 @@
 	<!-- I am the focus div, and I have kids with pictures -->
 	<xsl:when test="($iAmFocusDiv)
 		and ($focusDivShowsChild)
-		and not($focusDiv/parent::m:structMap)">BtableIsNext</xsl:when>
+		and not($focusDiv/parent::m:structMap)">BBtableIsNext</xsl:when>
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
@@ -240,13 +242,12 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
   </xsl:variable>
- <!--  
+<!-- 
 [[
 scs:<xsl:value-of select="$focusDivShowsChildStrict"/>|
 <xsl:value-of select="boolean($focusDiv/parent::m:structMap)"/>
 sa<xsl:value-of select="$selfAction"/>]] 
--->
- 
+--> 
 <xsl:choose>
   <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
@@ -383,12 +384,18 @@ sa<xsl:value-of select="$selfAction"/>]]
 				(  ($pos='left') or ( $imagePos &gt; 0 )  ) )
 "/ -->
    <xsl:choose>
-     <xsl:when test="$node/m:div/m:fptr and ( ($imagePos &gt; 0) or ($pos = 'left') )">
+     <xsl:when test="$node/m:div//m:fptr and ( ($imagePos &gt; 0) or ($pos = 'left') )">
+	<!-- do the // from a key?  would have to count this div's order;
+		but we must already know that here -->
  	<xsl:variable name="naillink">
            <xsl:text>/</xsl:text>
            <xsl:value-of select="$page/m:mets/@OBJID"/>
            <xsl:text>/</xsl:text>
-           <xsl:value-of select="$node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@FILEID"/>
+           <xsl:value-of select="
+		if ($node/m:div[contains(@TYPE,'thumbnail')])
+		then $node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@FILEID
+		else (($node//m:div[contains(@TYPE,'thumbnail')][1]/m:fptr)[1])/@FILEID
+	   "/>
         </xsl:variable>
 
  	<xsl:variable name="nailref">
@@ -406,22 +413,36 @@ sa<xsl:value-of select="$selfAction"/>]]
 	<xsl:variable name="xy">
            <xsl:call-template name="scale-max">
            	<xsl:with-param name="max" select="number(65)"/>
-           	<xsl:with-param name="x" select="$node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@cdl2:X"/>
-           	<xsl:with-param name="y" select="$node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@cdl2:Y"/>
+           	<xsl:with-param name="x" select="
+		if ($node/m:div[contains(@TYPE,'thumbnail')])
+		then $node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@cdl2:X
+		else (($node//m:div[contains(@TYPE,'thumbnail')][1]/m:fptr)[1])/@cdl2:X"/>
+           	<xsl:with-param name="y" select="
+		if ($node/m:div[contains(@TYPE,'thumbnail')])
+		then $node/m:div[contains(@TYPE,'thumbnail')][1]/m:fptr/@cdl2:Y
+		else (($node//m:div[contains(@TYPE,'thumbnail')][1]/m:fptr)[1])/@cdl2:Y"/>
            </xsl:call-template>
    	</xsl:variable>
 
-
-	<a href="{$nailref}" title="{$node/@LABEL}">
-	<img border="0" width="{$xy/xy/@width}" height="{$xy/xy/@height}" src="{$naillink}"
-		alt="{$node/@LABEL}"/>
-	<br/>
-	<xsl:variable name="kidcount" select="count($node/m:div[m:div/m:fptr])"/>
-	<xsl:if test="$kidcount = 1">1 item</xsl:if>
-	<xsl:if test="$kidcount &gt; 1">
-		<xsl:value-of select="$kidcount"/> items
-	</xsl:if>
-	</a>
+	<!-- xsl:choose -->
+	  <!-- xsl:when test="$node/m:div//m:fptr" --><!-- picture -->
+		<a href="{$nailref}" title="{$node/@LABEL}">
+		<img border="0" width="{$xy/xy/@width}" height="{$xy/xy/@height}" src="{$naillink}"
+			alt="{$node/@LABEL}"/>
+		<br/>
+		<xsl:variable name="kidcount" select="count($node/m:div[m:div/m:fptr])"/>
+		<xsl:if test="$kidcount = 1">1 item</xsl:if>
+		<xsl:if test="$kidcount &gt; 1">
+			<xsl:value-of select="$kidcount"/> items
+		</xsl:if>
+		</a>
+	  <!-- /xsl:when -->
+	  <!-- xsl:otherwise>
+		<a href="{$nailref}" title="{$node/@LABEL}">
+		<xsl:value-of select="$node/@LABEL"/>
+		</a>
+	  </xsl:otherwise>
+	</xsl:choose -->
      </xsl:when>
      <xsl:otherwise/>
    </xsl:choose>
