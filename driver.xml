@@ -46,14 +46,14 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -->
 
-  <mets-profile-driver pref="./profiles/00000013.xml">
+  <mets-profile-driver pref="./profiles/00000013.xml" frameworkID="UCBGeneralProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000013.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver pref="./profiles/00000003.profile.xml">
+  <mets-profile-driver pref="./profiles/00000003.profile.xml" frameworkID="UCBPagedTextObjectProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000004.xml</PROFILE>
@@ -66,19 +66,20 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver pref="./profiles/00000010.xml">
+  <mets-profile-driver pref="./profiles/00000010.xml" frameworkID="CDL7TrainProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000010.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver pref="./profiles/UCBImagedObjectProfile.xml">
+  <mets-profile-driver pref="./profiles/UCBImagedObjectProfile.xml" frameworkID="UCBImagedObjectProfile">
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBImagedObjectProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver label="EAD Finding Aid" pref="./profiles/kt0t1nb6x7.profile.xml">
+  <mets-profile-driver label="EAD Finding Aid" pref="./profiles/kt0t1nb6x7.profile.xml" frameworkID="kt0t1nb6x7">
   <!-- this profile is never "METS only" -->
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt0t1nb6x7</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ead-dc.xsl</tool>
@@ -87,7 +88,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="coca" pref="./profiles/kt1g5010zb.profile.xml">
+  <mets-profile-driver label="coca" pref="./profiles/kt1g5010zb.profile.xml" frameworkID="kt1g5010zb">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt1g5010zb</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ddi-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/DDI-tbl.html.xsl</tool>
@@ -95,7 +96,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="generic MODS" pref="./profiles/kt2g5020r0.profile.xml">
+  <mets-profile-driver label="generic MODS" pref="./profiles/kt2g5020r0.profile.xml" frameworkID="kt2g5020r0">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt2g5020r0</PROFILE>
     <PROFILE>http://ark-dev.cdlib.org:8086/mets/profiles/kt2g5020r0.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
@@ -104,7 +105,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="EAD extracted images" pref="./profiles/kt3q2nb7vz.profile.xml">
+  <mets-profile-driver label="EAD extracted images" pref="./profiles/kt3q2nb7vz.profile.xml" frameworkID="kt3q2nb7vz">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3q2nb7vz</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ead-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3q2nb7vz.xslt</tool>
@@ -112,7 +113,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="UCPEE" pref="./profiles/kt3v19p5bk.profile.xml">
+  <mets-profile-driver label="UCPEE" pref="./profiles/kt3v19p5bk.profile.xml" frameworkID="kt3v19p5bk">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3v19p5bk</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ucpress-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3v19p5bk.html.xslt</tool>
@@ -120,7 +121,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="lsta MARC" pref="./profiles/kt400011f8.profile.xml">
+  <mets-profile-driver label="lsta MARC" pref="./profiles/kt400011f8.profile.xml" frameworkID="kt400011f8">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt400011f8</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt400011f8-logic-mods.xslt</tool>
@@ -130,7 +131,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml">
+  <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml" frameworkID="kt4g5012g0">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4g5012g0</PROFILE>
     <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
@@ -141,7 +142,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="OAC texts / MODS" pref="./profiles/kt5k40135s.profile.xml">
+  <mets-profile-driver label="OAC texts / MODS" pref="./profiles/kt5k40135s.profile.xml" frameworkID="kt5k40135s">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt5k40135s</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt5k40135s.html.xslt</tool>
@@ -149,7 +150,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="MODS eSch text (oceans)" pref="./profiles/kt5z09p6zn.profile.xml">
+  <mets-profile-driver label="MODS eSch text (oceans)" pref="./profiles/kt5z09p6zn.profile.xml" frameworkID="kt5z09p6zn">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt5z09p6zn</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt5z09p6zn.html.xslt</tool>
@@ -157,7 +158,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="CRS reports" pref="./profiles/kt667nb8wm.profile.xml">
+  <mets-profile-driver label="CRS reports" pref="./profiles/kt667nb8wm.profile.xml" frameworkID="kt667nb8wm">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt667nb8wm</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/preMod-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/preMod.html.xsl</tool>
@@ -165,7 +166,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="OAC texts / DC" pref="./profiles/kt7j49p867.profile.xml">
+  <mets-profile-driver label="OAC texts / DC" pref="./profiles/kt7j49p867.profile.xml" frameworkID="kt7j49p867">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt7j49p867</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt7j49p867.html.xslt</tool>
@@ -173,9 +174,25 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <!--
   -->
-  <mets-profile-driver label="profile for profiles" pref="./profiles/kt8s20152f.profile.xml">
+  <mets-profile-driver label="profile for profiles" pref="./profiles/kt8s20152f.profile.xml" frameworkID="kt8s20152f">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt8s20152f</PROFILE>
     <tool type="xslt" role="toHTML">./xslt/view/kt8s20152f.html.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+  -->
+  <mets-profile-driver label="OAI Harvesting" pref="./profiles/kt796nc95n.profile.xml" frameworkID="kt796nc95n">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt796nc95n </PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/OAI-DC.qdc2.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
+  </mets-profile-driver>
+
+  <!--
+  -->
+  <mets-profile-driver label="OAI Harvesting" pref="./profiles/vf5h99080.profile.xml" frameworkID="vf5h99080">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/vf5h99080 </PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/OCA-DC.qdc.xslt</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
   </mets-profile-driver>
 
   <mets-profile-driver label="removed" pref="./profiles/Removed.profile.xml">
