@@ -27,13 +27,13 @@
   <xsl:key name="divChildShowsChild"  match="m:div[m:div/m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
-<xsl:key name="mrSidHack" match="m:file[contains(@MIMETYPE,'mrsid')]" use="'needIt'"/>
+<!-- xsl:key name="mrSidHack" match="m:file[contains(@MIMETYPE,'mrsid')]" use="'needIt'"/ -->
 
  <xsl:variable name="mrsid-hack">
-   <xsl:choose>
+   <!-- xsl:choose>
      <xsl:when test="key('mrSidHack','needIt')">2</xsl:when>
      <xsl:otherwise>0</xsl:otherwise>
-   </xsl:choose>
+   </xsl:choose -->
   </xsl:variable>
   <xsl:variable name="focusDivShowsChild" select="key('divShowsChild',$order)"/>
   <xsl:variable name="focusDivShowsChildStrict" select="key('divShowsChildStrict',$order)"/>
