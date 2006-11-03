@@ -21,18 +21,17 @@
  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
- <xsl:key name="divShowsChildStrict" match="m:div[m:div[1]/m:div[1]/m:fptr]">
+ <xsl:key name="divShowsChildStrict" match="m:div[m:div[@ORDER or @LABEL][1]/m:div[1]/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
   <xsl:key name="divChildShowsChild"  match="m:div[m:div/m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
-
+<xsl:key name="mrSidHack" match="m:file[contains(@MIMETYPE,'mrsid')]" use="'needIt'"/>
 
  <xsl:variable name="mrsid-hack">
    <xsl:choose>
-     <xsl:when test="$page/m:mets/m:fileSec//m:file[contains(@MIMETYPE,'mrsid')]
-">2</xsl:when>
+     <xsl:when test="key('mrSidHack','needIt')">2</xsl:when>
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
@@ -77,7 +76,6 @@
         if ($iAmFocusDiv) then boolean(0) else boolean(1)
       else .//m:div[. is $focusDiv]"
   />
-
   <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- I am the parent of the focus div, and -->
@@ -86,7 +84,7 @@
 		and ($focusDivIsImage)">AtableIsNext</xsl:when>
 	<!-- I am the focus div, and I have kids with pictures -->
 	<xsl:when test="($iAmFocusDiv)
-		and ($focusDivShowsChild)">BtableIsNext</xsl:when>
+		and ($focusDivShowsChildStrict)">BtableIsNext</xsl:when>
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
@@ -101,7 +99,6 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-<!-- xsl:value-of select="$selfAction"/ -->
 <xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
 <xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div/m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>
@@ -136,12 +133,12 @@
   </xsl:choose>
 </xsl:variable>
 
-<xsl:variable name="countImg" select="count(m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
-<xsl:variable name="countKid" select="count(m:div[@ORDER or @LABEL][m:div])"/>
+<!-- xsl:variable name="countImg" select="count(m:div[@ORDER or @LABEL][m:div//m:fptr])"/ -->
+<!-- xsl:variable name="countKid" select="count(m:div[@ORDER or @LABEL][m:div])"/ -->
 
 	<xsl:choose>
-    <xsl:when test="ends-with($selfAction , 'tableIsNext')
-		and ($countKid = $countImg)">
+    <xsl:when test="ends-with($selfAction , 'tableIsNext')">
+<!--		and ($countKid = $countImg)"> -->
 		<table border="0">
 		  <xsl:apply-templates 
 			select="for $x in $startOfPage to $endOfPage return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
@@ -159,7 +156,7 @@
 			   <xsl:value-of select="$page/m:mets/@OBJID"/>
 		           <xsl:text>/?order=</xsl:text>
 			   <xsl:for-each select="m:div[@ORDER or @LABEL][m:div][position()=$startOfPage -15]">
-				<xsl:value-of select="(count(preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div]) + 1)"/>
+				<xsl:value-of select="@ORDER"/>
 			   </xsl:for-each>
 			   <xsl:value-of select="$brandCgi"/>
 			  </xsl:attribute>
@@ -180,7 +177,7 @@
 			   <xsl:value-of select="$page/m:mets/@OBJID"/>
 		             <xsl:text>/?order=</xsl:text>
 			   <xsl:for-each select="m:div[@ORDER or @LABEL][m:div][position()=$endOfPage +1]">
-				<xsl:value-of select="(count(preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div]) + 1)"/>
+				<xsl:value-of select="@ORDER"/>
 			   </xsl:for-each>
 			   <xsl:value-of select="$brandCgi"/>
 			  </xsl:attribute>
@@ -252,6 +249,7 @@ sa<xsl:value-of select="$selfAction"/>]]
   <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
 <div class="structMap">
+<xsl:message>hot</xsl:message>
 
 <xsl:choose>
     	<xsl:when test="$iAmFocusDiv">
@@ -259,7 +257,9 @@ sa<xsl:value-of select="$selfAction"/>]]
 		<xsl:value-of select="@LABEL"/>
     	</xsl:when>
 	<xsl:when test="$focusDecendsFromMe">
-<a href="/{$this.base}/?order={count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1}{$brandCgi}">
+	<xsl:variable name="linkOrder" select="@ORDER"/>
+
+<a href="/{$this.base}/?order={$linkOrder}{$brandCgi}">
 <xsl:copy-of select="$brand.arrow.dn"/>
 <xsl:value-of select="@LABEL"/>
 </a>
@@ -267,7 +267,7 @@ sa<xsl:value-of select="$selfAction"/>]]
            <xsl:when test="ends-with($selfAction , 'tableIsNext')">
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'headings')">
-<a href="/{$this.base}/?order={count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
+<a href="/{$this.base}/?order={@ORDER}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
 	  </xsl:when>
 	  <xsl:otherwise><!-- (<xsl:value-of select="$selfAction"/>) --></xsl:otherwise>
 	</xsl:choose>
@@ -289,7 +289,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div"/>
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'headings')">
-<a href="/{$this.base}/?order={count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
+<a href="/{$this.base}/?order={@ORDER}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
 	  </xsl:when>
 	  <xsl:otherwise><!-- (<xsl:value-of select="$selfAction"/>) --></xsl:otherwise>
 	</xsl:choose>
@@ -314,18 +314,18 @@ sa<xsl:value-of select="$selfAction"/>]]
   <tr>
 	   <xsl:call-template name="navThumb">
 		<xsl:with-param name="node" select="."/>
-		<xsl:with-param name="number" 
-			select="(count(preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div]) + 1)"/>
+		<xsl:with-param name="number" select="@ORDER"/>
 	  	<xsl:with-param name="pos" select="'left'"/>
 	   </xsl:call-template>
 
 	   <xsl:call-template name="navThumb">
 		<xsl:with-param name="node" select="$node2"/>
-		<xsl:with-param name="number" select="(count($node2/preceding::m:div[@ORDER or @LABEL][m:div] | $node2/ancestor::m:div[@ORDER or @LABEL][m:div]) + 1)"/>
+		<xsl:with-param name="number" select="$node2/@ORDER"/>
 	   </xsl:call-template>
+
 	   <xsl:call-template name="navThumb">
 		<xsl:with-param name="node" select="$node3"/>
-		<xsl:with-param name="number" select="(count($node3/preceding::m:div[@ORDER or @LABEL][m:div] | $node3/ancestor::m:div[@ORDER or @LABEL][m:div]) + 1)"/>
+		<xsl:with-param name="number" select="$node3/@ORDER"/>
 	  	<xsl:with-param name="pos" select="'right'"/>
 	   </xsl:call-template>
   </tr>
