@@ -28,6 +28,10 @@
 <xsl:param name="brand" select="'calisphere'"/>
 <xsl:param name="servlet.dir"/>
 
+<!-- xsl:key name="thumbCount" match="m:fileGrp[contains(@USE,'thumbnail')][1]/m:file"
+use="'count'"/ -->
+
+
 <!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
     <xsl:choose>
@@ -94,6 +98,7 @@
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
+	<!-- xsl:when test="count(key('thumbCount','count')) = 1" --> 
 	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"> 
 	  <xsl:text>image-simple</xsl:text>
         </xsl:when>
