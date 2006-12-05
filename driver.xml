@@ -194,6 +194,11 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="toQDC">./xslt/dc/OCA-DC.qdc.xslt</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
   </mets-profile-driver>
+  
+  <mets-profile-driver label="Escholarship" pref="./profiles/vf9g44mq8" frameworkID="vf9g44mq8">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/vf9g44mq8</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/eschol-mets2qdc.xsl</tool>
+  </mets-profile-driver>
 
   <mets-profile-driver label="removed" pref="./profiles/Removed.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4199q42g</PROFILE>
