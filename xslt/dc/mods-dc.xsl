@@ -48,6 +48,11 @@ MODS
 		<xsl:with-param name="node" select="/m:mets/@LABEL"/>
 		<!-- /m:mets/@LABEL | (//mods:mods)[1]/mods:titleInfo"/ -->
 	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'title'"/>
+                <xsl:with-param name="qualifier">alternative</xsl:with-param>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:titleInfo[position() &gt; 1]"/>
+	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="creator">
