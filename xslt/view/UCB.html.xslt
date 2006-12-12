@@ -287,19 +287,31 @@ use="'count'"/ -->
 <!-- toggel back to TEI view; launch other media -->
 <xsl:template match="insert-LaunchPad" name="insert-LaunchPad">
 <xsl:comment>insert-LaunchPad</xsl:comment>
- <xsl:if test="$page/../TEI.2">
+ <xsl:if test="$page/../TEI.2 or $page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
       <div id="print-control-b" class="nifty4">
           <div class="box4">
-               <table cellspacing="0" cellpadding="0">
-                   <tr>
-           <td width="11"> </td>                          
-	   <td align="left" valign="middle">view: <a href="/{$page/m:mets/@OBJID}?brand={$brand}">scanned version</a>
-           </td>
-           <td align="left" valign="middle">&#160;| 
-         	<span class="highlight">transcription</span>
-	  </td>
+		<xsl:choose>
+		  <xsl:when test="$page/../TEI.2">
+               		<table cellspacing="0" cellpadding="0">
+                   	 <tr>
+           		   <td width="11">&#160;</td>                          
+	    		   <td align="left" valign="middle">view: <a href="/{$page/m:mets/@OBJID}?brand={$brand}">transcription</a></td>
+           		   <td align="left" valign="middle">&#160;|&#160;<span class="highlight">scanned version</span></td>
                         </tr>
                      </table>
+		  </xsl:when>
+		  <xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
+			<table cellspacing="0" cellpadding="0">
+                        <tr>
+                           <td width="7">&#160;</td>                          
+				   <td align="left" valign="middle">
+					<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video (QuickTime)</a>
+                           </td>
+                           <td><img src="http://calisphere-dev.cdlib.org:2210/images/misc/qt-icon.gif" alt="quicktime graphic" /></td>	
+						</tr>
+                     </table>
+		  </xsl:when>
+		</xsl:choose>
           </div>
         </div> 
   </xsl:if>
