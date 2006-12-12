@@ -27,6 +27,7 @@
 <xsl:param name="debug"/>
 <xsl:param name="brand" select="'calisphere'"/>
 <xsl:param name="servlet.dir"/>
+<xsl:param name="doc.view"/>
 
 <!-- xsl:key name="thumbCount" match="m:fileGrp[contains(@USE,'thumbnail')][1]/m:file"
 use="'count'"/ -->
@@ -84,6 +85,10 @@ use="'count'"/ -->
 	  <xsl:text>&amp;smLinkStyle=</xsl:text>
 	  <xsl:value-of select="$smLinkStyle"/>
 	</xsl:if>
+	<xsl:if test="$doc.view">
+	  <xsl:text>&amp;doc.view=</xsl:text>
+	  <xsl:value-of select="$doc.view"/>
+	</xsl:if>
   </xsl:variable>
 <xsl:variable name="focusDiv" select="key('absPos',$order)"/>
 
@@ -94,7 +99,7 @@ use="'count'"/ -->
 	</xsl:choose>
 	</xsl:variable>
 
-  <xsl:variable name="page" select="/"/>
+  <xsl:variable name="page" select="if (/TEI.2) then /TEI.2 else /"/>
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
@@ -278,6 +283,27 @@ use="'count'"/ -->
 </xsl:template>
 
 <!-- calisphere design -->
+
+<!-- toggel back to TEI view; launch other media -->
+<xsl:template match="insert-LaunchPad" name="insert-LaunchPad">
+<xsl:comment>insert-LaunchPad</xsl:comment>
+ <xsl:if test="$page/../TEI.2">
+      <div id="print-control-b" class="nifty4">
+          <div class="box4">
+               <table cellspacing="0" cellpadding="0">
+                   <tr>
+           <td width="11"> </td>                          
+	   <td align="left" valign="middle">view: <a href="/{$page/m:mets/@OBJID}?brand={$brand}">scanned version</a>
+           </td>
+           <td align="left" valign="middle">&#160;| 
+         	<span class="highlight">transcription</span>
+	  </td>
+                        </tr>
+                     </table>
+          </div>
+        </div> 
+  </xsl:if>
+</xsl:template>
 
 <!-- calisphere image-simple -->
 <xsl:template match="insert-largerImageLink">
