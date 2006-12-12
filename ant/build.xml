@@ -1,0 +1,20 @@
+<project basedir="." default="jar">
+    
+    <property name="resource.home" value="resources/stylesheet/mets-support"/>
+    <target name="jar">
+        <!-- Create a jar file for ingest -->
+        <delete dir="../temp"/>
+        <delete dir="../build"/>
+        <mkdir dir="../temp/${resource.home}"/>
+        <mkdir dir="../build"/>
+        <copy todir="../temp/${resource.home}">
+            <fileset dir=".." includes="profiles/*.* xslt/**/*.* xslt/*.* driver.xml"/>
+        </copy>
+        <jar destfile="../build/mets-support.jar">
+            <fileset dir="../temp"/>
+        </jar>
+        <delete dir="../temp"/>
+    </target>
+<!-- add to and from cvs -->
+
+</project>
