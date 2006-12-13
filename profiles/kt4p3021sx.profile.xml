@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS_Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-0.xsd">
+    <URI LOCTYPE="URL">http://ark.cdlib.org/ark:/13030/kt4p3021sx</URI>
+    <title>WAS web crawl object</title>
+    <abstract>Objects created by web crawling with Heritrix</abstract>
+    <date>2006-12-13T11:28:00-08:00</date>
+    <contact>
+        <name>Shifra Pride Raffel</name>
+        <address>California Digital Library; University of California Office of the President; 415
+            20th Street, 4th Floor; Oakland, CA 94612-2901</address>
+    </contact>
+    <related_profile URI=""/>
+    <extension_schema>
+        <URI>http://ark.cdlib.org/schemas/appqualifieddc/appqualifieddc.xsd</URI>
+        <context>xmlns="http://ark.cdlib.org/schemas/appqualifieddc/"</context>
+        <note></note>
+    </extension_schema>
+    <description_rules/>
+    <controlled_vocabularies/>
+    <structural_requirements>
+        <metsHdr>
+            <requirement/>
+        </metsHdr>
+        <dmdSec>
+            <requirement/>
+        </dmdSec>
+        <fileSec>
+            <requirement/>
+        </fileSec>
+        <structMap/>
+        <behaviorSec/>
+        <multiSection>
+            <requirement/>
+        </multiSection>
+    </structural_requirements>
+    <technical_requirements>
+        <content_files/>
+        <metadata_files/>
+    </technical_requirements>
+    <tool>
+        <agency></agency>
+        <URI>http://ark-dev.cdlib.org:8086/xslt/extract-dc/admin-dcMODS.qdc.xsl</URI>
+        <description>
+            <p ID="toQDC">This XSLT is used to extract an Dublin Core record from the object</p>
+        </description>
+    </tool>
+    <tool>
+        <agency>California Digital Library</agency>
+        <URI>http://ark-dev.cdlib.org:8086/xslt/bpc-mets/allMetsBPC.xsl</URI>
+        <description>
+            <p ID="generalBPC">This generic METS Best Practice Checker XSLT is from Schematron and outputs errors as XML.</p>
+        </description>
+    </tool>
+</METS_Profile>
