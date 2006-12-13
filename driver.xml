@@ -1,6 +1,6 @@
 <mets-profiles>
 <!-- $Id$ $Name$ -->
-<!-- 
+<!--
  This is a mets profile driver file.  Its purpose it to provide a
  mapping of METS PROFILES to files needed to support use of the
  profiles.
@@ -13,36 +13,36 @@ METS profile driver
 	<tool> element
 		type = " xslt | java | ???"
 		role = " ...
-	the value of <tool> is a file path / uri.  If relative, 
+	the value of <tool> is a file path / uri.  If relative,
 	they are releative to this driver.xml file, or they are
 	releative to an xml:base
---> <!-- 
+--> <!--
 
 Copyright (c) 2006, Regents of the University of California
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without 
+Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-- Redistributions of source code must retain the above copyright notice, 
+- Redistributions of source code must retain the above copyright notice,
   this list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice, 
-  this list of conditions and the following disclaimer in the documentation 
+- Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 - Neither the name of the University of California nor the names of its
-  contributors may be used to endorse or promote products derived from this 
+  contributors may be used to endorse or promote products derived from this
   software without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -->
 
@@ -194,7 +194,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="toQDC">./xslt/dc/OCA-DC.qdc.xslt</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
   </mets-profile-driver>
-  
+
   <mets-profile-driver label="Escholarship" pref="./profiles/vf9g44mq8" frameworkID="vf9g44mq8">
     <PROFILE>http://ark.cdlib.org/ark:/13030/vf9g44mq8</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/eschol-mets2qdc.xsl</tool>
@@ -203,6 +203,11 @@ POSSIBILITY OF SUCH DAMAGE.
   <mets-profile-driver label="removed" pref="./profiles/Removed.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4199q42g</PROFILE>
     <tool type="xslt" role="toHTML">./xslt/view/removed.html.xslt</tool>
+  </mets-profile-driver>
+
+  <mets-profile-driver label="WAS" pref="./profiles/kt4p3021sx" frameworkID="kt4p3021sx">
+    <PROFILE>http://ark.cdlib.org/ark:/13030/kt4p3021sx</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/admin-dcMODS.qdc.xsl</tool>
   </mets-profile-driver>
 
 </mets-profiles>
