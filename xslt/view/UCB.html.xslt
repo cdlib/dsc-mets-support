@@ -145,9 +145,9 @@ use="'count'"/ -->
 <!-- image-simple metadata printable-details -->
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="($page/mets:mets/*/@xtf:meta or $page/../TEI.2/xtf:meta) and not($layout='metadata')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
-	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
+	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/*" mode="briefMeta"/>
 	<p><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-name"/></p>
   </xsl:when>
