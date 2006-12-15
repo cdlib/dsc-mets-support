@@ -67,7 +67,8 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
    <xsl:if test="not(/m:mets[@TYPE='archival collection'])">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:odd"/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:odd[not(child::e:p)] |
+                /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:odd[e:p]/*[not(name()='head')]"/>
         </xsl:call-template>
    </xsl:if>
 </xsl:template>
@@ -129,6 +130,35 @@ select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate"
 		<xsl:with-param name="prependString" select="'http://ark.cdlib.org/'"/>
 		<xsl:with-param name="node" select="/m:mets/@OBJID"/>
 	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'identifier'"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitid | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:container"/>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template match="e:unitid[@label]">
+	<xsl:value-of select="@label"/>
+	<xsl:if test="
+			substring(@label,string-length(@label)) != ':'
+			and
+			substring(@label, string-length(@label)-1) != ': '
+		">:
+	</xsl:if>
+	<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="e:container[@label or @type]">
+	<xsl:choose>
+		<xsl:when test="@label">
+		<xsl:value-of select="@label"/><xsl:text> </xsl:text>
+		</xsl:when>
+		<xsl:when test="@type">
+		<xsl:value-of select="@type"/>
+		<xsl:text> </xsl:text>
+		</xsl:when>
+		<xsl:otherwise/>
+	</xsl:choose>
+	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template name="source">
