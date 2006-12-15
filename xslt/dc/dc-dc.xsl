@@ -58,7 +58,7 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
                 <xsl:with-param name="qualifier">series</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='ead']/m:mdRef/@LABEL"/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']/@LABEL"/>
         </xsl:call-template>
 </xsl:template>
 	
