@@ -12,13 +12,13 @@
     <xsl:output encoding="UTF-8" indent="yes" method="xml" exclude-result-prefixes="#all"/>
 
     <xsl:template match="/">
-        <qualifieddc xmlns="http://ark.cdlib.org/schemas/appqualifieddc/"
+        <qdc xmlns="http://ark.cdlib.org/schemas/appqualifieddc/"
             xmlns:dc="http://purl.org/dc/elements/1.1/" 
             xmlns:dcterms="http://purl.org/dc/terms/"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ark.cdlib.org/schemas/appqualifieddc/ http://ark.cdlib.org/schemas/appqualifieddc/appqualifieddc.xsd">
             <xsl:apply-templates/>
-        </qualifieddc>
+        </qdc>
     </xsl:template>
 
     <xsl:template match="mets:mets">
@@ -26,46 +26,46 @@
         <xsl:call-template name="creator"/>
         <xsl:call-template name="subject"/>
         <xsl:call-template name="description"/>
-        <dc:publisher>
+        <publisher>
             <xsl:text>University of California Press</xsl:text>
-        </dc:publisher>
+        </publisher>
         <!-- dc:contributor -->
         <xsl:call-template name="date"/>
-        <dc:type xsi:type="dcterms:DCMIType">
+        <type xsi:type="dcterms:DCMIType">
             <xsl:text>Text</xsl:text>
-        </dc:type>
-        <dc:format xsi:type="dcterms:IMT">
+        </type>
+        <format xsi:type="dcterms:IMT">
             <xsl:text>application/xml</xsl:text>
-        </dc:format>
+        </format>
         <xsl:call-template name="identifier"/>
         <!-- dc:source -->
-        <dc:language xsi:type="dcterms:ISO639-2">
+        <language xsi:type="dcterms:ISO639-2">
             <xsl:text>eng</xsl:text>
-        </dc:language>
+        </language>
         <!-- dc:relation -->
-        <dcterms:isPartOf xsi:type="dcterms:URI">
+        <relation.ispartof xsi:type="dcterms:URI">
             <xsl:text>http://www.ucpress.edu/</xsl:text>
-        </dcterms:isPartOf>
-        <dcterms:isPartOf xsi:type="dcterms:URI">
+        </relation.ispartof>
+        <relation.ispartof xsi:type="dcterms:URI">
             <xsl:text>http://escholarship.cdlib.org</xsl:text>
-        </dcterms:isPartOf>
+        </relation.ispartof>
         <xsl:call-template name="coverage"/>
         <xsl:call-template name="rights"/>
     </xsl:template>
 
    <xsl:template name="title">
       <xsl:for-each select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='titleInfo']">
-         <dc:title>
+         <title>
             <xsl:value-of select="*"/>
-         </dc:title>
+         </title>
       </xsl:for-each>
    </xsl:template>
 
    <xsl:template name="creator">
       <xsl:for-each select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='name']">
-         <dc:creator>
+         <creator>
             <xsl:apply-templates select="*"/>
-         </dc:creator>
+         </creator>
       </xsl:for-each>
    </xsl:template>
    
@@ -90,17 +90,17 @@
 
     <xsl:template match="*[local-name()='subject'][@authority='lcsh'][parent::*[local-name()='mods']]" mode="subject">
         <xsl:if test="normalize-space(.)!=''">
-           <dc:subject xsi:type="dcterms:LCSH">
+           <subject xsi:type="dcterms:LCSH">
                 <xsl:apply-templates mode="subject"/>
-            </dc:subject>
+            </subject>
         </xsl:if>
     </xsl:template>
    
    <xsl:template match="*[local-name()='subject'][@authority='mesh'][parent::*[local-name()='mods']]" mode="subject">
       <xsl:if test="normalize-space(.)!=''">
-         <dc:subject xsi:type="dcterms:MESH">
+         <subject xsi:type="dcterms:MESH">
             <xsl:apply-templates mode="subject"/>
-         </dc:subject>
+         </subject>
       </xsl:if>
    </xsl:template>
    
@@ -115,65 +115,65 @@
 
     <xsl:template match="*[matches(local-name(), 'SubDescs1|SubDescs2|SubDescs3|SubDescs4|SubDescs5|SubDescs6|SubDescs7|SubDescs8|SubDescs9|SubDescs10')]">
         <xsl:if test="normalize-space(.)!=''">
-            <dc:subject>
+            <subject>
                 <xsl:apply-templates/>
-            </dc:subject>
+            </subject>
         </xsl:if>
     </xsl:template>
 
     <xsl:template name="description">
         <xsl:if test="mets:dmdSec[@ID='ucpress']/mets:mdWrap/mets:xmlData/*[local-name()='ROW']/*[local-name()='UCPnum.Copy']">
-            <dc:description>
+            <description>
                 <xsl:apply-templates select="mets:dmdSec[@ID='ucpress']/mets:mdWrap/mets:xmlData/*[local-name()='ROW']/*[local-name()='UCPnum.Copy']"/>
-            </dc:description>
+            </description>
         </xsl:if>
     </xsl:template>
 
     <xsl:template name="date">
        <xsl:if test="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']//*[local-name()='dateIssued'][@encoding='marc']">
-            <dc:date>
+            <date>
                <xsl:value-of select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']//*[local-name()='dateIssued'][@encoding='marc']"/>
-            </dc:date>
+            </date>
         </xsl:if>
     </xsl:template>
 
     <xsl:template name="identifier">
-        <dc:identifier xsi:type="dcterms:URI">
+        <identifier xsi:type="dcterms:URI">
             <xsl:text>http://ark.cdlib.org/</xsl:text><xsl:value-of select="//mets:mets/@OBJID"/>
-        </dc:identifier>
+        </identifier>
        <xsl:for-each select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='identifier'][@type='isbn']">
-          <dc:identifier>
+          <identifier>
              <xsl:text>ISBN: </xsl:text>
              <xsl:value-of select="."/>
-          </dc:identifier>
+          </identifier>
        </xsl:for-each>
        <xsl:for-each select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='identifier'][@type='lccn']">
-          <dc:identifier>
+          <identifier>
              <xsl:text>LCCN: </xsl:text>
              <xsl:value-of select="."/>
-          </dc:identifier>
+          </identifier>
        </xsl:for-each>
     </xsl:template>
 
     <!-- for-each? -->
     <xsl:template name="coverage">
         <xsl:if test="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='subject']/*[local-name()='geographic']">
-            <dc:coverage>
+            <coverage>
                 <xsl:apply-templates select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='subject']/*[local-name()='geographic'][not(.=following::*[local-name()='geographic'])]"/>
-            </dc:coverage>
+            </coverage>
         </xsl:if>
         <xsl:if test="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='subject']/*[local-name()='temporal']">
-            <dc:coverage>
+            <coverage>
                 <xsl:apply-templates select="mets:dmdSec[@ID='mods']/mets:mdWrap/mets:xmlData/*[local-name()='mods']/*[local-name()='subject']/*[local-name()='temporal'][not(.=following::*[local-name()='temporal'])]"/>
-            </dc:coverage>
+            </coverage>
         </xsl:if>
     </xsl:template>
 
     <xsl:template name="rights">
         <xsl:if test="mets:dmdSec[@ID='ucpress']/mets:mdWrap/mets:xmlData/*[local-name()='ROW']/*[local-name()='public_nonPublic']">
-            <dc:rights>
+            <rights>
                 <xsl:value-of select="mets:dmdSec[@ID='ucpress']/mets:mdWrap/mets:xmlData/*[local-name()='ROW']/*[local-name()='public_nonPublic']"/>
-            </dc:rights>
+            </rights>
         </xsl:if>
     </xsl:template>
     
