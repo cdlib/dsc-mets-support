@@ -151,6 +151,21 @@ brand: <xsl:value-of select="$brand"/>
 
 </xsl:template>
 
+<xsl:template match="contributor[1][text()]" mode="briefMeta">
+<p>
+        <h2>
+        <xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
+        <xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
+        <xsl:text>:</xsl:text>
+        </h2>
+        <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
+</p>
+<p>
+      <xsl:text> </xsl:text><xsl:value-of select="."/>
+</p>
+</xsl:template>
+
+
 <xsl:template match="insert-brand-links">
 <xsl:comment>insert-brand-links</xsl:comment>
  <xsl:copy-of select="$brand.links"/>
