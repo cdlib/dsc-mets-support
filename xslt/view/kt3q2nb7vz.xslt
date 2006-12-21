@@ -171,6 +171,31 @@ brand: <xsl:value-of select="$brand"/>
  </xsl:choose>
 </xsl:template>
 
+<xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
+<xsl:choose>
+  <xsl:when test="name() = 'contributor'">
+        <p>
+                <h2>
+                <xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
+                <xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
+                <xsl:text>:</xsl:text>
+                </h2>
+                <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
+        </p>
+        <p>
+        <xsl:text> </xsl:text><xsl:value-of select="."/>
+        </p>
+  </xsl:when>
+  <xsl:when test="name() = 'creator' and ../contributor"/>
+  <xsl:otherwise>
+        <p>
+                <h2>Contributor:</h2>
+                <xsl:text> </xsl:text><xsl:value-of select="."/>
+        </p>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
 
 <!-- xsl:template match='ead:*'>
         <xsl:if test="descendant-or-self::*[text()]"><p><xsl:apply-templates/></p></xsl:if>
@@ -207,8 +232,8 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:template -->
 
 <xsl:template match="ead:lb">
+<xsl:text> -- </xsl:text>
 </xsl:template>
-
 
 <xsl:template match="ead:c">
 		<xsl:apply-templates select="ead:did" mode="did"/>
@@ -223,13 +248,30 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="ead:repository">
 </xsl:template>
 
+<xsl:template match="ead:origination" mode="did">
+<p><h2>Creator:</h2>
+<xsl:value-of select="."/>
+</p>
+</xsl:template>
+
 <xsl:template match="ead:did" mode="did">
-        <xsl:apply-templates select="ead:unittitle, ead:unitdate, ead:unitid" mode="did"/>
+	<xsl:if test="not(ead:unittitle)">
+<p><h2>Title:</h2>
+<xsl:value-of select="../ead:series/ead:unittitle[position() = last()]"/>
+</p></xsl:if>
+        <xsl:apply-templates select=".//ead:unittitle, .//ead:origination, .//ead:unitdate, .//ead:unitid | .//ead:container, .//ead:physdesc" mode="did"/>
+        <xsl:apply-templates select="ead:abstract | ead:langmaterial | ead:materialspec | ead:note | ead:physloc | ead:repository " mode="did"/>
 <!-- abstract, container, dao, daogrp, head, langmaterial, materialspec, note, origination, physdesc, physloc, repository, unitdate, unitid, unittitle -->
 </xsl:template>
 
 <xsl:template match="*" mode="did">
 	<p><xsl:apply-templates/></p>
+</xsl:template>
+
+<xsl:template match="ead:physdesc" mode="did">
+<p><h2>Format:</h2>
+<xsl:value-of select="."/>
+</p>
 </xsl:template>
 
 <xsl:template match="ead:unitdate" mode="did">
@@ -238,7 +280,7 @@ brand: <xsl:value-of select="$brand"/>
 </p>
 </xsl:template>
 
-<xsl:template match="ead:unitid" mode="did">
+<xsl:template match="ead:unitid | ead:container" mode="did">
 <p><h2>Identifier:</h2>
 <xsl:value-of select="."/>
 </p>
@@ -246,7 +288,7 @@ brand: <xsl:value-of select="$brand"/>
 
 <xsl:template match="ead:unittitle" mode="did">
 <p><h2>Title:</h2>
-<xsl:value-of select="."/>
+<xsl:apply-templates select="text()|ead:lb"/>
 </p>
 </xsl:template>
 
