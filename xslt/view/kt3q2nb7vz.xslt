@@ -190,7 +190,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:otherwise>
         <p>
                 <h2>Contributor:</h2>
-                <xsl:text> </xsl:text><xsl:value-of select="."/>
+                <xsl:text> </xsl:text><xsl:apply-templates select="."/>
         </p>
   </xsl:otherwise>
 </xsl:choose>
@@ -249,10 +249,28 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:template>
 
 <xsl:template match="ead:origination" mode="did">
-<p><h2>Creator:</h2>
-<xsl:value-of select="."/>
+<xsl:choose>
+  <xsl:when test="text() and not (ead:*)">
+<p><h2>Contributor:</h2>
+	<xsl:value-of select="."/>
 </p>
+  </xsl:when>
+  <xsl:otherwise>
+<p><h2>Contributor:</h2>
+</p>
+	<xsl:apply-templates select="*" mode="did"/>
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
+
+<xsl:template match="ead:persname | ead:corpname" mode="did">
+	<p><xsl:value-of select="."/></p>
+</xsl:template>
+
+<xsl:template match="ead:persname[@role] | ead:corpname[@role]" mode="did">
+	<p><xsl:value-of select="."/> (<xsl:value-of select="@role"/>)</p>
+</xsl:template>
+
 
 <xsl:template match="ead:did" mode="did">
 	<xsl:if test="not(ead:unittitle)">
@@ -260,7 +278,7 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:value-of select="../ead:series/ead:unittitle[position() = last()]"/>
 </p></xsl:if>
         <xsl:apply-templates select=".//ead:unittitle, .//ead:origination, .//ead:unitdate, .//ead:unitid | .//ead:container, .//ead:physdesc" mode="did"/>
-        <xsl:apply-templates select="ead:abstract | ead:langmaterial | ead:materialspec | ead:note | ead:physloc | ead:repository " mode="did"/>
+        <xsl:apply-templates select="ead:abstract | ead:langmaterial | ead:materialspec | ead:note | ead:physloc " mode="did"/>
 <!-- abstract, container, dao, daogrp, head, langmaterial, materialspec, note, origination, physdesc, physloc, repository, unitdate, unitid, unittitle -->
 </xsl:template>
 
