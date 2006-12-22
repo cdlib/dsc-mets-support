@@ -96,7 +96,7 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
 
 <xsl:template name="date">
 <xsl:for-each
-select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did/e:unitdate">
+select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did//e:unitdate">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
                 <xsl:with-param name="node" select="."/>
