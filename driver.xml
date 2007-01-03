@@ -190,7 +190,7 @@ POSSIBILITY OF SUCH DAMAGE.
   <!--
   -->
   <mets-profile-driver label="OAI Harvesting" pref="./profiles/vf5h99080.profile.xml" frameworkID="vf5h99080">
-    <PROFILE>http://ark.cdlib.org/ark:/13030/vf5h99080 </PROFILE>
+    <PROFILE>http://ark.cdlib.org/ark:/13030/vf5h99080</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/OCA-DC.qdc.xslt</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
   </mets-profile-driver>
