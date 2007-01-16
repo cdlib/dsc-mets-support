@@ -287,25 +287,27 @@ use="'count'"/ -->
 <!-- toggel back to TEI view; launch other media -->
 <xsl:template match="insert-LaunchPad" name="insert-LaunchPad">
 <xsl:comment>insert-LaunchPad</xsl:comment>
- <xsl:if test="$page/../TEI.2 or $page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
-      <div id="print-control-b" class="nifty4">
+ <!-- xsl:if test="$page/../TEI.2 or $page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']" -->
+ <xsl:if test="$page/../TEI.2 or $focusDiv/m:div[@TYPE='video/reference']">
+      <div id="{@class}" class="nifty4">
           <div class="box4">
 		<xsl:choose>
 		  <xsl:when test="$page/../TEI.2">
                		<table cellspacing="0" cellpadding="0">
                    	 <tr>
-           		   <td width="11">&#160;</td>                          
-	    		   <td align="left" valign="middle">view: <a href="/{$page/m:mets/@OBJID}?brand={$brand}">transcription</a></td>
-           		   <td align="left" valign="middle">&#160;|&#160;<span class="highlight">scanned version</span></td>
+           		   <td width="7">&#160;</td>                          
+	    		   <td align="left" valign="middle"><a href="/{$page/m:mets/@OBJID}?brand={$brand}">view transcription</a></td>
+           		   <td align="left" valign="middle">&#160;|&#160;scanned version</td>
                         </tr>
                      </table>
 		  </xsl:when>
-		  <xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
+		  <!-- xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']" -->
+		  <xsl:when test="$focusDiv/m:div[@TYPE='video/reference']">
 			<table cellspacing="0" cellpadding="0">
                         <tr>
                            <td width="7">&#160;</td>                          
 				   <td align="left" valign="middle">
-					<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video (QuickTime)</a>
+					<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video (QuickTime)</a>
                            </td>
                            <td><img src="http://calisphere-dev.cdlib.org:2210/images/misc/qt-icon.gif" alt="quicktime graphic" /></td>	
 						</tr>

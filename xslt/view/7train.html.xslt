@@ -83,7 +83,7 @@
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
-	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"> 
+	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')]/m:file) = 1"> 
 	  <xsl:text>image-simple</xsl:text>
         </xsl:when>
 	<xsl:otherwise>
