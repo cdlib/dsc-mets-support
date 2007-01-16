@@ -151,18 +151,29 @@ brand: <xsl:value-of select="$brand"/>
 
 </xsl:template>
 
-<xsl:template match="contributor[1][text()]" mode="briefMeta">
-<p>
-        <h2>
-        <xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
-        <xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
-        <xsl:text>:</xsl:text>
-        </h2>
-        <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
-</p>
-<p>
-      <xsl:text> </xsl:text><xsl:value-of select="."/>
-</p>
+<xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
+<xsl:choose>
+  <xsl:when test="name() = 'contributor'">
+	<p>
+       		<h2>
+       		<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
+       		<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
+       		<xsl:text>:</xsl:text>
+       		</h2>
+       		<xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
+	</p>
+	<p>
+      	<xsl:text> </xsl:text><xsl:value-of select="."/>
+	</p>
+  </xsl:when>
+  <xsl:when test="name() = 'creator' and ../contributor"/>
+  <xsl:otherwise>
+	<p>
+		<h2>Contributor:</h2>
+       		<xsl:text> </xsl:text><xsl:value-of select="."/>
+	</p>
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 
