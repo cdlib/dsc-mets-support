@@ -29,7 +29,21 @@
 <xsl:copy-of select="$brand.search.box"/>
 </xsl:template>
 
-<xsl:template match="title[1][text()]| contributor[1][text()]| description[@q='abstract'][text()][1]| date[1][text()]"  mode="briefMeta">
+<xsl:template match="date[1][text()]"  mode="briefMeta">
+	<p>
+	<h2>Date:</h2>
+	<xsl:choose>
+	   <xsl:when test="not(../date[@q='created'] = '')">
+		<xsl:value-of select="../date[@q='created'][1]"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+		<xsl:value-of select="."/>
+	   </xsl:otherwise>
+	</xsl:choose>
+	</p>
+</xsl:template>
+
+<xsl:template match="title[1][text()]| contributor[1][text()]| description[@q='abstract'][text()][1]"  mode="briefMeta">
 <p>
 	<h2>
 	<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
@@ -211,7 +225,7 @@ and the referer is on-site -->
       <p>
         <a class="highlight" href="{$queryURL}">
           <xsl:text>Back</xsl:text>
-		<xsl:if test="not (session:isEnabled()
+		<!-- xsl:if test="not (session:isEnabled()
                 and
                         (not (matches($http.Referer, concat($theHost,'/search')))
                          or (matches($http.Referer, '/test/qa.html$'))
@@ -219,7 +233,7 @@ and the referer is on-site -->
                 and (normalize-space($http.Referer) != ''))
 		">
  		<xsl:text> to Search Results</xsl:text>
-		</xsl:if>
+		</xsl:if -->
         </a>
       </p>
     </xsl:if>
