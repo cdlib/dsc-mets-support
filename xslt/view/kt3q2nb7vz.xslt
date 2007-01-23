@@ -176,9 +176,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="name() = 'contributor'">
         <p>
                 <h2>
-                <xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
-                <xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
-                <xsl:text>:</xsl:text>
+                <xsl:text>Creator/Contributor:</xsl:text>
                 </h2>
                 <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
         </p>
@@ -189,7 +187,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="name() = 'creator' and ../contributor"/>
   <xsl:otherwise>
         <p>
-                <h2>Contributor:</h2>
+                <h2>Creator/Contributor:</h2>
                 <xsl:text> </xsl:text><xsl:apply-templates select="."/>
         </p>
   </xsl:otherwise>
@@ -249,14 +247,18 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:template>
 
 <xsl:template match="ead:origination" mode="did">
+	<xsl:apply-templates select="*" mode="did"/>
+</xsl:template>
+
+<xsl:template match="ead:origination[1]" mode="did">
 <xsl:choose>
   <xsl:when test="text() and not (ead:*)">
-<p><h2>Contributor:</h2>
+<p><h2>Creator/Contributor:</h2>
 	<xsl:value-of select="."/>
 </p>
   </xsl:when>
   <xsl:otherwise>
-<p><h2>Contributor:</h2>
+<p><h2>Creator/Contributor:</h2>
 </p>
 	<xsl:apply-templates select="*" mode="did"/>
   </xsl:otherwise>
@@ -1288,7 +1290,7 @@ select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods
 
 <!-- calisphere image-complex -->
 
-<xsl:template match="insert-inner-paging">
+<!-- xsl:template match="insert-inner-paging">
 <xsl:comment>insert-inner-paging</xsl:comment>
 <xsl:choose>
   <xsl:when test="number($order) &lt;  0">
@@ -1303,7 +1305,7 @@ select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods
 	<a href="?order={number($order) + 1}{$brandCgi}">next</a>
   </xsl:otherwise>
 </xsl:choose>
-</xsl:template>
+</xsl:template -->
 
  
 </xsl:stylesheet>

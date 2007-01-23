@@ -308,7 +308,7 @@
 
 <!-- calisphere image-complex -->
 
-<xsl:template match="insert-inner-paging">
+<!-- xsl:template match="insert-inner-paging">
 <xsl:comment>insert-inner-paging</xsl:comment>
 <xsl:variable name="imageIsNext">
 	<xsl:if test="$page/key('absPos',number($order) +1)/m:div/m:fptr">true</xsl:if>
@@ -326,7 +326,7 @@
 <xsl:if test="$imageIsNext = 'true'">
 	<a href="/{$page/m:mets/@OBJID}/?order={number($order) + 1}{$brandCgi}">next</a>
 </xsl:if>
-</xsl:template>
+</xsl:template -->
 
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>

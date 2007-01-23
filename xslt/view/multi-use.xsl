@@ -33,7 +33,7 @@
 	<p>
 	<h2>Date:</h2>
 	<xsl:choose>
-	   <xsl:when test="not(../date[@q='created'] = '')">
+	   <xsl:when test="../date[@q='created'] and not(../date[@q='created'] = '')">
 		<xsl:value-of select="../date[@q='created'][1]"/>
 	   </xsl:when>
 	   <xsl:otherwise>
@@ -46,9 +46,16 @@
 <xsl:template match="title[1][text()]| contributor[1][text()]| description[@q='abstract'][text()][1]"  mode="briefMeta">
 <p>
 	<h2>
+	<xsl:choose>
+	  <xsl:when test="name()='contributor'">
+		<xsl:text>Creator/Contributor:</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
 	<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
 	<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
 	<xsl:text>:</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
 	</h2>
 	<xsl:text> </xsl:text><xsl:value-of select="."/>
 </p>

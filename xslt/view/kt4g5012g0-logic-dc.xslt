@@ -156,9 +156,7 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="name() = 'contributor'">
 	<p>
        		<h2>
-       		<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
-       		<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
-       		<xsl:text>:</xsl:text>
+       		<xsl:text>Creator/Contributor:</xsl:text>
        		</h2>
        		<xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
 	</p>
@@ -166,10 +164,10 @@ brand: <xsl:value-of select="$brand"/>
       	<xsl:text> </xsl:text><xsl:value-of select="."/>
 	</p>
   </xsl:when>
-  <xsl:when test="name() = 'creator' and ../contributor"/>
+  <xsl:when test="name() = 'creator' and ../contributor[text()]"/>
   <xsl:otherwise>
 	<p>
-		<h2>Contributor:</h2>
+		<h2>Creator/Contributor:</h2>
        		<xsl:text> </xsl:text><xsl:value-of select="."/>
 	</p>
   </xsl:otherwise>

@@ -66,11 +66,38 @@
   <xsl:value-of select="$order"></xsl:value-of>
 -->
 	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div"/>
-	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/>
+<!-- hr/ -->
+	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
+		<xsl:with-param name="depth" select="number(0)"/>
+	</xsl:apply-templates>
+	<!-- xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="detail-div">
+		<xsl:with-param name="depth" select="number(0)"/>
+	</xsl:apply-templates -->
+</xsl:template>
+
+<xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="detail-div">
+<xsl:param name="depth"/>
+<xsl:variable name="A" select="count(../m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
+<xsl:variable name="focusDivOrderInSiblingCount" select="count(./preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
+<div class="structMap">
+<xsl:if test="$order = @ORDER"><b>*</b></xsl:if>
+<xsl:value-of select="$depth"/><xsl:text> </xsl:text>
+<xsl:value-of select="@ORDER"/><xsl:text>.  </xsl:text>
+{<xsl:value-of select="$focusDivOrderInSiblingCount"/>/<xsl:value-of select="$A"/>} 
+<xsl:value-of select="boolean(m:div/m:fptr)"/>
+<xsl:value-of select="@LABEL"/>
+	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="detail-div">
+		<xsl:with-param name="depth" select="$depth+1"/>
+	</xsl:apply-templates>
+</div>
 </xsl:template>
 
 <!-- creates the inner table (AJAXify the paging here somehow?) -->
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
+<xsl:param name="depth"/>
+<!-- xsl:value-of select="$focusDiv/@ORDER"/>=
+<xsl:value-of select="$order"/>=
+<xsl:value-of select="@ORDER"/ -->
 <!-- xsl:message>atl2-table</xsl:message -->
   <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
   <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>  
@@ -80,15 +107,19 @@
         if ($iAmFocusDiv) then boolean(0) else boolean(1)
       else .//m:div[. is $focusDiv]"
   />
+<!-- xsl:value-of select="$iAmParentOfFocusDiv"/>
+/<xsl:value-of select="$focusDiv/preceding-sibling::m:div/@ORDER"/>/
+/<xsl:value-of select="key('divChildShowsChild',$focusDiv/preceding-sibling::m:div/@ORDER)"/>/ -->
   <xsl:variable name="selfAction">
    <xsl:choose>
 	<!-- I am the parent of the focus div, and -->
 	<xsl:when test="($iAmParentOfFocusDiv) 
 		and not ($focusDivShowsChild)
-		and ($focusDivIsImage)">AAtableIsNext</xsl:when>
+		and ($focusDivIsImage)
+">AAtableIsNext</xsl:when>
 	<!-- I am the focus div, and I have kids with pictures -->
 	<xsl:when test="($iAmFocusDiv)
-		and ($focusDivShowsChildStrict)">BtableIsNext</xsl:when>
+		and ($focusDivShowsChild)">bBtableIsNext</xsl:when>
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
@@ -103,14 +134,22 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-<!-- <xsl:value-of select="$selfAction"/> -->
-<xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
-<xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div/m:fptr]) + 1"/>
+<xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
+<xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>
 <xsl:variable name="pagesCount" select="ceiling(  $focusDivSiblingCount div 15 )"/>
 <xsl:variable name="thisPageOrder" select="1 + ($focusDivOrderInSiblingCountMinus1 - ($focusDivOrderInSiblingCountMinus1 mod 15)) div 15"/>
-<xsl:variable name="startOfPage" select="number(($thisPageOrder -1)*15 + 1 ) cast as xs:integer"/>
-<xsl:variable name="endOfPage" select="number($startOfPage + 14) cast as xs:integer"/>
+<xsl:variable name="startOfPage" select="
+		if ($depth = 0)
+		then number(($thisPageOrder -1)*15 + 1 ) cast as xs:integer
+		else number(1) cast as xs:integer"/>	
+<xsl:variable name="endOfPage" select="
+		if ($depth = 0 )
+		then number($startOfPage + 14) cast as xs:integer
+		else number($focusDivSiblingCount) cast as xs:integer"/>
+
+<!-- xsl:value-of select="$selfAction"/ -->
+
 <xsl:variable name="itemsOnNextPage">
     <xsl:choose>
 	<xsl:when test="$thisPageOrder + 1 = $pagesCount">
@@ -148,10 +187,12 @@
 		  <xsl:apply-templates 
 			select="for $x in $startOfPage to $endOfPage return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
 			mode="image-table"/>
+		  <!-- xsl:apply-templates 
+			select="for $x in 1 to 15 return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
+			mode="image-table"/ -->
 		</table>
 		
 		<div class="image-nav">Click image for larger view</div>
-
 		<xsl:if test="$focusDivSiblingCount &gt; 15">
 		  <div class="pagination">
 		    <xsl:if test="$pagesBehind = 'true'">
@@ -192,10 +233,13 @@
 		    </xsl:if>
 		  </div>
 		</xsl:if>
+<xsl:call-template name="nextSib"/>
 
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'recurse')">
-	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/>
+	<xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table">
+		<xsl:with-param name="depth" select="$depth+1"/>
+	</xsl:apply-templates>
 	  </xsl:when>
 	  <xsl:otherwise>
 	<!-- xsl:apply-templates select="m:div[@ORDER or @LABEL][m:div]" mode="alt2-table"/ -->
@@ -240,35 +284,36 @@
 	<xsl:when test="
 		not ($focusDivIsImage)
 		and not ($focusDivShowsChildStrict)
-		and ($focusDiv/parent::m:structMap)">Gheadings</xsl:when>
+		and ($focusDiv/parent::m:structMap)">GtableIsNext</xsl:when>
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
   </xsl:variable>
-
-<!-- [[
+<!-- 
+  [[
 scs:<xsl:value-of select="$focusDivShowsChildStrict"/>|
 <xsl:value-of select="boolean($focusDiv/parent::m:structMap)"/>
-sa<xsl:value-of select="$selfAction"/>]]  -->
+sa<xsl:value-of select="$selfAction"/>]]
+-->
 <xsl:choose>
   <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
 <div class="structMap">
 <xsl:message>hot</xsl:message>
-
 <xsl:choose>
     	<xsl:when test="$iAmFocusDiv">
 		<xsl:copy-of select="$brand.arrow.up"/>
 		<xsl:value-of select="@LABEL"/>
+<xsl:call-template name="breadThumb"/>
     	</xsl:when>
 	<xsl:when test="$focusDecendsFromMe">
 	<xsl:variable name="linkOrder" select="@ORDER"/>
-
 <a href="/{$this.base}/?order={$linkOrder}{$brandCgi}">
 <xsl:copy-of select="$brand.arrow.dn"/>
 <xsl:value-of select="@LABEL"/>
 </a>
 	<xsl:choose>
            <xsl:when test="ends-with($selfAction , 'tableIsNext')">
+<xsl:call-template name="breadThumb"/>
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'headings')">
 <a href="/{$this.base}/?order={@ORDER}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
@@ -280,12 +325,13 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
 	</xsl:otherwise>
 </xsl:choose>
 
+
 	<xsl:choose>
            <xsl:when test="ends-with($selfAction , 'tableIsNext')">
 		<xsl:if test="not($iAmFocusDiv)">
 			<div class="structMap">
 <xsl:copy-of select="$brand.arrow.up"/>
-			<xsl:value-of select="$focusDiv/@LABEL"/>
+			<xsl:value-of select="$focusDiv/@LABEL"/> 
 			</div>
 		</xsl:if>
 	  </xsl:when>
@@ -295,7 +341,7 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
 	  <xsl:when test="ends-with($selfAction , 'headings')">
 <a href="/{$this.base}/?order={@ORDER}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
 	  </xsl:when>
-	  <xsl:otherwise><!-- (<xsl:value-of select="$selfAction"/>) --></xsl:otherwise>
+	  <xsl:otherwise></xsl:otherwise>
 	</xsl:choose>
 
 
@@ -303,6 +349,40 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
  </xsl:when>
  <xsl:otherwise></xsl:otherwise>
 </xsl:choose>
+</xsl:template>
+
+<xsl:template name="nextSib">
+<xsl:variable name="focusDivSiblingCount" select="count(../m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
+<xsl:variable name="focusDivOrderInSiblingCount" select="count(./preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
+  <xsl:if test="not(parent::m:structMap) and $focusDivSiblingCount &gt; 15">
+	<div class="pagination">
+	<xsl:text> </xsl:text>
+		<xsl:if test="1 &lt; $focusDivOrderInSiblingCount">
+			<a href="/{$page/m:mets/@OBJID}/?order={number(preceding-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{preceding-sibling::m:div[m:div//m:fptr][1]/@LABEL}">previous</a>
+			<xsl:text> </xsl:text>
+		</xsl:if>
+	  <xsl:value-of select="$focusDivOrderInSiblingCount"/> of <xsl:value-of select="$focusDivSiblingCount"/> 
+		<xsl:if test="$focusDivSiblingCount &gt; $focusDivOrderInSiblingCount">
+			<xsl:text> </xsl:text>
+			<a href="/{$page/m:mets/@OBJID}/?order={number(following-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{following-sibling::m:div[m:div//m:fptr][1]/@LABEL}">next</a>
+		</xsl:if>
+	</div>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="breadThumb">
+<xsl:if test="not(parent::m:structMap) and m:div/m:fptr">
+<!-- xsl:value-of select="$order, @ORDER"/ -->
+	<table border="0">
+   	<tr>
+		<xsl:call-template name="navThumb">
+	  	<xsl:with-param name="node" select="."/>
+		<xsl:with-param name="number" select="@ORDER"/>
+		<xsl:with-param name="pos" select="if (@ORDER = $order) then 'breadThumbOn' else 'breadThumb'"/>
+		</xsl:call-template>
+   	</tr>
+	</table>
+</xsl:if>
 </xsl:template>
 
 
@@ -356,17 +436,18 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
    <xsl:param name="node"/><!-- div from structMap -->
    <xsl:param name="number"/><!-- order= source oroder of div -->
    <xsl:param name="pos"/><!-- left or right or blank -->
-   <xsl:variable name="imagePos" select="(count( $node/preceding-sibling::m:div[m:div/m:fptr]))"/>
+   <xsl:variable name="imagePos" select="(count( $node/preceding-sibling::m:div[m:div//m:fptr]))"/>
 	<!-- need class="on" on td if this cell has an image in it -->
 		<!-- pos=left will always have content -->
 		<!-- $imagePos &gt; 0 will be true when other divs have content -->
    <td>
+<!-- xsl:value-of select="$order, $number, $imagePos"/ -->
 	<xsl:choose>
 	   <xsl:when test=" ( number($order) = number($number) and
 				(  ($pos ='left') 
 				   or ( $imagePos &gt; 0  and $pos != 'right')  
 				) 
-			    )">
+			    ) or $pos = 'breadThumbOn'">
 		<xsl:attribute name="class" select="'on'"/>
 	   </xsl:when>
 	   <xsl:when test=" ( number($order) = number($number) and
@@ -381,14 +462,15 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
 	   </xsl:when>
 	</xsl:choose>
 <!-- xsl:value-of select="$pos"/>|
-<xsl:value-of select="$order"/>|
+<xsl:value-of select="$order"/>=
 <xsl:value-of select="$number"/>|
 <xsl:value-of select="$imagePos"/>*
 <xsl:value-of select=" ( number($order) = number($number) and
 				(  ($pos='left') or ( $imagePos &gt; 0 )  ) )
 "/ -->
-   <xsl:choose>
-     <xsl:when test="$node/m:div//m:fptr and ( ($imagePos &gt; 0) or ($pos = 'left') )">
+   <!-- xsl:choose>
+     <xsl:when test="$node/m:div//m:fptr and ( ($imagePos &gt; 0) or ($pos = 'left') ) " -->
+<xsl:if test="boolean($node)">
 	<!-- do the // from a key?  would have to count this div's order;
 		but we must already know that here -->
  	<xsl:variable name="naillink">
@@ -429,30 +511,44 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
            </xsl:call-template>
    	</xsl:variable>
 
-	<!-- xsl:choose -->
-	  <!-- xsl:when test="$node/m:div//m:fptr" --><!-- picture -->
+
+
 		<a href="{$nailref}" title="{$node/@LABEL}">
 		<img border="0" width="{$xy/xy/@width}" height="{$xy/xy/@height}" src="{$naillink}"
 			alt="{$node/@LABEL}"/>
+		</a>
 		<br/>
-<!-- xsl:variable name="$nailref"/ -->
 		<xsl:variable name="kidcount" select="count($node/m:div[m:div/m:fptr])"/>
+	<xsl:choose>
+	  <xsl:when test="not($node/@ORDER = $order)">
+		<a href="{$nailref}" title="{$node/@LABEL}">
+		<xsl:call-template name="navThumbKidCount">
+			<xsl:with-param name="kidcount" select="$kidcount"/>
+		</xsl:call-template>
+		</a>
+	  </xsl:when>
+	  <xsl:otherwise>
+		<xsl:call-template name="navThumbKidCount">
+			<xsl:with-param name="kidcount" select="$kidcount"/>
+		</xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+
+
+
+
+
+
+</xsl:if>
+   </td>
+</xsl:template>
+
+<xsl:template name="navThumbKidCount">
+ <xsl:param name="kidcount"/>
 		<xsl:if test="$kidcount = 1">1 item</xsl:if>
 		<xsl:if test="$kidcount &gt; 1">
 			<xsl:value-of select="$kidcount"/> items
 		</xsl:if>
-		</a>
-	  <!-- /xsl:when -->
-	  <!-- xsl:otherwise>
-		<a href="{$nailref}" title="{$node/@LABEL}">
-		<xsl:value-of select="$node/@LABEL"/>
-		</a>
-	  </xsl:otherwise>
-	</xsl:choose -->
-     </xsl:when>
-     <xsl:otherwise/>
-   </xsl:choose>
-   </td>
 </xsl:template>
 
 <xsl:template match="insert-inner-paging">
@@ -465,13 +561,15 @@ sa<xsl:value-of select="$selfAction"/>]]  -->
 </xsl:variable>
 
 <xsl:if test="$imageIsBefore = 'true'">
-	<a href="/{$page/m:mets/@OBJID}/?order={number($order) - 1}{$brandCgi}">previous</a>
+	<a href="/{$page/m:mets/@OBJID}/?order={number($order) - 1}{$brandCgi}"
+	  title="{$page/key('absPos', number($order) - 1 )/@LABEL}">previous</a>
 </xsl:if>
 <xsl:if test="$imageIsBefore = 'true' and $imageIsNext = 'true'">
 	<span class="bullet">|</span>
 </xsl:if>
 <xsl:if test="$imageIsNext = 'true'">
-	<a href="/{$page/m:mets/@OBJID}/?order={number($order) + 1}{$brandCgi}">next</a>
+	<a href="/{$page/m:mets/@OBJID}/?order={number($order) + 1}{$brandCgi}"
+	  title="{$page/key('absPos', number($order) + 1 )/@LABEL}">next</a>
 </xsl:if>
 </xsl:template>
 
