@@ -193,7 +193,7 @@
 		</table>
 		
 		<div class="image-nav">Click image for larger view</div>
-		<xsl:if test="$focusDivSiblingCount &gt; 15">
+		<xsl:if test="$focusDivSiblingCount &gt; 15 and $depth = 0">
 		  <div class="pagination">
 		    <xsl:if test="$pagesBehind = 'true'">
 		  	<a>
@@ -233,7 +233,7 @@
 		    </xsl:if>
 		  </div>
 		</xsl:if>
-<xsl:call-template name="nextSib"/>
+<!-- xsl:call-template name="nextSib"/ -->
 
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'recurse')">
@@ -304,6 +304,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 		<xsl:copy-of select="$brand.arrow.up"/>
 		<xsl:value-of select="@LABEL"/>
 <xsl:call-template name="breadThumb"/>
+<xsl:call-template name="nextSib"/>
     	</xsl:when>
 	<xsl:when test="$focusDecendsFromMe">
 	<xsl:variable name="linkOrder" select="@ORDER"/>
@@ -314,6 +315,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 	<xsl:choose>
            <xsl:when test="ends-with($selfAction , 'tableIsNext')">
 <xsl:call-template name="breadThumb"/>
+<xsl:call-template name="nextSib"/>
 	  </xsl:when>
 	  <xsl:when test="ends-with($selfAction , 'headings')">
 <a href="/{$this.base}/?order={@ORDER}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
@@ -358,28 +360,67 @@ sa<xsl:value-of select="$selfAction"/>]]
 	<div class="pagination">
 	<xsl:text> </xsl:text>
 		<xsl:if test="1 &lt; $focusDivOrderInSiblingCount">
-			<a href="/{$page/m:mets/@OBJID}/?order={number(preceding-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{preceding-sibling::m:div[m:div//m:fptr][1]/@LABEL}">previous</a>
+			<a href="/{$page/m:mets/@OBJID}/?order={number(preceding-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{preceding-sibling::m:div[m:div//m:fptr][1]/@LABEL}">back</a>
 			<xsl:text> </xsl:text>
 		</xsl:if>
-	  <xsl:value-of select="$focusDivOrderInSiblingCount"/> of <xsl:value-of select="$focusDivSiblingCount"/> 
+	 | <!-- xsl:value-of select="$focusDivOrderInSiblingCount"/> of <xsl:value-of select="$focusDivSiblingCount"/ --> 
 		<xsl:if test="$focusDivSiblingCount &gt; $focusDivOrderInSiblingCount">
 			<xsl:text> </xsl:text>
-			<a href="/{$page/m:mets/@OBJID}/?order={number(following-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{following-sibling::m:div[m:div//m:fptr][1]/@LABEL}">next</a>
+			<a href="/{$page/m:mets/@OBJID}/?order={number(following-sibling::m:div[m:div//m:fptr][1]/@ORDER) }{$brandCgi}" title="{following-sibling::m:div[m:div//m:fptr][1]/@LABEL}">forward</a>
 		</xsl:if>
 	</div>
   </xsl:if>
 </xsl:template>
 
 <xsl:template name="breadThumb">
-<xsl:if test="not(parent::m:structMap) and m:div/m:fptr">
+
+<xsl:if test="not(parent::m:structMap)">
 <!-- xsl:value-of select="$order, @ORDER"/ -->
 	<table border="0">
    	<tr>
+	<xsl:choose>
+	  <xsl:when test="m:div/m:fptr">
 		<xsl:call-template name="navThumb">
 	  	<xsl:with-param name="node" select="."/>
 		<xsl:with-param name="number" select="@ORDER"/>
 		<xsl:with-param name="pos" select="if (@ORDER = $order) then 'breadThumbOn' else 'breadThumb'"/>
 		</xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="../m:div[m:div/m:fptr]">
+		<td class="on">	
+
+       <xsl:variable name="nailref">
+           <xsl:text>/</xsl:text>
+           <xsl:value-of select="$page/m:mets/@OBJID"/>
+           <xsl:text>/?order=</xsl:text>
+           <xsl:value-of select="@ORDER"/>
+           <xsl:if test="$size">
+           <xsl:text>&amp;size=</xsl:text>
+           <xsl:value-of select="$size"/>
+           </xsl:if>
+           <xsl:value-of select="$brandCgi"/>
+        </xsl:variable>
+
+
+                <xsl:variable name="kidcount" select="count(m:div[m:div/m:fptr])"/>
+        <xsl:choose>
+          <xsl:when test="not(@ORDER = $order)">
+                <a href="{$nailref}" title="{@LABEL}">
+                <xsl:call-template name="navThumbKidCount">
+                        <xsl:with-param name="kidcount" select="$kidcount"/>
+                </xsl:call-template>
+                </a>
+          </xsl:when>
+          <xsl:otherwise>
+                <xsl:call-template name="navThumbKidCount">
+                        <xsl:with-param name="kidcount" select="$kidcount"/>
+                </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
+		</td>
+	  </xsl:when>
+	  <xsl:otherwise/>
+	</xsl:choose>
    	</tr>
 	</table>
 </xsl:if>
