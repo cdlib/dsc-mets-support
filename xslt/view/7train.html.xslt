@@ -94,7 +94,7 @@
 
 <!-- xsl:output method="html"/ -->
 
-<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script style" indent="yes" method="xhtml"/>
+<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script style" indent="yes" method="xhtml" media-type="text/html"/>
 
   <!-- $page has the METS, $template has HTML and template tags -->
 <xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
