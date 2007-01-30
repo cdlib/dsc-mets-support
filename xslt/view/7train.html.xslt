@@ -9,6 +9,7 @@
 		xmlns:cdlview="http://www.cdlib.org/view"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:mods="http://www.loc.gov/mods/v3"
+		xmlns:gdm="http://sunsite.berkeley.edu/MOA2/"
                 xmlns:dcterms="http://purl.org/dc/terms/"
 		xmlns:xtf="http://cdlib.org/xtf"
 		xmlns:view_="http://www.cdlib.org/view_"
@@ -328,14 +329,38 @@
 </xsl:if>
 </xsl:template -->
 
+<xsl:template match="gdm:LocalID">
+<p><h2>Identifier:</h2><xsl:value-of select="."/>
+</p>
+</xsl:template>
+
+<xsl:template match="gdm:coreDate[@primaryDate or @beginDateNorm]">
+<p><h2>Date:</h2><xsl:value-of select="if (@primaryDate)
+	then @primaryDate
+	else @beginDateNorm"/></p>
+</xsl:template>
+
+<xsl:template match="gdm:GDM">
+ <xsl:apply-templates select="gdm:Core/gdm:coreDate, gdm:Core/gdm:LocalID"/>
+</xsl:template>
+
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
+
+<xsl:variable name="thisGDM">
+                <xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
+                        <xsl:variable name="why" select="."/>
+                        <xsl:apply-templates select="$page/key('md', $why )/m:mdWrap/m:xmlData/gdm:GDM"/>
+                </xsl:for-each>
+</xsl:variable>
+
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
             <div class="metadata-text">
         <xsl:if test="not($order = '1')">
                 <p><h2>Title:</h2>
                 <xsl:value-of select="$focusDiv/@LABEL"/>
                 </p>
+<xsl:copy-of select="$thisGDM"/>
                 <p><h2>From:</h2>
                 <a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
                 </p>
