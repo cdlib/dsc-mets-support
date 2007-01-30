@@ -275,11 +275,11 @@ brand: <xsl:value-of select="$brand"/>
 
 
 <xsl:template match="ead:did" mode="did">
-	<xsl:if test="not(ead:unittitle)">
+	<xsl:if test="not(ead:unittitle) or (ead:unittitle and ead:unittitle='')">
 <p><h2>Title:</h2>
 <xsl:value-of select="../ead:series/ead:unittitle[position() = last()]"/>
 </p></xsl:if>
-        <xsl:apply-templates select=".//ead:unittitle, .//ead:origination, .//ead:unitdate, .//ead:unitid | .//ead:container, .//ead:physdesc" mode="did"/>
+        <xsl:apply-templates select=".//ead:unittitle[text()], .//ead:origination, .//ead:unitdate, .//ead:unitid | .//ead:container, .//ead:physdesc" mode="did"/>
         <xsl:apply-templates select="ead:abstract | ead:langmaterial | ead:materialspec | ead:note | ead:physloc " mode="did"/>
 <!-- abstract, container, dao, daogrp, head, langmaterial, materialspec, note, origination, physdesc, physloc, repository, unitdate, unitid, unittitle -->
 </xsl:template>
@@ -612,7 +612,6 @@ brand: <xsl:value-of select="$brand"/>
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-
   <xsl:choose>
     <!-- special case for -->
     <xsl:when test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='dao']">
@@ -637,6 +636,22 @@ brand: <xsl:value-of select="$brand"/>
   	/></a>
     </xsl:otherwise>
   </xsl:choose>
+  <!-- UCR Kmast -->
+  <xsl:if test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='stereo'] or
+	         $page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='back']">
+   <p>
+   <xsl:if test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='stereo']">
+	<a href="/{$page/m:mets/@OBJID}/stereo">stereo view</a>
+   </xsl:if>
+   <xsl:if test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='stereo'] and
+	         $page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='back']">
+	<xsl:text> | </xsl:text>
+   </xsl:if>
+   <xsl:if test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='back']">
+	<a href="/{$page/m:mets/@OBJID}/back">reverse side</a>
+   </xsl:if>
+   </p>
+  </xsl:if>
 
 </xsl:template>
 

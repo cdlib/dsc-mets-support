@@ -33,7 +33,7 @@
  <xsl:variable name="mrsid-hack">
    <xsl:choose>
      <!-- xsl:when test="key('mrSidHack','file')">2</xsl:when -->
-<xsl:when test="$page/m:mets/@mrSidHack">2</xsl:when>
+<xsl:when test="$page/m:mets/@mrSidHack or $page/../TEI.2/m:mets/m:fileSec//@MIMETYPE='image/x-mrsid-image'">2</xsl:when>
      <!-- xsl:when test="1 = 1">2</xsl:when -->
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
@@ -650,10 +650,17 @@ sa<xsl:value-of select="$selfAction"/>]]
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
 <xsl:variable name="thisMODS">
+	<xsl:choose>
+	   <xsl:when test="number($order) = 1">
+		<xsl:copy-of select="cdlview:MODS(($page/m:mets/m:dmdSec/m:mdWrap/m:xmlData/mods:mods)[1],'')"/>
+	   </xsl:when>
+	   <xsl:otherwise>
 		<xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
 			<xsl:variable name="why" select="."/>
 			<xsl:copy-of select="cdlview:MODS($page/key('md', $why )//mods:mods, '')"/>
 		</xsl:for-each>
+	   </xsl:otherwise>
+	</xsl:choose>
 </xsl:variable>
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
             <div class="metadata-text">
