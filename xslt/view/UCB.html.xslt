@@ -293,23 +293,22 @@ use="'count'"/ -->
           <div class="box4">
 		<xsl:choose>
 		  <xsl:when test="$page/../TEI.2">
-               		<table cellspacing="0" cellpadding="0">
+               		<table>
                    	 <tr>
-           		   <td width="7">&#160;</td>                          
-	    		   <td align="left" valign="middle"><a href="/{$page/m:mets/@OBJID}?brand={$brand}">view transcription</a></td>
-           		   <td align="left" valign="middle">&#160;|&#160;scanned version</td>
+	    		   <td><a href="/{$page/m:mets/@OBJID}?brand={$brand}">view transcription</a></td>
+			   <td class="pipe-spacing">|</td>
+           		   <td>scanned version</td>
                         </tr>
                      </table>
 		  </xsl:when>
 		  <!-- xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']" -->
 		  <xsl:when test="$focusDiv/m:div[@TYPE='video/reference']">
-			<table cellspacing="0" cellpadding="0">
+			<table>
                         <tr>
-                           <td width="7">&#160;</td>                          
-				   <td align="left" valign="middle">
-					<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video (QuickTime)</a>
+                           <td>&#160;</td>                          
+				   <td>
+					<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video</a>
                            </td>
-                           <td><img src="http://calisphere-dev.cdlib.org:2210/images/misc/qt-icon.gif" alt="quicktime graphic" /></td>	
 						</tr>
                      </table>
 		  </xsl:when>
