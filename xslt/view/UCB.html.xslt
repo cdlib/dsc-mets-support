@@ -305,8 +305,7 @@ use="'count'"/ -->
 		  <xsl:when test="$focusDiv/m:div[@TYPE='video/reference']">
 			<table>
                         <tr>
-                           <td>&#160;</td>                          
-				   <td>
+				   <td class="spacer">
 					<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video</a>
                            </td>
 						</tr>
