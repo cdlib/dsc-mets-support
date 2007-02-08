@@ -151,30 +151,6 @@ brand: <xsl:value-of select="$brand"/>
 
 </xsl:template>
 
-<xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
-<xsl:choose>
-  <xsl:when test="name() = 'contributor'">
-	<p>
-       		<h2>
-       		<xsl:text>Creator/Contributor:</xsl:text>
-       		</h2>
-       		<xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
-	</p>
-	<p>
-      	<xsl:text> </xsl:text><xsl:value-of select="."/>
-	</p>
-  </xsl:when>
-  <xsl:when test="name() = 'creator' and ../contributor[text()]"/>
-  <xsl:otherwise>
-	<p>
-		<h2>Creator/Contributor:</h2>
-       		<xsl:text> </xsl:text><xsl:value-of select="."/>
-	</p>
-  </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-
 <xsl:template match="insert-brand-links">
 <xsl:comment>insert-brand-links</xsl:comment>
  <xsl:copy-of select="$brand.links"/>

@@ -171,30 +171,6 @@ brand: <xsl:value-of select="$brand"/>
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
-<xsl:choose>
-  <xsl:when test="name() = 'contributor'">
-        <p>
-                <h2>
-                <xsl:text>Creator/Contributor:</xsl:text>
-                </h2>
-                <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
-        </p>
-        <p>
-        <xsl:text> </xsl:text><xsl:value-of select="."/>
-        </p>
-  </xsl:when>
-  <xsl:when test="name() = 'creator' and ../contributor"/>
-  <xsl:otherwise>
-        <p>
-                <h2>Creator/Contributor:</h2>
-                <xsl:text> </xsl:text><xsl:apply-templates select="."/>
-        </p>
-  </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-
 <!-- xsl:template match='ead:*'>
         <xsl:if test="descendant-or-self::*[text()]"><p><xsl:apply-templates/></p></xsl:if>
 </xsl:template -->
