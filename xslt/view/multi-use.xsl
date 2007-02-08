@@ -43,23 +43,38 @@
 	</p>
 </xsl:template>
 
-<xsl:template match="title[1][text()]| contributor[1][text()]| description[@q='abstract'][text()][1]"  mode="briefMeta">
+<xsl:template match="title[1][text()]| description[@q='abstract'][text()][1]"  mode="briefMeta">
 <p>
 	<h2>
-	<xsl:choose>
-	  <xsl:when test="name()='contributor'">
-		<xsl:text>Creator/Contributor:</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
 	<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
 	<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
 	<xsl:text>:</xsl:text>
-	  </xsl:otherwise>
-	</xsl:choose>
 	</h2>
 	<xsl:text> </xsl:text><xsl:value-of select="."/>
 </p>
 </xsl:template>
+
+<xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
+<xsl:choose>
+  <xsl:when test="name() = 'contributor'">
+        <p>
+                <h2>Creator/Contributor:</h2>
+                <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
+        </p>
+        <p>
+        <xsl:text> </xsl:text><xsl:value-of select="."/>
+        </p>
+  </xsl:when>
+  <xsl:when test="name() = 'creator' and ../contributor"/>
+  <xsl:otherwise>
+        <p>
+                <h2>Creator/Contributor:</h2>
+                <xsl:text> </xsl:text><xsl:apply-templates select="."/>
+        </p>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
 
 <xsl:template match="title| contributor" mode="briefMeta">
 	<p><xsl:apply-templates mode="magic"/></p>
