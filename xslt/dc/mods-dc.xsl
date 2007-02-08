@@ -178,6 +178,17 @@ MODS
         </xsl:call-template>
 </xsl:template>
 
+<xsl:template match="mods:dateIssued">
+	<xsl:value-of select="."/>
+        <xsl:text> (issued)</xsl:text>
+</xsl:template>
+
+<xsl:template match="mods:copyrightDate">
+	<xsl:value-of select="."/>
+        <xsl:text> (copyright)</xsl:text>
+</xsl:template>
+
+
 <xsl:template name="type">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">type</xsl:with-param>
