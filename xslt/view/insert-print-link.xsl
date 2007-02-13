@@ -90,8 +90,9 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1]"/>
 </div>
 </xsl:if>
 <div class="identifier">
+
 <xsl:value-of 
-   select="replace(($page/mets:mets/identifier[@xtf:meta])[1]
+   select="replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1]
 		,'^http://ark.cdlib.org/','http://content.cdlib.org/')"/>
 <xsl:if test="$brand">
 	<xsl:text>/?brand=</xsl:text>
