@@ -227,13 +227,7 @@ and the referer is on-site -->
 <xsl:value-of select="($page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD'])[1]/@LABEL"/></a>
 <!-- img src="http://www.oac.cdlib.org/images/text_icon.gif"/ --> 
 <!-- crumb 2 -->
-  <xsl:choose>
-	<xsl:when test="number($order) &gt; 1">
-			&#160;&#160;&gt;&#160; 
-		<a href="/{$page/m:mets/@OBJID}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
-	</xsl:when>
-	<xsl:otherwise/>
-  </xsl:choose>
+
 </div>
 	</xsl:when>
 	<xsl:otherwise/>

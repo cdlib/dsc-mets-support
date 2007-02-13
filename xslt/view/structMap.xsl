@@ -680,7 +680,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 	<xsl:if test="$order = '1'">
 		<xsl:copy-of select="$thisMODS"/>
 	</xsl:if>
-		<xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
+		<xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta] | $page/../TEI.2/xtf:meta/relation-from" mode="fullDC"/>
 		<h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
