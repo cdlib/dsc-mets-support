@@ -61,9 +61,11 @@
                 <h2>Creator/Contributor:</h2>
                 <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
         </p>
+	<xsl:if test="not(../creator[1] = .)">
         <p>
         <xsl:text> </xsl:text><xsl:value-of select="."/>
         </p>
+	</xsl:if>
   </xsl:when>
   <xsl:when test="name() = 'creator' and ../contributor"/>
   <xsl:otherwise>
@@ -76,7 +78,11 @@
 </xsl:template>
 
 
-<xsl:template match="title| contributor" mode="briefMeta">
+<xsl:template match="title" mode="briefMeta">
+	<p><xsl:apply-templates mode="magic"/></p>
+</xsl:template>
+
+<xsl:template match="contributor" mode="briefMeta">
 	<p><xsl:apply-templates mode="magic"/></p>
 </xsl:template>
 
