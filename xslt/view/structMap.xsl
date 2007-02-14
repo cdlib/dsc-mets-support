@@ -134,19 +134,16 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-<xsl:variable name="focusDivSiblingCount" select="count(m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
-<xsl:variable name="focusDivOrderInSiblingCount" select="count($focusDiv/preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
+<xsl:variable name="orderPlusOne" select="number($order) + 1"/>
+<xsl:variable name="focusPocus" select="
+		if ($iAmFocusDiv and $focusDivShowsChild) then key('absPos',$orderPlusOne) else $focusDiv"/>
+<xsl:variable name="focusDivSiblingCount" select="count($focusPocus/../m:div[@ORDER or @LABEL][m:div//m:fptr])"/>
+<xsl:variable name="focusDivOrderInSiblingCount" select="count($focusPocus/preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
 <xsl:variable name="focusDivOrderInSiblingCountMinus1" select="$focusDivOrderInSiblingCount - 1"/>
 <xsl:variable name="pagesCount" select="ceiling(  $focusDivSiblingCount div 15 )"/>
 <xsl:variable name="thisPageOrder" select="1 + ($focusDivOrderInSiblingCountMinus1 - ($focusDivOrderInSiblingCountMinus1 mod 15)) div 15"/>
-<xsl:variable name="startOfPage" select="
-		if ($depth = 0)
-		then number(($thisPageOrder -1)*15 + 1 ) cast as xs:integer
-		else number(1) cast as xs:integer"/>	
-<xsl:variable name="endOfPage" select="
-		if ($depth = 0 )
-		then number($startOfPage + 14) cast as xs:integer
-		else number($focusDivSiblingCount) cast as xs:integer"/>
+<xsl:variable name="startOfPage" select="number(($thisPageOrder -1)*15 + 1 ) cast as xs:integer"/>	
+<xsl:variable name="endOfPage" select="number($startOfPage + 14) cast as xs:integer"/>
 
 <!-- xsl:value-of select="$selfAction"/ -->
 
@@ -191,9 +188,8 @@
 			select="for $x in 1 to 15 return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
 			mode="image-table"/ -->
 		</table>
-		
 		<div class="image-nav">Click image for larger view</div>
-		<xsl:if test="$focusDivSiblingCount &gt; 15 and $depth = 0">
+		<xsl:if test="$focusDivSiblingCount &gt; 15">
 		  <div class="pagination">
 		    <xsl:if test="$pagesBehind = 'true'">
 		  	<a>
