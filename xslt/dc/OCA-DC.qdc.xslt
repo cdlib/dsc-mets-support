@@ -16,11 +16,13 @@
             </xsl:for-each>
             
             <xsl:for-each select="//cdl:*">
-                <xsl:call-template name="setele">
-                    <xsl:with-param name="name" select="local-name()"/>
-                    <xsl:with-param name="prefix" select="'cdl.'"/>
-                    <xsl:with-param name="value" select="."/>                
-                </xsl:call-template>
+                <xsl:if test="not(local-name() = 'qualifieddc')">
+                    <xsl:call-template name="setele">
+                        <xsl:with-param name="name" select="local-name()"/>
+                        <xsl:with-param name="prefix" select="'cdl.'"/>
+                        <xsl:with-param name="value" select="."/>                
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
         </qdc>
     </xsl:template>
