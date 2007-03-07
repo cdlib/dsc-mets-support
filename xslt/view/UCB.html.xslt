@@ -306,7 +306,7 @@ use="'count'"/ -->
 			<table>
                         <tr>
 				   <td class="spacer">
-					<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID}">view video</a>
+					<a href="/{$page/m:mets/@OBJID}/?layout=quicktime-object&amp;order={$order}{$brandCgi}">view video</a> (quicktime required)
                            </td>
 						</tr>
                      </table>
@@ -315,6 +315,35 @@ use="'count'"/ -->
           </div>
         </div> 
   </xsl:if>
+</xsl:template>
+
+<!-- calisphere quicktime-object -->
+
+<xsl:template match="insert-quicktimeObject">
+<xsl:comment>insert-quicktimeObject</xsl:comment>
+<xsl:variable name="qtFile">
+  <xsl:text>/</xsl:text>
+  <xsl:value-of select="$page/m:mets/@OBJID"/>
+  <xsl:text>/</xsl:text>
+  <xsl:value-of select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
+</xsl:variable>
+<xsl:variable name="qtX" select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X"/>
+<xsl:variable name="qtY" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:Y) + 10"/>
+
+<script language="JavaScript" type="text/javascript">
+<xsl:comment>
+  QT_WriteOBJECT_XHTML('<xsl:value-of select="$qtFile"/>', 
+	'<xsl:value-of select="$qtX"/>',
+	'<xsl:value-of select="$qtY"/>',
+	'',
+        'autoplay','true',
+        'controller','true',
+        'pluginspage','http://www.apple.com/quicktime/download/',
+        'node','1',
+        'type','video/quicktime'
+);
+</xsl:comment>
+</script>
 </xsl:template>
 
 <!-- calisphere image-simple -->
