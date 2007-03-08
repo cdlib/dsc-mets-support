@@ -327,23 +327,22 @@ use="'count'"/ -->
   <xsl:text>/</xsl:text>
   <xsl:value-of select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
 </xsl:variable>
-<xsl:variable name="qtX" select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X"/>
+<xsl:variable name="qtX" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X)"/>
 <xsl:variable name="qtY" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:Y) + 10"/>
 
 <script language="JavaScript" type="text/javascript">
 <xsl:comment>
-  QT_WriteOBJECT_XHTML('<xsl:value-of select="$qtFile"/>', 
-	'<xsl:value-of select="$qtX"/>',
-	'<xsl:value-of select="$qtY"/>',
-	'',
-        'autoplay','true',
-        'controller','true',
-        'pluginspage','http://www.apple.com/quicktime/download/',
-        'node','1',
-        'type','video/quicktime'
-);
-</xsl:comment>
+AC_AX_RunContent( 'classid','clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B','width','<xsl:value-of select="$qtX"/>','height','<xsl:value-of select="$qtY"/>','codebase','http://www.apple.com/qtactivex/qtplugin.cab','src','<xsl:value-of select="$qtFile"/>','autoplay','true','controller','true','pluginspage','http://www.apple.com/quicktime/download/' ); //end AC code
+// </xsl:comment>
 </script>
+<noscript>
+<object CLASSID="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="{$qtX}" height="{$qtY}"  CODEBASE="http://www.apple.com/qtactivex/qtplugin.cab">
+<param name="SRC" VALUE="{$qtFile}"/>
+<param name="CONTROLLER" VALUE="true"/>
+<param name="AUTOPLAY" VALUE="true"/>
+<embed src="{$qtFile}" width="{$qtX}" height="{$qtY}" autoplay="true" controller="true" PLUGINSPAGE="http://www.apple.com/quicktime/download/"></embed>
+</object>
+</noscript>
 </xsl:template>
 
 <!-- calisphere image-simple -->
