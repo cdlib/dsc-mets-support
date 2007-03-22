@@ -55,6 +55,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <mets-profile-driver pref="./profiles/00000012.xml" frameworkID="UCSDSimpleObjectProfile">
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000012.xml</PROFILE>
+    <PROFILE>UCSD Simple Object Profile</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
