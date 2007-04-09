@@ -84,9 +84,9 @@
 </xsl:template>
 
 <xsl:template match="insert-printable-credit">
-<xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1]">
+<xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]">
 <div class="publisher">
-Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1]"/>
+Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/>
 </div>
 </xsl:if>
 <div class="identifier">
