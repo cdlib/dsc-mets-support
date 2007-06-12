@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xlink="http://www.w3.org/TR/xlink"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mets="http://www.loc.gov/METS/"
                 xmlns:m="http://www.loc.gov/METS/"
                 xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/"
@@ -204,6 +204,7 @@ use="'count'"/ -->
 	<xsl:text> @maxY=</xsl:text>
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
+<xsl:variable name="dynamic" select="count($page/m:mets/m:fileSec//m:fileGrp[@USE='image/dynamic'])"/>
    <xsl:choose>
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
   <xsl:variable name="use" select="@use"/>
@@ -215,7 +216,24 @@ use="'count'"/ -->
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+<xsl:variable name="dynamicId" select="$page/m:mets/m:structMap//m:div[@TYPE='image/dynamic']/m:fptr/@FILEID"/>
+  <xsl:variable name="largerImageLink">
+	<xsl:choose>
+	  <xsl:when test="$dynamic = number(0)">
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$page/m:mets/@OBJID"/>
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$page/m:mets/@OBJID"/>
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$dynamicId"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+  </xsl:variable>
+<a href="{$largerImageLink}" title="Larger Image">
   <img  border="0"
 	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
 	width="{$xy/xy/@width}"
@@ -306,7 +324,7 @@ use="'count'"/ -->
 			<table>
                         <tr>
 				   <td class="spacer">
-					<a href="/{$page/m:mets/@OBJID}/?layout=quicktime-object&amp;order={$order}{$brandCgi}">view video</a> (quicktime required)
+					<a href="/{$page/m:mets/@OBJID}/?layout=quicktime-object&amp;order={$order}{$brandCgi}">rotate 360&#xb0;</a> (quicktime required)
                            </td>
 						</tr>
                      </table>
@@ -327,22 +345,35 @@ use="'count'"/ -->
   <xsl:text>/</xsl:text>
   <xsl:value-of select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
 </xsl:variable>
+<xsl:variable name="fid" select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
+<xsl:variable name="qtFileDirect" select="$page/m:mets/m:fileSec//m:file[@ID = $fid]/m:FLocat[1]/@xlink:href"/>
 <xsl:variable name="qtX" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X)"/>
 <xsl:variable name="qtY" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:Y) + 10"/>
 
 <script language="JavaScript" type="text/javascript">
 <xsl:comment>
-AC_AX_RunContent( 'classid','clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B','width','<xsl:value-of select="$qtX"/>','height','<xsl:value-of select="$qtY"/>','codebase','http://www.apple.com/qtactivex/qtplugin.cab','src','<xsl:value-of select="$qtFile"/>','autoplay','true','controller','true','pluginspage','http://www.apple.com/quicktime/download/' ); //end AC code
+ QT_WriteOBJECT_XHTML('<xsl:value-of select="$qtFileDirect"/>',
+       '<xsl:value-of select="$qtX"/>',
+       '<xsl:value-of select="$qtY"/>',
+       '',
+         'autoplay','true',
+         'controller','true',
+         'pluginspage','http://www.apple.com/quicktime/download/'
+ );
+
+
+<!-- AC_AX_RunContent( 'classid','clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B','width','<xsl:value-of select="$qtX"/>','height','<xsl:value-of select="$qtY"/>','codebase','http://www.apple.com/qtactivex/qtplugin.cab','src','<xsl:value-of select="$qtFileDirect"/>','autoplay','true','controller','true','pluginspage','http://www.apple.com/quicktime/download/' ); //end AC code  -->
 // </xsl:comment>
 </script>
 <noscript>
 <object CLASSID="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="{$qtX}" height="{$qtY}"  CODEBASE="http://www.apple.com/qtactivex/qtplugin.cab">
-<param name="SRC" VALUE="{$qtFile}"/>
+<param name="SRC" VALUE="{$qtFileDirect}"/>
 <param name="CONTROLLER" VALUE="true"/>
 <param name="AUTOPLAY" VALUE="true"/>
-<embed src="{$qtFile}" width="{$qtX}" height="{$qtY}" autoplay="true" controller="true" PLUGINSPAGE="http://www.apple.com/quicktime/download/"></embed>
+<embed src="{$qtFileDirect}" width="{$qtX}" height="{$qtY}" autoplay="true" controller="true" PLUGINSPAGE="http://www.apple.com/quicktime/download/"></embed>
 </object>
 </noscript>
+
 </xsl:template>
 
 <!-- calisphere image-simple -->
