@@ -673,7 +673,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 
 <script type="text/javascript">
 <xsl:comment>
-  document.links['zoomMe'].href =
+		document.getElementById('zoomMe').href =
     "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/<xsl:value-of select="$zID"/>";
 </xsl:comment>
 </script>

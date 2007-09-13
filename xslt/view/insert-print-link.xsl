@@ -54,7 +54,7 @@ function populateMetadata() {
 	<xsl:if test="$page/mets:mets/format[@q='jp2'] = 'jp2'">
 <script type="text/javascript">
 <xsl:comment>
-  document.links['zoomMe'].href =
+	document.getElementById('zoomMe').href =
     "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1";
 </xsl:comment>
 </script>
