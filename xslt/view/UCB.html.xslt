@@ -141,7 +141,7 @@ use="'count'"/ -->
     </xsl:copy>
   </xsl:template>
 
-<xsl:template match="insert-metadataPortion">
+<xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <!-- image-simple metadata printable-details -->
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
@@ -170,10 +170,6 @@ use="'count'"/ -->
 <xsl:comment>insert-brand-links</xsl:comment>
  <xsl:apply-templates select="$brand.links"/>
 
-<xsl:if test="$structMap='alt1'">
-    <script type="text/javascript" src="/js3p/aqlists/aqtree3clickable.js"></script>
-	<link rel="stylesheet" href="/js3p/aqlists/aqtree3clickable.css"/>
-</xsl:if>
 </xsl:template>
 
 <xsl:template match="insert-brand-head">
@@ -218,27 +214,20 @@ use="'count'"/ -->
   </xsl:variable>
 <xsl:variable name="dynamicId" select="$page/m:mets/m:structMap//m:div[@TYPE='image/dynamic']/m:fptr/@FILEID"/>
   <xsl:variable name="largerImageLink">
-	<xsl:choose>
-	  <xsl:when test="$dynamic = number(0)">
 <xsl:text>/</xsl:text>
 <xsl:value-of select="$page/m:mets/@OBJID"/>
 <xsl:text>/</xsl:text>
 <xsl:value-of select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-<xsl:text>/</xsl:text>
-<xsl:value-of select="$page/m:mets/@OBJID"/>
-<xsl:text>/</xsl:text>
-<xsl:value-of select="$dynamicId"/>
-	  </xsl:otherwise>
-	</xsl:choose>
   </xsl:variable>
-<a href="{$largerImageLink}" title="Larger Image">
+<a id="zoomMe" href="{$largerImageLink}" title="Larger Image">
   <img  border="0"
 	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
+
+<xsl:call-template name="single-image-zoom"/>
+
    </xsl:when>
    <xsl:otherwise><!-- page in a complex object -->
 

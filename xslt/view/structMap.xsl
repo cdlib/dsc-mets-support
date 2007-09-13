@@ -612,6 +612,11 @@ sa<xsl:value-of select="$selfAction"/>]]
 
 <xsl:template match="insert-inner-content">
 <xsl:comment>insert-inner-content @css-id:<xsl:value-of select="@css-id"/></xsl:comment>
+
+<!-- xsl:copy-of select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference']"/ -->
+
+
+
 <xsl:variable name="thisImage" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]"/>
 <xsl:choose>
  <xsl:when test="$thisImage">
@@ -626,14 +631,20 @@ sa<xsl:value-of select="$selfAction"/>]]
       <xsl:with-param name="y" select="number($thisImage/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
-
+  <xsl:variable name="largerImageLink">
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$page/m:mets/@OBJID"/>
+<xsl:text>/</xsl:text>
+<xsl:value-of select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
+  </xsl:variable>
+<a id="zoomMe" href="{$largerImageLink}" title="Larger Image">
   <img
         src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID}"
         width="{$xy/xy/@width}"
         height="{$xy/xy/@height}"
 	border="0"
   /></a>
+<xsl:call-template name="complex-image-zoom"/>
 	</div>
      </div>
      <xsl:apply-templates select="*"/>
@@ -641,6 +652,33 @@ sa<xsl:value-of select="$selfAction"/>]]
  </xsl:when>
  <xsl:otherwise/>
 </xsl:choose>
+</xsl:template>
+
+<xsl:template name="complex-image-zoom">
+<xsl:if test="$page/mets:mets/format[@q='jp2'] = 'jp2'">
+<xsl:variable name="fileId" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID"/>
+<xsl:variable name="seq" select="$page/m:mets/m:fileSec/m:fileGrp/m:file[@ID=$fileId]/@SEQ"/>
+<xsl:variable name="zID">
+	<xsl:text>z</xsl:text>
+	<xsl:choose>
+		<xsl:when test="$seq">
+			<xsl:value-of select="$seq"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:value-of select="$focusDiv/@ORDER - 1"/>
+		</xsl:otherwise>
+	</xsl:choose>
+
+</xsl:variable>
+
+<script type="text/javascript">
+<xsl:comment>
+  document.links['zoomMe'].href =
+    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/<xsl:value-of select="$zID"/>";
+</xsl:comment>
+</script>
+</xsl:if>
+
 </xsl:template>
 
 <xsl:template match="insert-inner-metadata">

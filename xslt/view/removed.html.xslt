@@ -429,4 +429,6 @@ removed.
         </xsl:choose>
 </xsl:template>
 
+<xsl:template name="insert-metadataPortion"/>
+
 </xsl:stylesheet>

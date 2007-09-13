@@ -71,7 +71,7 @@
   <xsl:otherwise>
         <p>
                 <h2>Creator/Contributor:</h2>
-                <xsl:text> </xsl:text><xsl:apply-templates select="."/>
+                <xsl:text> </xsl:text><xsl:value-of select="."/>
         </p>
   </xsl:otherwise>
 </xsl:choose>

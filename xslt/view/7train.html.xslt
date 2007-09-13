@@ -115,13 +115,13 @@
 
   <!-- default match identity transform -->
   <xsl:template match="@*|node()">
-    <xsl:namespace name="http://www.w3.org/1999/xhtml"/>
+    <!-- xsl:namespace name="http://www.w3.org/1999/xhtml"/ -->
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 
-<xsl:template match="insert-metadataPortion">
+<xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
 
 <xsl:choose>
@@ -227,12 +227,13 @@
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+<a id="zoomMe" href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
   <img  border="0"
 	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
+<xsl:call-template name="single-image-zoom"/>
    </xsl:when>
    <xsl:otherwise><!-- page in a complex object -->
 

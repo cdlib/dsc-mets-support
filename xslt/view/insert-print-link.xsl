@@ -9,6 +9,57 @@
         exclude-result-prefixes="#all"  >
 
 <xsl:param name="http.URL"/>
+<xsl:template name="jsod-printable-metadata">
+<xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
+<xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
+<xsl:message><xsl:copy-of select="$metada"/></xsl:message>
+/* metadata via javascript on demand */
+function populateMetadata() {
+	document.title =  '<xsl:value-of select='replace( $page/mets:mets/@LABEL, "&apos;" , "\\&apos;" )'/>';
+	var metadata  = YAHOO.util.Dom.get('printable-description');
+	// var insertCredit  = YAHOO.util.Dom.get('insertCredit');
+	var string = '<xsl:apply-templates select="$credit" mode="xmlInJs"/>';
+  string += '<![CDATA[<br clear="all" /><div id="printable-metadata">]]>';
+	string += '<xsl:apply-templates select="$metada" mode="xmlInJs"/>';
+  string += '<![CDATA[</div>]]>';
+	metadata.innerHTML = string;
+	// insertCredit.innerHTML = '<![CDATA[<div class="publisher">Courtesy of ]]><xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/><![CDATA[</div>]]>';
+}
+</xsl:template>
+
+<xsl:template match="*" mode="xmlInJs">
+	<xsl:text>&lt;</xsl:text>
+	<xsl:value-of select="name()"/>
+	<xsl:apply-templates select="@*" mode="xmlInJs"/>
+	<xsl:text>&gt;</xsl:text>
+	<xsl:apply-templates select="*|text()" mode="xmlInJs"/>
+	<xsl:text>&lt;/</xsl:text>
+	<xsl:value-of select="name()"/>
+	<xsl:text>&gt;</xsl:text>
+</xsl:template>
+
+<xsl:template match="@*" mode="xmlInJs">
+	<xsl:text> </xsl:text>
+	<xsl:value-of select="name()"/>
+	<xsl:text>=&quot;</xsl:text>
+	<xsl:value-of select="."/>
+	<xsl:text>&quot;</xsl:text>
+</xsl:template>
+
+<xsl:template match="text()" mode="xmlInJs">
+	<xsl:value-of select='normalize-space(replace(.,"&apos;","\\&apos;"))'/>
+</xsl:template>
+
+<xsl:template name="single-image-zoom">
+	<xsl:if test="$page/mets:mets/format[@q='jp2'] = 'jp2'">
+<script type="text/javascript">
+<xsl:comment>
+  document.links['zoomMe'].href =
+    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1";
+</xsl:comment>
+</script>
+</xsl:if>
+</xsl:template>
 
 <xsl:template match="insert-print-links">
 <xsl:comment>insert-print-links @shape: <xsl:value-of select="@shape"/></xsl:comment>
@@ -83,7 +134,7 @@
 </xsl:choose>
 </xsl:template>
 
-<xsl:template match="insert-printable-credit">
+<xsl:template match="insert-printable-credit" name="insert-printable-credit">
 <xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]">
 <div class="publisher">
 Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/>

@@ -145,7 +145,7 @@ brand: <xsl:value-of select="$brand"/>
     <xsl:value-of select="$page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
 </xsl:template>
 
-<xsl:template match="insert-metadataPortion">
+<xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
@@ -595,7 +595,7 @@ brand: <xsl:value-of select="$brand"/>
     </xsl:when>
     <!-- special case for -->
     <xsl:when test="not($page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='hi-res'])">
-	<a href="/{$page/m:mets/@OBJID}/{$use}">
+	<a id="zoomMe" href="/{$page/m:mets/@OBJID}/{$use}">
   	<img  border="0"
 		src="/{$page/m:mets/@OBJID}/{$use}" 
 		width="{$xy/xy/@width}"
@@ -604,7 +604,7 @@ brand: <xsl:value-of select="$brand"/>
     </xsl:when>
     <!-- the normal case -->
     <xsl:otherwise>
-	<a href="/{$page/m:mets/@OBJID}/hi-res">
+	<a id="zoomMe" href="/{$page/m:mets/@OBJID}/hi-res">
   	<img  border="0"
 		src="/{$page/m:mets/@OBJID}/{$use}" 
 		width="{$xy/xy/@width}"
@@ -612,6 +612,7 @@ brand: <xsl:value-of select="$brand"/>
   	/></a>
     </xsl:otherwise>
   </xsl:choose>
+<xsl:call-template name="single-image-zoom"/>
   <!-- UCR Kmast -->
   <xsl:if test="$page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='stereo'] or
 	         $page/m:mets/m:structMap/m:div/m:div/m:fptr[@FILEID='back']">

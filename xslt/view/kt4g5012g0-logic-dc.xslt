@@ -24,6 +24,7 @@
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
 <xsl:param name="servlet.dir"/>
 <xsl:param name="debug"/>
+<xsl:param name="mode"/>
 <xsl:param name="brand" select="'calisphere'"/>
 <!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
@@ -91,7 +92,6 @@
    </xsl:choose>
 </xsl:param>
 
-
 <!-- xsl:output method="html"/ -->
 
 <!-- xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/ -->
@@ -112,9 +112,7 @@ xslt: <xsl:value-of select="static-base-uri()"/>
 layout: <xsl:value-of select="base-uri($layoutXML)"/>
 brand: <xsl:value-of select="$brand"/> 
 </xsl:comment>
-
-  <xsl:apply-templates 
-	select="($layoutXML)//*[local-name()='html']"/>
+  <xsl:apply-templates select="($layoutXML)//*[local-name()='html']"/>
   </xsl:template>
 
   <!-- default match identity transform -->
@@ -126,7 +124,7 @@ brand: <xsl:value-of select="$brand"/>
 
   <xsl:template match="nbsp"><xsl:text disable-output-escaping='yes'><![CDATA[&nbsp;]]></xsl:text></xsl:template>
 
-<xsl:template match="insert-metadataPortion">
+<xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
 
 <xsl:choose>
@@ -231,12 +229,13 @@ brand: <xsl:value-of select="$brand"/>
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<a href="/{$page/m:mets/@OBJID}/hi-res">
+<a id="zoomMe" href="/{$page/m:mets/@OBJID}/hi-res">
   <img  border="0"
 	src="/{$page/m:mets/@OBJID}/{$use}" 
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
+<xsl:call-template name="single-image-zoom"/>
  </xsl:when>
     <xsl:otherwise><!-- page in a complex object -->
 
