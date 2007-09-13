@@ -5,20 +5,29 @@
 	>
 
 <xsl:function name="mets-profiles:URItoDisplayXslt">
- <xsl:param name="profile"/>
-
-<xsl:variable name="driver" select="document('../driver.xml')"/>
-
-<xsl:variable name="file" select="$driver/mets-profiles/mets-profile-driver[PROFILE = $profile]/
+	<xsl:param name="profile"/>
+	<xsl:variable name="driver" select="document('../driver.xml')"/>
+	<xsl:variable name="file" 
+		select="$driver/mets-profiles/mets-profile-driver[PROFILE = $profile]/
 					tool[@type='xslt'][@role='toHTML']"/>
+	<xsl:if test="$file">
+		<!-- xsl:value-of select="base-uri($driver)"/ -->
+		<xsl:text>mets-support/</xsl:text>
+		<xsl:value-of select="$file"/>
+	</xsl:if>
+</xsl:function>
 
-
-<xsl:if test="$file">
-<!-- xsl:value-of select="base-uri($driver)"/ -->
-<xsl:text>mets-support/</xsl:text>
-<xsl:value-of select="$file"/>
-</xsl:if>
-
+<xsl:function name="mets-profiles:URItoJsodXslt">
+	<xsl:param name="profile"/>
+	<xsl:variable name="driver" select="document('../driver.xml')"/>
+	<xsl:variable name="file" 
+		select="$driver/mets-profiles/mets-profile-driver[PROFILE = $profile]/
+					tool[@type='xslt'][@role='toJsod']"/>
+	<xsl:if test="$file">
+		<!-- xsl:value-of select="base-uri($driver)"/ -->
+		<xsl:text>mets-support/</xsl:text>
+		<xsl:value-of select="$file"/>
+	</xsl:if>
 </xsl:function>
 
 </xsl:stylesheet>

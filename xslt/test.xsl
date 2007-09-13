@@ -17,6 +17,8 @@
 ---------
 <xsl:copy-of select="mp:URItoDisplayXslt('http://www.loc.gov/mets/profiles/00000010.xml')"/>
 ---------
+<xsl:copy-of select="mp:URItoDisplayXslt('http://www.loc.gov/mets/profiles/00000013.xml')"/>
+---------
 
 </xsl:template>
 
