@@ -174,7 +174,7 @@ MODS
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">date</xsl:with-param>
                 <xsl:with-param name="qualifier">created</xsl:with-param>
-                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:recordInfo/mods:recordCreationDate | (//mods:mods)[1]/mods:originInfo/mods:dateCreated |(//mods:mods)[1]/mods:recordInfo/mods:recordChangeDate"/>
+                <xsl:with-param name="node" select="(//mods:mods)[1]/mods:originInfo/mods:dateCreated"/>
         </xsl:call-template>
 </xsl:template>
 
