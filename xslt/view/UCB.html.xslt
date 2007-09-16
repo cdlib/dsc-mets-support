@@ -283,7 +283,7 @@ use="'count'"/ -->
  	<xsl:value-of
 	  select="
 		replace(normalize-space(
-($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) , 'http://.*$' , '')" 
+($page//mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) , 'http://.*$' , '')" 
 	/>
   </xsl:otherwise>
 </xsl:choose>
