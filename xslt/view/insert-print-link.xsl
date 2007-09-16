@@ -9,13 +9,16 @@
         exclude-result-prefixes="#all"  >
 
 <xsl:param name="http.URL"/>
+ 
 <xsl:template name="jsod-printable-metadata">
 <xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
 <xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
+<xsl:variable name="label" select="if ($page/m:mets) then $page/m:mets/@LABEL else  $page/TEI.2/m:mets/@LABEL"/>
 <xsl:message><xsl:copy-of select="$metada"/></xsl:message>
 /* metadata via javascript on demand */
 function populateMetadata() {
-	document.title =  '<xsl:value-of select='replace( $page/mets:mets/@LABEL, "&apos;" , "\\&apos;" )'/>';
+
+	document.title =  '<xsl:value-of select='replace( $label, "&apos;" , "\\&apos;" )'/>';
 	var metadata  = YAHOO.util.Dom.get('printable-description');
 	// var insertCredit  = YAHOO.util.Dom.get('insertCredit');
 	var string = '<xsl:apply-templates select="$credit" mode="xmlInJs"/>';
@@ -135,15 +138,15 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template match="insert-printable-credit" name="insert-printable-credit">
-<xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]">
+<xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1] | ($page/TEI.2/xtf:meta/publisher)[1]">
 <div class="publisher">
-Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/>
+Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1] | ($page/TEI.2/xtf:meta/publisher)[1]"/>
 </div>
 </xsl:if>
 <div class="identifier">
 
 <xsl:value-of 
-   select="replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1]
+   select="replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1] | ($page/TEI.2/xtf:meta/identifier)[1]
 		,'^http://ark.cdlib.org/','http://content.cdlib.org/')"/>
 <xsl:if test="$brand">
 	<xsl:text>/?brand=</xsl:text>
