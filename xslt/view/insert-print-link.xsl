@@ -18,7 +18,7 @@
 /* metadata via javascript on demand */
 function populateMetadata() {
 
-	document.title =  '<xsl:value-of select='replace( $label, "&apos;" , "\\&apos;" )'/>';
+	document.title =  '<xsl:value-of select='replace( normalize-space($label), "&apos;" , "\\&apos;" )'/>';
 	var metadata  = YAHOO.util.Dom.get('printable-description');
 	// var insertCredit  = YAHOO.util.Dom.get('insertCredit');
 	var string = '<xsl:apply-templates select="$credit" mode="xmlInJs"/>';
