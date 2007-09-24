@@ -18,7 +18,7 @@
 		xmlns:exslt="http://exslt.org/common"
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
-
+ <xsl:key name="divByOrder" match="m:div[@ORDER]" use="@ORDER"/> 
  <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
@@ -655,7 +655,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 </xsl:template>
 
 <xsl:template name="complex-image-zoom">
-<xsl:if test="$page/mets:mets/format[@q='jp2'] = 'jp2'">
+<xsl:if test="($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')">
 <xsl:variable name="fileId" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID"/>
 <xsl:variable name="seq" select="$page/m:mets/m:fileSec/m:fileGrp/m:file[@ID=$fileId]/@SEQ"/>
 <xsl:variable name="zID">
@@ -672,9 +672,16 @@ sa<xsl:value-of select="$selfAction"/>]]
 </xsl:variable>
 
 <script type="text/javascript">
-<xsl:comment>
+<xsl:comment><xsl:text>
 		document.getElementById('zoomMe').href =
-    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/<xsl:value-of select="$zID"/>";
+    "http://192.35.209.153/Fullscreen.ics?ark=</xsl:text>
+		<xsl:value-of select="$page/mets:mets/@OBJID"/>
+		<xsl:text>/</xsl:text>
+		<xsl:value-of select="$zID"/>
+		<xsl:text>&amp;order=</xsl:text>
+		<xsl:value-of select="$order"/>
+		<xsl:text>";
+</xsl:text>
 </xsl:comment>
 </script>
 </xsl:if>

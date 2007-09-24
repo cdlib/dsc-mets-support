@@ -13,7 +13,18 @@
 <xsl:template name="jsod-printable-metadata">
 <xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
 <xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
-<xsl:variable name="label" select="if ($page/m:mets) then $page/m:mets/@LABEL else  $page/TEI.2/m:mets/@LABEL"/>
+<xsl:variable name="label">
+	<xsl:choose>
+		<xsl:when test="not($order = '')">
+ 			<xsl:value-of select="key('divByOrder', $order)/@LABEL"/>
+			<xsl:text> / </xsl:text>
+ 			<xsl:value-of select="if ($page/m:mets) then $page/m:mets/@LABEL else $page/TEI.2/m:mets/@LABEL"/>
+		</xsl:when>
+		<xsl:otherwise>
+ 			<xsl:value-of select="if ($page/m:mets) then $page/m:mets/@LABEL else $page/TEI.2/m:mets/@LABEL"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:variable>
 <xsl:message><xsl:copy-of select="$metada"/></xsl:message>
 /* metadata via javascript on demand */
 function populateMetadata() {
@@ -25,7 +36,7 @@ function populateMetadata() {
   string += '<![CDATA[<br clear="all" /><div id="printable-metadata">]]>';
 	string += '<xsl:apply-templates select="$metada" mode="xmlInJs"/>';
   string += '<![CDATA[</div>]]>';
-	metadata.innerHTML = string;
+	if (metadata) metadata.innerHTML = string;
 	// insertCredit.innerHTML = '<![CDATA[<div class="publisher">Courtesy of ]]><xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/><![CDATA[</div>]]>';
 }
 </xsl:template>
@@ -54,11 +65,11 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template name="single-image-zoom">
-	<xsl:if test="$page/mets:mets/format[@q='jp2'] = 'jp2'">
+	<xsl:if test="($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')">
 <script type="text/javascript">
 <xsl:comment>
 	document.getElementById('zoomMe').href =
-    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1";
+    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1&amp;<xsl:value-of select="$brandCgi"/>";
 </xsl:comment>
 </script>
 </xsl:if>

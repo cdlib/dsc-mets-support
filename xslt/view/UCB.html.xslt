@@ -115,7 +115,7 @@ use="'count'"/ -->
 
 <!-- xsl:output method="html"/ -->
 
-<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script style" indent="yes" method="xhtml" media-type="text/html"/>
+<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script" indent="yes" method="xhtml" media-type="text/html"/>
 
   <!-- $page has the METS, $template has HTML and template tags -->
 <xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
@@ -145,7 +145,7 @@ use="'count'"/ -->
 <!-- image-simple metadata printable-details -->
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="($page/mets:mets/*/@xtf:meta or $page/../TEI.2/xtf:meta or $page/TEI.2/xtf:meta) and not($layout='metadata')">
+  <xsl:when test="($page/mets:mets/*/@xtf:meta or $page/../TEI.2/xtf:meta or $page/TEI.2/xtf:meta) and not($layout='metadata') and not($layout='iframe')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/* | $page/TEI.2/xtf:meta/*" mode="briefMeta"/>
 	<p><h2>Contributing Institution:</h2>
@@ -201,6 +201,9 @@ use="'count'"/ -->
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
 <xsl:variable name="dynamic" select="count($page/m:mets/m:fileSec//m:fileGrp[@USE='image/dynamic'])"/>
+<!-- xsl:variable name="count-hack" select="if ($mrsid-hack) number($mrsid-hack)
+																				else if ($page/m:mets/meta) number(1)
+																				else number(0)"/ -->
    <xsl:choose>
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
   <xsl:variable name="use" select="@use"/>

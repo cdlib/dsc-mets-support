@@ -30,7 +30,7 @@
 </xsl:template>
 
 <xsl:template match="date[1][text()]"  mode="briefMeta">
-	<p>
+	<div>
 	<h2>Date:</h2>
 	<xsl:choose>
 	   <xsl:when test="../date[@q='created'] and not(../date[@q='created'] = '')">
@@ -40,39 +40,39 @@
 		<xsl:value-of select="."/>
 	   </xsl:otherwise>
 	</xsl:choose>
-	</p>
+	</div>
 </xsl:template>
 
 <xsl:template match="title[1][text()]| description[@q='abstract'][text()][1]"  mode="briefMeta">
-<p>
+<div>
 	<h2>
 	<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
 	<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
 	<xsl:text>:</xsl:text>
 	</h2>
 	<xsl:text> </xsl:text><xsl:value-of select="."/>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="contributor[1][text()]|creator[1][text()]" mode="briefMeta">
 <xsl:choose>
   <xsl:when test="name() = 'contributor'">
-        <p>
+        <div>
                 <h2>Creator/Contributor:</h2>
                 <xsl:text> </xsl:text><xsl:value-of select="../creator[1]"/>
-        </p>
+        </div>
 	<xsl:if test="not(../creator[1] = .)">
-        <p>
+        <div>
         <xsl:text> </xsl:text><xsl:value-of select="."/>
-        </p>
+        </div>
 	</xsl:if>
   </xsl:when>
   <xsl:when test="name() = 'creator' and ../contributor"/>
   <xsl:otherwise>
-        <p>
+        <div>
                 <h2>Creator/Contributor:</h2>
                 <xsl:text> </xsl:text><xsl:value-of select="."/>
-        </p>
+        </div>
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -94,20 +94,20 @@
 
 <xsl:template match="title[1][text()]| creator[1][text()]| subject[not(@q='series')][1][text()]| description[1][text()]| publisher[1][text()]| contributor[1][text()]| date[1][text()]| type[@q][1][text()]| format[1][text()]| identifier[not(starts-with(text(),'http://ark')) and text()][1]| source[1][text()]| language[1][text()]| coverage[1][text()]| rights[1][text()] | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))]"
 	mode="fullDC">
-<p>
+<div>
 	<h2>
 	<xsl:value-of select="upper-case(substring(local-name(),1,1))"/>
 	<xsl:value-of select="substring(local-name(),2,string-length(local-name()))"/>
 	<xsl:text>:</xsl:text>
 	</h2><xsl:text> </xsl:text>
-	<xsl:apply-templates mode="magic"/></p>
+	<xsl:apply-templates mode="magic"/></div>
 </xsl:template>
 
 <xsl:template match="title| creator| description| contributor| date| 
 	format| identifier| source| language| coverage| rights| subject | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))][position() &gt; 1] "
 	mode="fullDC">
   <xsl:if test="not(name()='identifier' and starts-with(.,'http://ark'))">
-	<p><xsl:apply-templates mode="magic"/></p>
+	<div><xsl:apply-templates mode="magic"/></div>
   </xsl:if>
 </xsl:template>
 
@@ -126,7 +126,7 @@
 </xsl:template>
 
 <xsl:template match="relation-from" mode="fullDC">
-<p><h2>Collection:</h2><xsl:text> </xsl:text>
+<div><h2>Collection:</h2><xsl:text> </xsl:text>
 <xsl:variable name="in-url" select="substring-before(.,'|')"/>
 <xsl:variable name="out-url">
    <xsl:choose>
@@ -141,7 +141,7 @@
    </xsl:choose>
 </xsl:variable>
 <a href="{$out-url}"><xsl:value-of select="substring-after(.,'|')"/></a>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="*" mode="fullDC">
