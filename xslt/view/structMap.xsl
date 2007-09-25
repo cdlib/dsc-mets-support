@@ -554,7 +554,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 		<img border="0" width="{$xy/xy/@width}" height="{$xy/xy/@height}" src="{$naillink}"
 			alt="{$node/@LABEL}"/>
 		</a>
-		<br/>
+		<div>
 		<xsl:variable name="kidcount" select="count($node/m:div[m:div/m:fptr])"/>
 	<xsl:choose>
 	  <xsl:when test="not($node/@ORDER = $order)">
@@ -570,6 +570,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 		</xsl:call-template>
 	  </xsl:otherwise>
 	</xsl:choose>
+		</div>
 
 
 
