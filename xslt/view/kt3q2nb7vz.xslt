@@ -148,24 +148,24 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-name"/>
-	</p>
+	</div>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-	<xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+	<xsl:if test="$layout != 'metadata' and $layout != 'iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
 <xsl:comment>from an EAD snippet</xsl:comment>
 
 <xsl:apply-templates select="$page/m:mets/m:dmdSec[@ID='dsc']/m:mdWrap/m:xmlData/ead:c"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
 	<xsl:call-template name="insert-institution-url"/>
-	</p>
+	</div>
 
   </xsl:otherwise>
  </xsl:choose>
@@ -213,9 +213,9 @@ brand: <xsl:value-of select="$brand"/>
 		<xsl:apply-templates select="ead:did" mode="did"/>
 		<xsl:apply-templates select="ead:*[local-name() != 'series'][local-name() !='did']"/>
 	<xsl:if test="ead:series">
-		<p><h2>Collection:</h2><xsl:text> </xsl:text>
+		<div><h2>Collection:</h2><xsl:text> </xsl:text>
 		<xsl:apply-templates select="ead:series" mode="link1"/>
-		</p>
+		</div>
 	</xsl:if>
 </xsl:template>
 
@@ -229,13 +229,13 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="ead:origination[1]" mode="did">
 <xsl:choose>
   <xsl:when test="text() and not (ead:*)">
-<p><h2>Creator/Contributor:</h2>
+<div><h2>Creator/Contributor:</h2>
 	<xsl:value-of select="."/>
-</p>
+</div>
   </xsl:when>
   <xsl:otherwise>
-<p><h2>Creator/Contributor:</h2>
-</p>
+<div><h2>Creator/Contributor:</h2>
+</div>
 	<xsl:apply-templates select="*" mode="did"/>
   </xsl:otherwise>
 </xsl:choose>
@@ -252,9 +252,9 @@ brand: <xsl:value-of select="$brand"/>
 
 <xsl:template match="ead:did" mode="did">
 	<xsl:if test="not(ead:unittitle) or (ead:unittitle and ead:unittitle='')">
-<p><h2>Title:</h2>
+<div><h2>Title:</h2>
 <xsl:value-of select="../ead:series/ead:unittitle[position() = last()]"/>
-</p></xsl:if>
+</div></xsl:if>
         <xsl:apply-templates select=".//ead:unittitle[text()], .//ead:origination, .//ead:unitdate, .//ead:unitid | .//ead:container, .//ead:physdesc" mode="did"/>
         <xsl:apply-templates select="ead:abstract | ead:langmaterial | ead:materialspec | ead:note | ead:physloc " mode="did"/>
 <!-- abstract, container, dao, daogrp, head, langmaterial, materialspec, note, origination, physdesc, physloc, repository, unitdate, unitid, unittitle -->
@@ -265,27 +265,27 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:template>
 
 <xsl:template match="ead:physdesc" mode="did">
-<p><h2>Format:</h2>
+<div><h2>Format:</h2>
 <xsl:value-of select="."/>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="ead:unitdate" mode="did">
-<p><h2>Date:</h2>
+<div><h2>Date:</h2>
 <xsl:value-of select="."/>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="ead:unitid | ead:container" mode="did">
-<p><h2>Identifier:</h2>
+<div><h2>Identifier:</h2>
 <xsl:value-of select="."/>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="ead:unittitle" mode="did">
-<p><h2>Title:</h2>
+<div><h2>Title:</h2>
 <xsl:apply-templates select="text()|ead:lb"/>
-</p>
+</div>
 </xsl:template>
 
 
@@ -300,7 +300,7 @@ brand: <xsl:value-of select="$brand"/>
 
 <xsl:template match="*[@label][local-name()!='container']" mode="dscdid">
 
-        <p><h2><xsl:value-of select="@label"/>
+        <div><h2><xsl:value-of select="@label"/>
                 <xsl:if test="
                         substring(@label,string-length(@label)) != ':'
                         and
@@ -308,7 +308,7 @@ brand: <xsl:value-of select="$brand"/>
                 ">:
                 </xsl:if><xsl:text disable-output-escaping='yes'><![CDATA[<br />]]></xsl:text>
         </h2><xsl:apply-templates/>
-        </p>
+        </div>
 
 </xsl:template>
 

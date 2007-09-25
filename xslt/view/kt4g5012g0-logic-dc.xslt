@@ -128,22 +128,22 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
 
 <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-name"/>
-        </p>
+        </div>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-        <xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+        <xsl:if test="$layout != 'metadata' and $layout != 'iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
-        </p>
+        </div>
   </xsl:otherwise>
  </xsl:choose>
 
@@ -292,18 +292,19 @@ brand: <xsl:value-of select="$brand"/>
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
             <div class="metadata-text">
         <xsl:if test="not($order = '1')">
-		<p><h2>Title:</h2>
+		<div><h2>Title:</h2>
 		<xsl:value-of select="$focusDiv/@LABEL"/>
-		</p>
-		<p><h2>From:</h2>
+		</div>
+		<div><h2>From:</h2>
                 <a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
-		</p>
+		</div>
                 <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
         <xsl:if test="$order = '1'">
                 <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
-                <h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
+                <div><h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
+								</div>
             </div>
 </div>
 </xsl:template>

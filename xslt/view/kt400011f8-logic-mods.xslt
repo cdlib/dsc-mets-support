@@ -130,25 +130,25 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
 	<!-- mini MD -->
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-name"/>
-        </p>
+        </div>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-        <xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+        <xsl:if test="$layout != 'metadata' and $layout != 'iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
         <xsl:copy-of
           select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
         <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
-	<p><h2>Contributing Institution:</h2>
+	<div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
-        </p>
+        </div>
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>

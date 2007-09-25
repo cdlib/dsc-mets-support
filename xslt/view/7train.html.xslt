@@ -107,7 +107,6 @@
 	xml: <xsl:value-of select="base-uri($page)"/>
 	PROFILE: <xsl:value-of select="$page/m:mets/@PROFILE"/>
 	xslt: <xsl:value-of select="static-base-uri()"/>
-	flayout: <xsl:value-of select="$fLayout"/>
 	layout: <xsl:value-of select="base-uri($layoutXML)"/>
 	brand: <xsl:value-of select="$brand"/> 
 	</xsl:comment>
@@ -126,7 +125,7 @@
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
 
 <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
         <xsl:comment>@xtf:meta found</xsl:comment>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
         <div><h2>Contributing Institution:</h2>
@@ -137,11 +136,11 @@
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-        <xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+        <xsl:if test="$layout != 'metadata' and $layout != 'iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
-        <p><h2>Contributing Institution:</h2>
+        <div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
-        </p>
+        </div>
   </xsl:otherwise>
  </xsl:choose>
 
@@ -152,23 +151,23 @@
 <!-- image-simple metadata printable-details -->
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
  <xsl:choose>
-  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata')">
+  <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="briefMeta"/>
-	<p><h2>Contributing Institution:</h2>
-	<xsl:call-template name="insert-institution-name"/></p>
+	<div><h2>Contributing Institution:</h2>
+	<xsl:call-template name="insert-institution-name"/></div>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-	<xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+	<xsl:if test="$layout != 'metadata' and $layout !='iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
 	<xsl:copy-of 
 	  select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
 	<!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
                 <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
-	<p><h2>Contributing Institution:</h2>
-	<xsl:call-template name="insert-institution-url"/></p>
+	<div><h2>Contributing Institution:</h2>
+	<xsl:call-template name="insert-institution-url"/></div>
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
@@ -332,14 +331,14 @@
 </xsl:template -->
 
 <xsl:template match="gdm:LocalID">
-<p><h2>Identifier:</h2><xsl:value-of select="."/>
-</p>
+<div><h2>Identifier:</h2><xsl:value-of select="."/>
+</div>
 </xsl:template>
 
 <xsl:template match="gdm:coreDate[@primaryDate or @beginDateNorm]">
-<p><h2>Date:</h2><xsl:value-of select="if (@primaryDate)
+<div><h2>Date:</h2><xsl:value-of select="if (@primaryDate)
 	then @primaryDate
-	else @beginDateNorm"/></p>
+	else @beginDateNorm"/></div>
 </xsl:template>
 
 <xsl:template match="gdm:GDM">

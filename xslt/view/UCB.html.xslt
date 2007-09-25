@@ -113,9 +113,7 @@ use="'count'"/ -->
    </xsl:choose>
 </xsl:param>
 
-<!-- xsl:output method="html"/ -->
-
-<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" cdata-section-elements="script" indent="yes" method="xhtml" media-type="text/html"/>
+<xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" omit-xml-declaration="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes" method="xhtml" media-type="text/html"/>
 
   <!-- $page has the METS, $template has HTML and template tags -->
 <xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
@@ -148,20 +146,20 @@ use="'count'"/ -->
   <xsl:when test="($page/mets:mets/*/@xtf:meta or $page/../TEI.2/xtf:meta or $page/TEI.2/xtf:meta) and not($layout='metadata') and not($layout='iframe')">
 	<xsl:comment>@xtf:meta found</xsl:comment>
 	<xsl:apply-templates select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/* | $page/TEI.2/xtf:meta/*" mode="briefMeta"/>
-	<p><h2>Contributing Institution:</h2>
-	<xsl:call-template name="insert-institution-name"/></p>
+	<div><h2>Contributing Institution:</h2>
+	<xsl:call-template name="insert-institution-name"/></div>
   </xsl:when>
   <xsl:when test="$layout = 'printable-details'">
         <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
   </xsl:when>
   <xsl:otherwise>
-	<xsl:if test="$layout != 'metadata'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
+	<xsl:if test="$layout != 'metadata' and $layout != 'iframe'"><xsl:comment>@xtf:meta not found</xsl:comment></xsl:if>
 	<xsl:copy-of 
 	  select="cdlview:MODS(($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1],'')"/>
 	<!-- xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/ -->
                 <xsl:apply-templates select="$page/m:mets/m:dmdSec/m:mdRef[@MDTYPE='EAD']" mode="link"/>
-	<p><h2>Contributing Institution:</h2>
-	<xsl:call-template name="insert-institution-url"/></p>
+	<div><h2>Contributing Institution:</h2>
+	<xsl:call-template name="insert-institution-url"/></div>
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
@@ -376,10 +374,10 @@ use="'count'"/ -->
 <!-- calisphere image-complex -->
 
 <xsl:template match="m:mdRef" mode="link">
-<p>
+<div>
 	<xsl:if test="position()=1"><h2>Collection:</h2></xsl:if>
 	<a href="{@*[local-name()='href']}{$brandCgi}"><xsl:value-of select="@LABEL"/></a>
-</p>
+</div>
 </xsl:template>
 
 

@@ -15,7 +15,7 @@
 <xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
 <xsl:variable name="label">
 	<xsl:choose>
-		<xsl:when test="not($order = '')">
+		<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) &gt; 1">
  			<xsl:value-of select="key('divByOrder', $order)/@LABEL"/>
 			<xsl:text> / </xsl:text>
  			<xsl:value-of select="if ($page/m:mets) then $page/m:mets/@LABEL else $page/TEI.2/m:mets/@LABEL"/>
