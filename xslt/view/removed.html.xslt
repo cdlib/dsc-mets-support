@@ -267,18 +267,20 @@ removed.
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
             <div class="metadata-text">
         <xsl:if test="not($order = '1')">
-		<p><h2>Title:</h2>
+		<div><h2>Title:</h2>
 		<xsl:value-of select="$focusDiv/@LABEL"/>
-		</p>
-		<p><h2>From:</h2>
+		</div>
+		<div><h2>From:</h2>
                 <a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
-		</p>
+		</div>
                 <xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
         <xsl:if test="$order = '1'">
                 <xsl:apply-templates select="$page/m:mets/*[@xtf:meta]" mode="fullDC"/>
         </xsl:if>
+								<div>
                 <h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
+								</div>
             </div>
 </div>
 </xsl:template>
