@@ -9,7 +9,8 @@
         exclude-result-prefixes="#all"  >
 
 <xsl:param name="http.URL"/>
- 
+<xsl:param name="zoomBase.value"/>
+<xsl:param name="zoomOn.value"/> 
 <xsl:template name="jsod-printable-metadata">
 <xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
 <xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
@@ -65,11 +66,11 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template name="single-image-zoom">
-	<xsl:if test="($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')">
+	<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')) and ($zoomOn.value = 'yes')">
 <script type="text/javascript">
 <xsl:comment>
 	document.getElementById('zoomMe').href =
-    "http://192.35.209.153/Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1&amp;<xsl:value-of select="$brandCgi"/>";
+    "<xsl:value-of select="$zoomBase.value"/>Fullscreen.ics?ark=<xsl:value-of select="$page/mets:mets/@OBJID"/>/z1&amp;<xsl:value-of select="$brandCgi"/>";
 </xsl:comment>
 </script>
 </xsl:if>
