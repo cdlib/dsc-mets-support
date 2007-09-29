@@ -26,7 +26,6 @@
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:variable>
-<xsl:message><xsl:copy-of select="$metada"/></xsl:message>
 /* metadata via javascript on demand */
 function populateMetadata() {
 
@@ -66,7 +65,7 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template name="single-image-zoom">
-	<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')) and ($zoomOn.value = 'yes')">
+	<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/format[@q='jp2'] = 'jp2')) and ($zoomOn.value = 'yes')">
 <script type="text/javascript">
 <xsl:comment>
 	document.getElementById('zoomMe').href =
