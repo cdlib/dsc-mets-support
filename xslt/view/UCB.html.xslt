@@ -198,7 +198,7 @@ use="'count'"/ -->
 	<xsl:text> @maxY=</xsl:text>
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
-<xsl:variable name="dynamic" select="count($page/m:mets/m:fileSec//m:fileGrp[@USE='image/dynamic'])"/>
+
 <!-- xsl:variable name="count-hack" select="if ($mrsid-hack) number($mrsid-hack)
 																				else if ($page/m:mets/meta) number(1)
 																				else number(0)"/ -->
@@ -213,7 +213,7 @@ use="'count'"/ -->
       <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
-<xsl:variable name="dynamicId" select="$page/m:mets/m:structMap//m:div[@TYPE='image/dynamic']/m:fptr/@FILEID"/>
+
   <xsl:variable name="largerImageLink">
 <xsl:text>/</xsl:text>
 <xsl:value-of select="$page/m:mets/@OBJID"/>
