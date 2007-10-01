@@ -32,9 +32,11 @@
 
  <xsl:variable name="mrsid-hack">
    <xsl:choose>
-     <!-- xsl:when test="key('mrSidHack','file')">2</xsl:when -->
-<xsl:when test="$page/m:mets/@mrSidHack or $page/../TEI.2/m:mets/m:fileSec//@MIMETYPE='image/x-mrsid-image'">2</xsl:when>
-     <!-- xsl:when test="1 = 1">2</xsl:when -->
+    <!-- xsl:when test="key('mrSidHack','file')">2</xsl:when -->
+		<xsl:when test="($page/m:mets/@mrSidHack or $page/../TEI.2/m:mets/m:fileSec//@MIMETYPE='image/x-mrsid-image' ) and ($page/m:mets/relation[contains(.,'library.ucla.edu')])">3</xsl:when>
+		<xsl:when test="$page/m:mets/@mrSidHack or $page/../TEI.2/m:mets/m:fileSec//@MIMETYPE='image/x-mrsid-image'">2</xsl:when>
+    <!-- xsl:when test="1 = 1">2</xsl:when -->
+		<!-- xsl:when test="$page/m:mets/relation[contains(.,'library.ucla.edu')]">1</xsl:when -->
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
@@ -98,7 +100,6 @@
 <!-- xsl:value-of select="$focusDiv/@ORDER"/>=
 <xsl:value-of select="$order"/>=
 <xsl:value-of select="@ORDER"/ -->
-<!-- xsl:message>atl2-table</xsl:message -->
   <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
   <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>  
   <xsl:variable name="focusDecendsFromMe" select="
@@ -244,7 +245,6 @@
 </xsl:template>
 
 <xsl:template match="m:div[@ORDER or @LABEL][m:div]" mode="alt2-div">
-<!-- xsl:message>atl2-div</xsl:message -->
   <xsl:variable name="iAmFocusDiv" select="boolean(. is $focusDiv)"/>
   <xsl:variable name="iAmParentOfFocusDiv" select="boolean(. is $focusDiv/..)"/>
   <xsl:variable name="focusDecendsFromMe" select="
@@ -294,7 +294,6 @@ sa<xsl:value-of select="$selfAction"/>]]
   <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
 <div class="structMap">
-<xsl:message>hot</xsl:message>
 <xsl:choose>
     	<xsl:when test="$iAmFocusDiv">
 		<xsl:copy-of select="$brand.arrow.up"/>
@@ -689,6 +688,35 @@ sa<xsl:value-of select="$selfAction"/>]]
 
 </xsl:template>
 
+<xsl:template match="insert-innerIframe">
+<xsl:comment>insert-innerIframe</xsl:comment>
+<xsl:variable name="thisMODS">
+	<xsl:choose>
+	   <xsl:when test="number($order) = 1">
+		<xsl:copy-of select="cdlview:MODS(($page/m:mets/m:dmdSec/m:mdWrap/m:xmlData/mods:mods)[1],'')"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+		<xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
+			<xsl:variable name="why" select="."/>
+			<xsl:copy-of select="cdlview:MODS($page/key('md', $why )//mods:mods, '')"/>
+		</xsl:for-each>
+	   </xsl:otherwise>
+	</xsl:choose>
+</xsl:variable>
+	<xsl:if test="not($order = '1')">
+	   <xsl:choose>
+	   		<xsl:when test="normalize-space($thisMODS) != ''">
+				<xsl:copy-of select="$thisMODS"/>
+	   		</xsl:when>
+	   	<xsl:otherwise>
+			<h2>Title:</h2>
+			<p><xsl:value-of select="$focusDiv/@LABEL"/></p>
+		</xsl:otherwise>
+	   </xsl:choose>
+	<hr/><h1>From:</h1>
+</xsl:if>
+</xsl:template>
+
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
 <xsl:variable name="thisMODS">
@@ -719,10 +747,13 @@ sa<xsl:value-of select="$selfAction"/>]]
 	   </xsl:choose>
 		<a href="/{$page/m:mets/@OBJID}?{$brandCgi}"><xsl:value-of select="$page/mets:mets/@LABEL"/></a>
 	</xsl:if>
+
 	<xsl:if test="$order = '1'">
 		<xsl:copy-of select="$thisMODS"/>
 	</xsl:if>
+
 		<xsl:apply-templates select="$page/m:mets/relation-from[@xtf:meta] | $page/../TEI.2/xtf:meta/relation-from" mode="fullDC"/>
+
 		<h2>Contributing Institution:</h2><xsl:call-template name="insert-institution-url"/>
             </div>
 </div>
