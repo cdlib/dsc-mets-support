@@ -345,6 +345,23 @@
  <xsl:apply-templates select="gdm:Core/gdm:coreDate, gdm:Core/gdm:LocalID"/>
 </xsl:template>
 
+<xsl:template match="insert-innerIframe">
+<xsl:comment>insert-innerIframe</xsl:comment>
+	<xsl:if test="not($order = '1')">
+	<xsl:variable name="thisGDM">
+                <xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
+                        <xsl:variable name="why" select="."/>
+                        <xsl:apply-templates select="$page/key('md', $why )/m:mdWrap/m:xmlData/gdm:GDM"/>
+                </xsl:for-each>
+	</xsl:variable>
+		<div><h2>Title:</h2>
+			<xsl:value-of select="$focusDiv/@LABEL"/>
+		</div>
+		<xsl:copy-of select="$thisGDM"/>
+		<hr/><h1>From:</h1>
+	</xsl:if>
+</xsl:template>
+
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
 
