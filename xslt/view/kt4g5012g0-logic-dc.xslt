@@ -287,6 +287,17 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:copy-of select="$brand.search.box"/>
 </xsl:template>
 
+<xsl:template match="insert-innerIframe">
+<xsl:comment>insert-innerIframe</xsl:comment>
+	<xsl:if test="not($order = '1')">
+		<div><h2>Title:</h2>
+		<xsl:value-of select="$focusDiv/@LABEL"/>
+		</div>
+		<hr/>
+		<h1>From:</h1>
+	</xsl:if>
+</xsl:template>
+
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">

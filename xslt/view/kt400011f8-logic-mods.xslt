@@ -395,6 +395,28 @@ brand: <xsl:value-of select="$brand"/>
 <!-- saving this for 500x400 1200x1000 type image size options -->
 </xsl:template>
 
+<xsl:template match="insert-innerIframe">
+<xsl:comment>insert-innerIframe</xsl:comment>
+        <xsl:if test="not($order = '1')">
+<xsl:variable name="thisMODS">
+                <xsl:for-each select="tokenize($focusDiv/@DMDID, '\s')">
+                        <xsl:variable name="why" select="."/>
+                        <xsl:copy-of select="cdlview:MODS($page/key('md', $why )//mods:mods, '')"/>
+                </xsl:for-each>
+</xsl:variable>
+           <xsl:choose>
+                        <xsl:when test="normalize-space($thisMODS) != ''">
+                                <xsl:copy-of select="$thisMODS"/>
+                        </xsl:when>
+                <xsl:otherwise>
+                        <h2>Title:</h2>
+                        <h2>From:</h2>
+                </xsl:otherwise>
+           </xsl:choose>
+	<hr/><h1>From:</h1>
+        </xsl:if>
+</xsl:template>
+
 <xsl:template match="insert-inner-metadata">
 <xsl:comment>insert-inner-metadata</xsl:comment>
 <xsl:variable name="thisMODS">
