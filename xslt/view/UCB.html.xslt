@@ -309,8 +309,8 @@ use="'count'"/ -->
                         </tr>
                      </table>
 		  </xsl:when>
-		  <!-- xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']" -->
-		  <xsl:when test="$focusDiv/m:div[@TYPE='video/reference']">
+		  <xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
+		  <!-- xsl:when test="$focusDiv/m:div[@TYPE='video/reference']" -->
 			<table>
                         <tr>
 				   <td class="spacer">
