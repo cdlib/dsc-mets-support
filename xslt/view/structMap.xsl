@@ -680,6 +680,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 		<xsl:value-of select="$zID"/>
 		<xsl:text>&amp;order=</xsl:text>
 		<xsl:value-of select="$order"/>
+		<xsl:value-of select="$brandCgi"/>
 		<xsl:text>";
 </xsl:text>
 </xsl:comment>
