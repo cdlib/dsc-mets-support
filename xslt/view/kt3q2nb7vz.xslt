@@ -43,7 +43,7 @@
     </xsl:choose>
   </xsl:param>
   <!-- end temp -->
-
+<xsl:key name="divByOrder" match="m:div[@ORDER]" use="@ORDER"/>
 <xsl:key name="absPos" match="m:div[@ORDER][m:div]">
 	<xsl:value-of select="count( preceding::m:div[@ORDER][m:div] | ancestor::m:div[@ORDER][m:div])+1"/>
 </xsl:key>
@@ -1279,6 +1279,8 @@ select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods
 <xsl:template match="insert-largerImageLink">
 <!-- saving this for 500x400 1200x1000 type image size options -->
 </xsl:template>
+
+<xsl:template match="insert-innerIframe"/>
 
 <!-- calisphere image-complex -->
 
