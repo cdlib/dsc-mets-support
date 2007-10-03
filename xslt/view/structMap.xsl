@@ -655,7 +655,7 @@ sa<xsl:value-of select="$selfAction"/>]]
 </xsl:template>
 
 <xsl:template name="complex-image-zoom">
-<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/TEI.2/format[@q='jp2'] = 'jp2')) and $zoomOn.value='yes' ">
+<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/format[@q='jp2'] = 'jp2')) and $zoomOn.value='yes' ">
 <xsl:variable name="fileId" select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID"/>
 <xsl:variable name="seq" select="$page/m:mets/m:fileSec/m:fileGrp/m:file[@ID=$fileId]/@SEQ"/>
 <xsl:variable name="zID">
