@@ -313,8 +313,8 @@ use="'count'"/ -->
 		  <!-- xsl:when test="$focusDiv/m:div[@TYPE='video/reference']" -->
 			<table>
                         <tr>
-				   <td class="spacer">
-					<a href="/{$page/m:mets/@OBJID}/?layout=quicktime-object&amp;order={$order}{$brandCgi}">rotate 360&#xb0;</a> (quicktime required)
+				   <td class="spacer"><!-- qtvr QTVR -->
+					<a href="/{$page/m:mets/@OBJID}/?layout=quicktime-object&amp;{$brandCgi}">rotate 360&#xb0;</a> (quicktime required)
                            </td>
 						</tr>
                      </table>
@@ -333,12 +333,12 @@ use="'count'"/ -->
   <xsl:text>/</xsl:text>
   <xsl:value-of select="$page/m:mets/@OBJID"/>
   <xsl:text>/</xsl:text>
-  <xsl:value-of select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
+  <xsl:value-of select="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
 </xsl:variable>
-<xsl:variable name="fid" select="$focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
+<xsl:variable name="fid" select="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@FILEID"/>
 <xsl:variable name="qtFileDirect" select="$page/m:mets/m:fileSec//m:file[@ID = $fid]/m:FLocat[1]/@xlink:href"/>
-<xsl:variable name="qtX" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X)"/>
-<xsl:variable name="qtY" select="number($focusDiv/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:Y) + 10"/>
+<xsl:variable name="qtX" select="number($page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:X)"/>
+<xsl:variable name="qtY" select="number($page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference'][1]/m:fptr[1]/@cdl2:Y) + 10"/>
 
 <script language="JavaScript" type="text/javascript">
 <xsl:comment>
