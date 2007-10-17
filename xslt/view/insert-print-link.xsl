@@ -65,7 +65,7 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template name="single-image-zoom">
-	<xsl:if test="(($page/mets:mets/format[@q='jp2'] = 'jp2') or ($page/format[@q='jp2'] = 'jp2')) and ($zoomOn.value = 'yes')">
+	<xsl:if test="(($page/mets:mets/format = 'jp2') or ($page/format = 'jp2')) and ($zoomOn.value = 'yes')">
 <script type="text/javascript">
 <xsl:comment>
 	document.getElementById('zoomMe').href =
