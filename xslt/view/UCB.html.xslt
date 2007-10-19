@@ -295,7 +295,7 @@ use="'count'"/ -->
 <!-- toggel back to TEI view; launch other media -->
 <xsl:template match="insert-LaunchPad" name="insert-LaunchPad">
 <xsl:comment>insert-LaunchPad</xsl:comment>
- <xsl:if test="$page/../TEI.2 or $page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
+ <xsl:if test="$page/../TEI.2 or $page/m:mets/m:fileSec/m:fileGrp[@USE='video/reference']">
  <!-- xsl:if test="$page/../TEI.2 or $focusDiv/m:div[@TYPE='video/reference']" -->
       <div id="{@class}" class="nifty4">
           <div class="box4">
@@ -309,7 +309,8 @@ use="'count'"/ -->
                         </tr>
                      </table>
 		  </xsl:when>
-		  <xsl:when test="$page/m:mets/m:structMap/m:div/m:div[@TYPE='video/reference']">
+		  <!-- xsl:when test="$page/m:mets/m:structMap/m:div//m:div[@TYPE='video/reference']" -->
+		  <xsl:when test="$page/m:mets/m:fileSec/m:fileGrp[@USE='video/reference']">
 		  <!-- xsl:when test="$focusDiv/m:div[@TYPE='video/reference']" -->
 			<table>
                         <tr>
