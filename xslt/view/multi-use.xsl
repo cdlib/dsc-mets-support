@@ -4,6 +4,7 @@
    xmlns:mods="http://www.loc.gov/mods/v3"
    xmlns:mets="http://www.loc.gov/METS/"
    xmlns:m="http://www.loc.gov/METS/" 
+	 xmlns:xtf="http://cdlib.org/xtf"
    xmlns:session="java:org.cdlib.xtf.xslt.Session"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	 exclude-result-prefixes="#all"	>
@@ -142,6 +143,21 @@
 </xsl:variable>
 <a href="{$out-url}"><xsl:value-of select="substring-after(.,'|')"/></a>
 </div>
+</xsl:template>
+
+<xsl:template match="insert-dcq-html">
+<xsl:apply-templates 
+	select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/* | $page/TEI.2/xtf:meta/*" 
+	mode="dcq-html"/>
+</xsl:template>
+
+<xsl:template match="contributor | coverage | creator | date | description | format | identifier | language
+| publisher | relation | rights | source | subject | title | type" mode="dcq-html">
+	<meta xmlns="http://www.w3.org/1999/xhtml" name="DC.{name()}" value="{normalize-space(.)}"/>
+</xsl:template>
+
+<xsl:template match="*" mode="dcq-html">
+	<meta xmlns="http://www.w3.org/1999/xhtml" name="XTF.{name()}" value="{normalize-space(.)}"/>
 </xsl:template>
 
 <xsl:template match="*" mode="fullDC">
