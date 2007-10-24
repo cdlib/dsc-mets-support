@@ -80,11 +80,11 @@
 
 
 <xsl:template match="title" mode="briefMeta">
-	<p><xsl:apply-templates mode="magic"/></p>
+	<div><xsl:apply-templates mode="magic"/></div>
 </xsl:template>
 
 <xsl:template match="contributor" mode="briefMeta">
-	<p><xsl:apply-templates mode="magic"/></p>
+	<div><xsl:apply-templates mode="magic"/></div>
 </xsl:template>
 
 <xsl:template match="date" mode="briefMeta">
@@ -93,7 +93,7 @@
 <xsl:template match="*" mode="briefMeta">
 </xsl:template>
 
-<xsl:template match="title[1][text()]| creator[1][text()]| subject[not(@q='series')][1][text()]| description[1][text()]| publisher[1][text()]| contributor[1][text()]| date[1][text()]| type[@q][1][text()]| format[1][text()]| identifier[not(starts-with(text(),'http://ark')) and text()][1]| source[1][text()]| language[1][text()]| coverage[1][text()]| rights[1][text()] | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))]"
+<xsl:template match="title[1][text()]| creator[1][text()]| subject[not(@q='series')][1][text()]| description[1][text()]| publisher[1][text()]| contributor[1][text()]| date[1][text()]| type[@q][1][text()]| format[1][@q!='x'][text()]| identifier[not(starts-with(text(),'http://ark')) and text()][1]| source[1][text()]| language[1][text()]| coverage[1][text()]| rights[1][text()] | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))]"
 	mode="fullDC">
 <div>
 	<h2>
@@ -105,7 +105,7 @@
 </xsl:template>
 
 <xsl:template match="title| creator| description| contributor| date| 
-	format| identifier| source| language| coverage| rights| subject | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))][position() &gt; 1] "
+	format[@q!='x']| identifier| source| language| coverage| rights| subject | relation[not(starts-with(text(),'http://'))][not(starts-with(text(),'ark:/'))][position() &gt; 1] "
 	mode="fullDC">
   <xsl:if test="not(name()='identifier' and starts-with(.,'http://ark'))">
 	<div><xsl:apply-templates mode="magic"/></div>
@@ -151,7 +151,7 @@
 	mode="dcq-html"/>
 </xsl:template>
 
-<xsl:template match="contributor | coverage | creator | date | description | format | identifier | language
+<xsl:template match="contributor | coverage | creator | date | description | format[@q!='x'] | identifier | language
 | publisher | relation | rights | source | subject | title | type" mode="dcq-html">
 	<meta xmlns="http://www.w3.org/1999/xhtml" name="DC.{name()}" value="{normalize-space(.)}"/>
 </xsl:template>
