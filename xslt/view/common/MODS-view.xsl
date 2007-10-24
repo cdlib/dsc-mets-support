@@ -94,14 +94,15 @@
 <!-- default -->
 <xsl:template match="*" mode="viewMODS">
 	<xsl:comment><xsl:value-of select="name()"/></xsl:comment>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <!-- supplied label -->
 <xsl:template match="*[@displayLabel]" mode="viewMODS">
 	<xsl:comment><xsl:value-of select="name()"/></xsl:comment>
+	<div>
 	<h2><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/></h2>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <!-- Title titleInfo heading -->
@@ -141,7 +142,7 @@
 
 <xsl:template priority="0.25" match="mods:titleInfo" mode="viewMODS">
 	<!-- will need to grab mods:part -->
-	<p>
+	<div>
 	<xsl:choose>
 	        <!-- should factor this out, making a copy for now -->
           <xsl:when test="@type='alternative'">
@@ -170,7 +171,7 @@
 	<xsl:if test="@type='uniform'">
 		<xsl:text>]</xsl:text>
 	</xsl:if>
-	</p>
+	</div>
 </xsl:template>
 
 <!-- xsl:template match="mods:*[parent::mods:titleInfo]" mode="viewMODS">
@@ -229,8 +230,9 @@
 
 <!-- Type typeOfResource genere heading -->
 <xsl:template match="mods:typeOfResource[1]" mode="viewMODS">
+	<div>
 	<h2>Type:</h2>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<xsl:apply-templates mode="viewMODS"/></div>
 	<xsl:apply-templates select="./following-sibling::mods:typeOfResource" mode="viewMODS"/>
 	<xsl:apply-templates select="./following-sibling::mods:genre" mode="viewMODS"/>
 </xsl:template>
@@ -252,9 +254,10 @@
 </xsl:template>
 
 <!-- Language language heading -->
-<xsl:template match="mods:language[1]" mode="viewMODS">
+<xsl:template match="mods:language[1]" mode="viewMODS">]
 	<h2>Language:</h2>
-	<xsl:for-each select="mods:languageTerm[1], (./following-sibling::mods:language)/mods:languageTerm[1]"><p>
+	<xsl:for-each select="mods:languageTerm[1], (./following-sibling::mods:language)/mods:languageTerm[1]">
+<div>
 <xsl:choose>
         <xsl:when test=". = 'eng'">
           <xsl:text>English</xsl:text>
@@ -318,7 +321,7 @@
           <xsl:value-of select="."/>
         </xsl:otherwise>
       </xsl:choose>
-	</p></xsl:for-each>
+	</div></xsl:for-each>
 </xsl:template>
 
 <!-- Physical Description physicalDescription heading -->
@@ -329,13 +332,13 @@
 
 <xsl:template match="mods:abstract[1]" mode="viewMODS">
 	<h2>Abstract:</h2>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:tableOfContents[1]" mode="viewMODS">
 	<h2>Contents:</h2>
 	<!-- what would this look like anyway -->
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:targetAudience[1]" mode="viewMODS">
@@ -345,7 +348,7 @@
 
 <xsl:template match="mods:note[1][parent::mods:mods]" mode="viewMODS">
 	<h2>Note:</h2>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:subject[1]" mode="viewMODS">
@@ -355,7 +358,7 @@
 </xsl:template>
 
 <xsl:template match="mods:subject" mode="viewMODS">
-	<p><xsl:apply-templates mode="subjectMODS"/></p>
+	<div><xsl:apply-templates mode="subjectMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:*" mode="subjectMODS">
@@ -373,24 +376,24 @@
 
 <xsl:template match="mods:relatedItem" mode="viewMODS">
 	<!-- h2>Related Item:</h2 -->
-	<p><xsl:apply-templates mode="relatedLink"/></p>
+	<div><xsl:apply-templates mode="relatedLink"/></div>
 </xsl:template>
 
 <xsl:template match="mods:relatedItem[@type='series']" mode="viewMODS">
   <xsl:variable name="myString"><xsl:value-of select="normalize-space(.)"/></xsl:variable>
   <xsl:variable name="rfString"><xsl:value-of select="normalize-space(substring-after($page/m:mets/relation-from[@xtf:meta] | $page/TEI.2/xtf:meta/relation-from,'|'))"/></xsl:variable>
    <xsl:if test="not(string($myString) = string($rfString))">
-<p><span class="subLabel">Series:</span>
+<div><span class="subLabel">Series:</span>
 	<xsl:text> </xsl:text>
-<xsl:apply-templates mode="relatedLink"/></p>
+<xsl:apply-templates mode="relatedLink"/></div>
    </xsl:if>
 </xsl:template>
 
 <xsl:template match="mods:relatedItem[@displayLabel]" mode="viewMODS">
   <xsl:if test="not(starts-with(lower-case(@displayLabel), 'collection'))">
-	<p><span class="subLabel"><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/></span>
+	<div><span class="subLabel"><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/></span>
 	<xsl:text> </xsl:text>
-	<xsl:apply-templates mode="relatedLink"/></p>
+	<xsl:apply-templates mode="relatedLink"/></div>
   </xsl:if>
 </xsl:template>
 
@@ -431,7 +434,7 @@
 	<h2>Identifier:</h2>
 	  </xsl:otherwise>
 	</xsl:choose>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:location[1]" mode="viewMODS">
@@ -441,15 +444,15 @@
 
 <xsl:template match="mods:accessCondition[1]" mode="viewMODS">
 	<h2>Copyright Note:</h2>
-	<p><xsl:apply-templates mode="viewMODS"/></p>
+	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:accessCondition[@displayLabel][position() &gt; 1]" mode="viewMODS">
 	<xsl:comment><xsl:value-of select="name()"/></xsl:comment>
-	<p>
+	<div>
 	<span class="subLabel"><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/></span>
 	<xsl:text> </xsl:text>
-	<xsl:apply-templates mode="viewMODS"/></p>
+	<xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:part[1]" mode="viewMODS">
@@ -489,11 +492,11 @@
 </xsl:template>
 
 <xsl:template match="mods:originInfo" mode="publisher">
-<p>
+<div>
 	<xsl:call-template name="publisher">
 	  <xsl:with-param name="origin" select="."/>
 	</xsl:call-template>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template match="mods:originInfo[1]" mode="origin">
@@ -506,11 +509,11 @@
 </xsl:template>
 
 <xsl:template match="mods:originInfo" mode="origin">
-<p>
+<div>
 	<xsl:call-template name="publisher">
 	  <xsl:with-param name="origin" select="."/>
 	</xsl:call-template>
-</p>
+</div>
 </xsl:template>
 
 <xsl:template name="publisher">
