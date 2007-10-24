@@ -50,6 +50,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://www.loc.gov/mets/profiles/00000013.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/UCB.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
@@ -71,6 +72,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://sunsite.berkeley.edu/mets/profiles/UCBTextProfile.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/UCB.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
@@ -78,6 +80,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://www.loc.gov/mets/profiles/00000010.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/7train.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
@@ -117,6 +120,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt3q2nb7vz</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ead-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt3q2nb7vz.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/kt3q2nb7vz.jsod.xslt</tool>
   </mets-profile-driver>
 
   <!--
@@ -133,6 +137,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt400011f8</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt400011f8-logic-mods.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/kt400011f8.jsod.xslt</tool>
     <tool type="xslt" role="bpc">./xslt/bpc/lstaMODS_checker.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
@@ -144,6 +149,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/kt4g5012g0.jsod.xslt</tool>
     <tool type="xslt" role="bpc">./xslt/bpc/lstaDC_checker.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
