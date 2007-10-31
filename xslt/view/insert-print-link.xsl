@@ -13,7 +13,6 @@
 <xsl:param name="zoomOn.value"/> 
 <xsl:template name="jsod-printable-metadata">
 <xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
-<xsl:variable name="metada"><xsl:call-template name="insert-metadataPortion"/></xsl:variable>
 <xsl:variable name="label">
 	<xsl:choose>
 		<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) &gt; 1">
@@ -33,8 +32,6 @@ function populateMetadata() {
 	var metadata  = YAHOO.util.Dom.get('printable-description');
 	// var insertCredit  = YAHOO.util.Dom.get('insertCredit');
 	var string = '<xsl:apply-templates select="$credit" mode="xmlInJs"/>';
-  string += '<![CDATA[<br clear="all" /><div id="printable-metadata">]]>';
-	string += '<xsl:apply-templates select="$metada" mode="xmlInJs"/>';
   string += '<![CDATA[</div>]]>';
 	if (metadata) metadata.innerHTML = string;
 	// insertCredit.innerHTML = '<![CDATA[<div class="publisher">Courtesy of ]]><xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/><![CDATA[</div>]]>';
@@ -76,6 +73,14 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template match="insert-print-links">
+<xsl:if test="(($page/mets:mets/format = 'jp2') or ($page/format = 'jp2')) and ($zoomOn.value = 'yes')">
+<script type="text/javascript">
+<xsl:comment>
+	document.getElementById('clicktext').innerHTML = 'Click image to zoom';
+</xsl:comment>
+</script>
+</xsl:if>
+
 <xsl:comment>insert-print-links @shape: <xsl:value-of select="@shape"/></xsl:comment>
 <xsl:comment><xsl:value-of select="static-base-uri()"/></xsl:comment>
 <xsl:variable name="inCgiString" select="replace(substring-after($http.URL,'?'),'&amp;?layout=[^&amp;]*','')"/>
