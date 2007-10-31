@@ -189,7 +189,15 @@
 			select="for $x in 1 to 15 return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
 			mode="image-table"/ -->
 		</table>
-		<div class="image-nav">Click image for larger view</div>
+		<div class="image-nav" id="clicktext">Click image for larger view</div>
+    <xsl:if test="(($page/mets:mets/format = 'jp2') or ($page/format = 'jp2')) and $zoomOn.value='yes' ">
+<script type="text/javascript">
+			<xsl:comment>
+			document.getElementById('clicktext').innerHTML = 'Click image to zoom';
+			</xsl:comment>
+</script>
+		</xsl:if>
+
 		<xsl:if test="$focusDivSiblingCount &gt; 15">
 		  <div class="pagination">
 		    <xsl:if test="$pagesBehind = 'true'">
