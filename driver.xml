@@ -48,6 +48,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <mets-profile-driver pref="./profiles/00000013.xml" frameworkID="UCBGeneralProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000013.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000013.xml</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
     <tool type="xslt" role="toJsod">./xslt/jsod/UCB.jsod.xslt</tool>
