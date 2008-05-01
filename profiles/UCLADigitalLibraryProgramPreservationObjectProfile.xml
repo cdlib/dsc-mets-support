@@ -1,0 +1,970 @@
+<?xml version="1.0"?>
+<METS_Profile xmlns="http://www.loc.gov/METS_Profile/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mets="http://www.loc.gov/METS/" 
+	xmlns:mods="http://www.loc.gov/mods/v3" 
+	xsi:schemaLocation="http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd
+		http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd
+		">
+	<!-- Created by Stephen Davison using XML Spy -->
+	<!-- Contributor: Holly Wang -->
+	<URI LOCTYPE="URL">http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml</URI>
+	<title>UCLA Digital Library Program Preservation Object Profile</title>
+	<abstract>The UCLA Digital Library Program Preservation Object Profile specifies how METS 
+	documents representing digital objects should be encoded for deposit in the California Digital 
+	Library Digital Preservation Repository.</abstract>
+	<date>2006-02-17T12:00:00</date>
+	<contact>
+		<name>Stephen Davison</name>
+		<institution>UCLA Digital Library Program</institution>
+		<address>390 Powell Library Building, UCLA, Los Angeles, CA 90095-7201</address>
+	</contact>
+	<related_profile>No related profiles.</related_profile>
+	<extension_schema>
+		<name>Metadata Object Description Schema (MODS)</name>
+		<URI>http://www.loc.gov/mods/v3/</URI>
+	</extension_schema>
+	<description_rules>
+		<p>It is recommended, but not required, that the content data used in the MODS section of a METS document conform to AACR2 to the extent that it applies.</p>
+	</description_rules>
+	<controlled_vocabularies>
+		<vocabulary>
+			<name>UCLA Digital Library Digital Object Types</name>
+			<maintenance_agency>University of California, Los Angeles Library</maintenance_agency>
+			<values>
+				<value>audio</value>
+				<value>book</value>
+				<value>chapter</value>
+				<value>collection</value>
+				<value>image set</value>
+				<value>issue</value>
+				<value>image</value>
+				<value>manuscript</value>
+				<value>manuscript set</value>
+				<value>page</value>
+				<value>page set</value>
+				<value>series</value>
+				<value>source</value>
+				<value>title</value>
+				<value>video</value>
+				<value>volume</value>
+				<value>website</value>
+				<value>work</value>
+			</values>
+			<description>
+				<p> 
+					The above controlled vocabularies is generated from 'digital object model.doc' which is a guideline for the UCLA digital collections. Please refer to this file for detailed description.  Any change in digital object model.doc should be reflected on above list. 			
+				</p>
+			</description>
+		</vocabulary>
+		<vocabulary>
+			<name>UCLA Digital Library file USE attribute values</name>
+			<maintenance_agency>University of California, Los Angeles Library</maintenance_agency>
+			<values>
+				<value>archive image</value>
+				<value>reference image</value>
+				<value>thumbnail image</value>
+				<value>archive audio</value>
+				<value>reference audio</value>
+				<value>archive video</value>
+				<value>reference video</value>
+				<value>text</value>
+			</values>
+			<description>
+				<p/>
+			</description>
+		</vocabulary>
+	</controlled_vocabularies>
+	<structural_requirements>
+		<metsRootElement>
+			<requirement>
+				<p>The METS root element must have an attribute PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml".</p>
+			</requirement>
+		</metsRootElement>
+		<dmdSec>
+			<requirement ID="dmdReq01">
+				<p>A document must contain one and only one Descriptive	Metadata Section (dmdSec) with a wrapped (mdWrap) MODS	bibliographic record. The mods element must have an ID attribute.</p>
+			</requirement>
+			<requirement ID="dmdReq02">
+				<p>If the digital object contains subparts that are to be described, the MODS element must contain Related Item (relatedItem) element for each subpart. Related Items elements can be nested as many times as is needed to reflect the structure of the object. An example of a subpart might be a bound codex with relatedItems describing each individual manuscript within the volume. An example with additional nested layers might be a digital object representing a popular song with relatedItems for the printed music and recorded music manifestations. Additonal nested relatedItems within the printed music relatedItem could be used to describe variant advertisements and covers. Each relatedItem element must have an ID attribute and a type="constituent" attribute.</p>
+      		</requirement>
+			<requirement ID="dmdReq03">
+				<p>Note that the description metadata should not be subdivided into subparts for purely arbitrary reasons. As this profile is designed for transfer of digital objects to and from a Digital Preservation Repository each relatedItem metadata section must describe a well-defined subpart of the complete object. The metadata structure of the Descriptive Metadata Section (dmdSec) as a whole may reflect the structure of the object as maintained in the contributing repository, but this is not necessary. See structReq03 below.</p>
+				<!-- Need to define use of TYPE here. Where does it go? -->
+      		</requirement>
+      </dmdSec>
+		<amdSec>
+			<requirement ID="amdReq01">
+				<p>An amdSec is not required.</p>
+			</requirement>
+		</amdSec>
+		<fileSec>
+			<requirement ID="fileReq01">
+				<p>The content files referenced by the fptr elements (in the structMap) must point to the appropriate files in the File Section (fileSec). File Group (fileGrp) elements must have a USE element with values drawn from the UCLA Digital Library Digital Object Types vocabulary. File (file) elements must have a MIMETYPE attribute with appropriate value and File Location (FLocat) elements must have a LOCTYPE attribute with appropriate value. The profile makes no further requirements regarding the fileSec element.</p>
+      		</requirement>
+		</fileSec>
+		<structMap>
+			<requirement ID="structReq01">
+				<p>The structure of the digital object will be represented in the Structure Map (structMap) section of the METS document. The document will have one and only one structMap. The structMap element must contain one and only one top level div element. The top-level div element of the structMap must have a DMDID attribute that points to the dmdSec element (of which there will only be one; see dmdReq01). The top-level div must contain a TYPE attribute with a value drawn from the UCLA Digital Library Digital Object Types vocabulary.</p>
+			</requirement>
+			<requirement ID="structReq02">
+				<p>The top-level div element may contain none, one, or more div elements, and these div elements may contain additional nested div elements. Each div element will contain a TYPE attribute drawn from the UCLA Digital Library Digital Object Types vocabulary. Each nested div element must have a DMDID attribute that associates it with a corresponding relatedItem type="constitutent" element in the dmdSec MODS record.</p>
+			</requirement>
+			<requirement ID="structReq03">
+				<p>The nested arrangement of the div elements in the structMap section will reflect the structure of the digital object as stored in the depositing repository. It is not required that the nested arrangement of the relatedItem elements in the Descriptive Metadata Section also reflect this structure. See dmdReq03 above.</p>
+			</requirement>
+		</structMap>
+	</structural_requirements>
+	<technical_requirements>
+		<content_files>
+			<requirement>
+				<head>Audio Files</head>
+				<p>The archive audio files referenced by conforming documents must be in WAVE Audio File Format. See Digital Formats for Library of Congress Collections: WAVE Audio File Format at http://www.digitalpreservation.gov/formats/fdd/fdd000001.shtml.</p>
+      		</requirement>
+			<requirement>
+				<head>Video Files</head>
+				<p>It is recommended that archive video files referenced by conforming documents be in MPEG-2 Video Encoding. See Digital Formats for Library of Congress Collections: MPEG-2 Video Encoding at http://www.digitalpreservation.gov/formats/fdd/fdd000028.shtml.</p>
+			</requirement>
+			<requirement>
+				<head>Still Image Files</head>
+				<p>The archive image files referenced by conforming documents must be in TIFF Revision 6.0 format. See Digital Formats for Library of Congress Collections: TIFF, Revision 6.0 at http://www.digitalpreservation.gov/formats/fdd/fdd000022.shtml.</p>
+			</requirement>
+			<requirement>
+				<head>Text Files</head>
+				<p>Text files referenced by conforming documents must be in XML format. See Digital Formats for Library of Congress Collections: XML (Extensible Markup Language) at http://www.digitalpreservation.gov/formats/fdd/fdd000075.shtml.</p>
+			</requirement>
+		</content_files>
+	</technical_requirements>
+	<tool>
+		<note>
+			<p>There are no associated tools for conforming documents.</p>
+		</note>
+	</tool>
+	
+	<Appendix NUMBER="1" ID="Example1">
+		<mets OBJID="21198_zz0000xbn3" LABEL="snb147_3" TYPE="Image" PROFILE="http://www.loc.gov/standards/mets/profiles/00000002.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-01-18T14:38:34" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+			<dmdSec ID="DMD-21198_zz0000xbn3">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods >
+							<mods:titleInfo>
+								<mods:title>snb147_3</mods:title>
+							</mods:titleInfo>
+							<mods:typeOfResource>still image</mods:typeOfResource>
+							<mods:originInfo>
+								<mods:dateCreated>2003-09-05</mods:dateCreated>
+							</mods:originInfo>
+							<mods:physicalDescription>
+								<mods:extent>Image 640 x 480 pixels</mods:extent>
+							</mods:physicalDescription>
+							<mods:subject>
+								<mods:topic>animal sex differences</mods:topic>
+								<mods:topic>spinal nucleus bulbocavernosus (SNB)</mods:topic>
+								<mods:topic>sex hormones</mods:topic>
+								<mods:topic>spinal cord</mods:topic>
+								<mods:topic>Rattus norvegicus</mods:topic>
+								<mods:topic>organizational effects</mods:topic>
+								<mods:topic>prenatal exposure</mods:topic>
+								<mods:topic>antiandrogens</mods:topic>
+								<mods:topic>Sprague-Dawley rats</mods:topic>
+								<mods:topic>androgens</mods:topic>
+								<mods:topic>neuroanatomy</mods:topic>
+								<mods:topic>male</mods:topic>
+								<mods:topic>control</mods:topic>
+								<mods:topic>development</mods:topic>
+								<mods:topic>central nervous system</mods:topic>
+								<mods:topic>motor neurons</mods:topic>
+								<mods:topic>spinal nerves</mods:topic>
+							</mods:subject>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>
+			<amdSec>
+				<sourceMD ID="SMD-21198_zz0000xbn3">
+					<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+						<xmlData>
+							<mods:source>UCLA Special collections</mods:source>
+						</xmlData>
+					</mdWrap>
+				</sourceMD>
+			</amdSec>
+			<fileSec>
+				<fileGrp USE="archive image">
+					<file ID="FID1-21198_zz0000xbn3" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/ratscia/masters/snb147_3a.tif"/>
+					</file>
+				</fileGrp>
+				<fileGrp USE="archive image">
+					<file ID="FID2-21198_zz0000xbn3" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/ratscia/masters/snb147_3a.tif"/>
+					</file>
+				</fileGrp>
+				<fileGrp USE="thumbnail image">
+					<file ID="FID3-21198_zz0000xbn3" MIMETYPE="image/jpeg">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digital.library.ucla.edu/ratscia/nails/ucla_ratscia_snb147_3a_a.jpg"/>
+					</file>
+				</fileGrp>
+				<fileGrp USE="thumbnail image">
+					<file ID="FID4-21198_zz0000xbn3" MIMETYPE="image/jpeg">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digital.library.ucla.edu/ratscia/nails/ucla_ratscia_snb147_3a_a.jpg"/>
+					</file>
+				</fileGrp>
+			</fileSec>
+			<structMap TYPE="physical">
+				<div ORDER="1" LABEL="snb147_3" DMDID="DMD-21198_zz0000xbn3" TYPE="image">
+					<fptr FILEID="FID1-21198_zz0000xbn3"/>
+					<fptr FILEID="FID2-21198_zz0000xbn3"/>
+					<fptr FILEID="FID3-21198_zz0000xbn3"/>
+					<fptr FILEID="FID4-21198_zz0000xbn3"/>
+				</div>
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	<Appendix NUMBER="2" ID="Example2">
+		<mets OBJID="21198_zz000000f2" LABEL="Haines Hall under construction" TYPE="Image" PROFILE="http://www.loc.gov/standards/mets/profiles/00000002.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-01-18T14:30:05" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+
+			<dmdSec ID="DMD-21198_zz000000f2">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods>
+							<mods:titleInfo>
+								<mods:title>Haines Hall under construction</mods:title>
+							</mods:titleInfo>
+							<mods:typeOfResource>still image</mods:typeOfResource>
+							<mods:originInfo>
+								<mods:dateCreated>1928-04-29</mods:dateCreated>
+							</mods:originInfo>
+							<mods:physicalDescription>
+								<mods:extent>Image 4X5 inches</mods:extent>
+							</mods:physicalDescription>
+							<mods:subject>
+								<mods:topic>construction images</mods:topic>
+								<mods:topic>Haines Hall</mods:topic>
+							</mods:subject>
+							<mods:language>
+								<mods:languageTerm>eng</mods:languageTerm>
+							</mods:language>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>
+			<amdSec>
+				<sourceMD ID="SMD-21198_zz000000f2">
+					<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+						<xmlData>
+							<mods:source>UCLA Special collections</mods:source>
+						</xmlData>
+					</mdWrap>
+				</sourceMD>
+			</amdSec>
+			<fileSec>
+				<fileGrp USE="archive image">
+					<file ID="FID1-21198_zz000000f2" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/hoover/masters/ua00000060_10a.tif"/>
+					</file>
+				</fileGrp>
+				<fileGrp USE="thumbnail image">
+					<file ID="FID2-21198_zz000000f2" MIMETYPE="image/jpeg">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digital.library.ucla.edu/hoover/nails/02002010_a.jpg"/>
+					</file>
+				</fileGrp>
+			</fileSec>
+			<structMap TYPE="physical" >
+				<div ORDER="1" LABEL="Haines Hall under construction" DMDID="DMD-21198_zz000000f2" TYPE="Image">
+					<fptr FILEID="FID1-21198_zz000000f2"/>
+					<fptr FILEID="FID2-21198_zz000000f2"/>
+				</div>
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	
+	<Appendix NUMBER="3" ID="Example3">
+		<mets OBJID="" LABEL="Minasian Collection" TYPE="Manuscript group" PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-02-17T14:30:05" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+			<dmdSec ID="DivID-0013">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods>
+							<mods:titleInfo>
+								<mods:title>Majm??ah</mods:title>
+								<mods:title type="alternative">??????</mods:title>
+							</mods:titleInfo>
+							<mods:language>
+								<mods:languageTerm>Arabic</mods:languageTerm>
+							</mods:language>
+							<mods:relatedItem ID="DivID-0013_001" type="constituent">
+								<mods:titleInfo>
+									<mods:title>Shar? D?w?n al-Mutanabb?</mods:title>
+									<mods:title type="alternative">??? ????? ???????</mods:title>
+								</mods:titleInfo>
+								<mods:language>
+									<mods:languageTerm>Arabic</mods:languageTerm>
+								</mods:language>
+								<mods:abstract>A commentary on the poetry of al-Mutanabb? including biographical notes. Mentions the works of al-Jurj?n?, al-Ma?arr?, Ibn Jinn?, and Ab? ?Al? ibn Furjah and Bur?jird?. Missing end folios. Seventy-six pages of 174 in the entire volume.</mods:abstract>
+								<mods:subject>
+									<mods:topic authority="lcsh">Arabic poetry</mods:topic>
+								</mods:subject>
+								<mods:subject>
+									<mods:topic authority="lcsh">Biography</mods:topic>
+								</mods:subject>
+								<mods:relatedItem ID="DivID-0013_001_001" type="constituent">
+									<mods:titleInfo>
+										<mods:title>Shar? D?w?n al-Mutanabb?: page 1</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_001_002" type="constituent">
+									<mods:titleInfo>
+										<mods:title>Shar? D?w?n al-Mutanabb?: page 2</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_001_003" type="constituent">
+									<mods:titleInfo>
+										<mods:title>Shar? D?w?n al-Mutanabb?: page 3</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_001_004" type="constituent">
+									<mods:titleInfo>
+										<mods:title>Shar? D?w?n al-Mutanabb?: page 4</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_001_005" type="constituent">
+									<mods:titleInfo>
+										<mods:title>Shar? D?w?n al-Mutanabb?: page 5</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<!-- Here follows as many relatedItem elements as needed to enumerate the pages -->
+							</mods:relatedItem>
+							<mods:relatedItem ID="DivID0013_002" type="constituent">
+								<mods:titleInfo>
+									<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af</mods:title>
+									<mods:title type="alternative">????? ????? ?????? ?????</mods:title>
+								</mods:titleInfo>
+								<mods:language>
+									<mods:languageTerm>Arabic</mods:languageTerm>
+								</mods:language>
+								<mods:abstract>A collection of various works of Arabic poetry. Consists of 12 chapters.</mods:abstract>
+								<mods:subject>
+									<mods:topic authority="lcsh">Arabic poetry</mods:topic>
+								</mods:subject>
+								<mods:relatedItem ID="DivID-0013_002_077" type="constituent">
+									<mods:titleInfo>
+										<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af: page 77</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_002_078" type="constituent">
+									<mods:titleInfo>
+										<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af: page 78</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_002_079" type="constituent">
+									<mods:titleInfo>
+										<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af: page 79</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_002_080" type="constituent">
+									<mods:titleInfo>
+										<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af: page 80</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<mods:relatedItem ID="DivID-0013_002_081" type="constituent">
+									<mods:titleInfo>
+										<mods:title>?ar??if al-?uraf wa-?ar??if al-nu?af: page 81</mods:title>
+									</mods:titleInfo>
+								</mods:relatedItem>
+								<!-- Here follows as many relatedItem elements as needed to enumerate the pages -->
+							</mods:relatedItem>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>
+			<fileSec>
+				<fileGrp USE="archive image">
+					<file ID="m0013_001_001" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_001_001.tif"/>
+					</file>
+					<file ID="m0013_001_002" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_001_002.tif"/>
+					</file>
+					<file ID="m0013_001_003" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_001_003.tif"/>
+					</file>
+					<file ID="m0013_001_004" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_001_004.tif"/>
+					</file>
+					<file ID="m0013_001_005" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_001_005.tif"/>
+					</file>
+					<!-- etc. for all the pages in this work -->
+					<file ID="m0013_002_077" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_002_077.tif"/>
+					</file>
+					<file ID="m0013_002_078" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_002_078.tif"/>
+					</file>
+					<file ID="m0013_002_079" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_002_079.tif"/>
+					</file>
+					<file ID="m0013_002_080" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_002_080.tif"/>
+					</file>
+					<file ID="m0013_002_081" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/minasian/masters/0013_002_081.tif"/>
+					</file>
+					<!-- etc. for all the pages in this work -->
+				</fileGrp>				
+			</fileSec>
+			<structMap TYPE="physical">
+				<div LABEL="Majm??ah" TYPE="Manuscript group" DMDID="DivID-0013">
+					<div LABEL="Shar? D?w?n al-Mutanabb?" TYPE="work" >
+						<div TYPE="page set" DMDID="DivID-0013">
+							<fptr FILEID="m0013_001_001"/>
+							<fptr FILEID="m0013_001_002"/>
+							<fptr FILEID="m0013_001_003"/>
+							<fptr FILEID="m0013_001_004"/>
+							<fptr FILEID="m0013_001_005"/>
+						</div>
+					</div>
+					<div LABEL="?ar??if al-?uraf wa-?ar??if al-nu?af" TYPE="work" >
+							<div TYPE="page set" DMDID="DivID-0013">
+								<fptr FILEID="m0013_002_077"/>
+								<fptr FILEID="m0013_002_078"/>
+								<fptr FILEID="m0013_002_079"/>
+								<fptr FILEID="m0013_002_080"/>
+								<fptr FILEID="m0013_002_081"/>
+						</div>
+					</div>				
+				</div>
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	<Appendix NUMBER="4" ID="Example4">
+		<mets OBJID="" LABEL="" TYPE="Manuscript group" PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-02-24T14:30:05" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+			<dmdSec ID="DivID-100">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods>
+							<mods:titleInfo type="collection" lang="English">
+								<mods:title>Campaign Literature Archive</mods:title>								
+							</mods:titleInfo>							
+							<mods:relatedItem ID="DivID-1908_001" type="folder" lang="English">
+								<mods:titleInfo>
+									<mods:title>1908 - California</mods:title>									
+								</mods:titleInfo>
+								<mods:relatedItem ID="DivID-1908_001_001" type="item" lang="English">
+								</mods:relatedItem>
+									<mods:titleInfo>
+										<mods:title>The Lincoln-Roosevelt Republican League</mods:title>									
+									</mods:titleInfo>
+									<mods:physicalDescription>
+											<mods:extent>8 sheets, folded and stapled, 32 printed pages, 3.25 x 6 inches</mods:extent>
+											<mods:note></mods:note>
+									</mods:physicalDescription>
+							</mods:relatedItem>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>
+			<fileSec>
+				<fileGrp USE="archive image">
+					<file ID="MASTERS-1908_001_001_001" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000006_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_002" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000007_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_003" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000008_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_004" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000009_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_005" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000010_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_006" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000011_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_007" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000012_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_008" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000013_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_009" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000014_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_010" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000015_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_011" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000016_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_012" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000017_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_013" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000018_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_014" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000019_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_015" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000020_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_016" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000021_3a.tif"/>
+					</file>
+					<file ID="MASTERS-1908_001_001_017" MIMETYPE="image/tiff">
+						<FLocat LOCTYPE="URL" xlink:type="simple" xlink:href="http://digilib.library.ucla.edu/campaign/masters/CL00000022_3a.tif"/>
+					</file>					
+				</fileGrp>
+			</fileSec>
+			<structMap TYPE="physical">
+				<div ID="div1" LABEL="Campaign Literature Archive"  TYPE="collection">
+				  <div ID="div1.1" LABEL="1908 - California"		TYPE="folder" >
+				   <div ID="div1.1.1" LABEL="1908 - California"		TYPE="item" >
+						<fptr FILEID="MASTERS-1908_001_001_001"/>
+						<fptr FILEID="MASTERS-1908_001_001_002"/>
+						<fptr FILEID="MASTERS-1908_001_001_003"/>
+						<fptr FILEID="MASTERS-1908_001_001_004"/>
+						<fptr FILEID="MASTERS-1908_001_001_005"/>
+						<fptr FILEID="MASTERS-1908_001_001_006"/>
+						<fptr FILEID="MASTERS-1908_001_001_007"/>
+						<fptr FILEID="MASTERS-1908_001_001_008"/>
+						<fptr FILEID="MASTERS-1908_001_001_009"/>
+						<fptr FILEID="MASTERS-1908_001_001_010"/>
+						<fptr FILEID="MASTERS-1908_001_001_011"/>
+						<fptr FILEID="MASTERS-1908_001_001_012"/>
+						<fptr FILEID="MASTERS-1908_001_001_013"/>
+						<fptr FILEID="MASTERS-1908_001_001_014"/>
+						<fptr FILEID="MASTERS-1908_001_001_015"/>
+						<fptr FILEID="MASTERS-1908_001_001_016"/>
+						<fptr FILEID="MASTERS-1908_001_001_017"/>
+					
+					</div>
+				  </div>
+				 </div>
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	<Appendix NUMBER="5" ID="Example5">
+		<mets OBJID="" LABEL="" TYPE="Manuscript group" PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-02-24T14:30:05" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+			<dmdSec ID="C1147">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods>
+							<mods:titleInfo type="collection"  ID="ETHNO">
+								<mods:title>Ethnomusicology Archive </mods:title>								
+							</mods:titleInfo>							
+							<mods:relatedItem ID="DivID-300" type="collection">
+								<mods:titleInfo>
+									<mods:title>Colin McPhee collection</mods:title>									
+								</mods:titleInfo>
+								<mods:relatedItem ID="mcphee197506_04_L0151" displayLabel="Two Men Playing Suling Gambuh Flutes" type="image">
+								<mods:abstract>Two Men Playing Suling Gambuh Flutes.</mods:abstract>
+								</mods:relatedItem>
+								<mods:relatedItem ID="mcphee197506_04_L0152" displayLabel="Gambuh Ensemble" type="image">
+								<mods:abstract>Musicians performing in a Gamelan Gambuh ensemble on two suling (flutes), rebab (bowed lute), 
+								two kendang (double-headed drum), and gong.
+								</mods:abstract>
+								</mods:relatedItem>
+								
+							</mods:relatedItem>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>
+			<fileSec>
+					<fileGrp USE="DERIVATIVE">
+						<file ID="mcphee197506_04_L0151_k" MIMETYPE="image/jpeg">
+							<FLocat LOCTYPE="URL" xlink:href="http://dlproj.library.ucla.edu/ethno/derivatives/jpg/mcphee197506_04_L0151_k.jpg"/>
+						</file>	
+						<file ID="mcphee197506_04_L0152_k" MIMETYPE="image/jpeg">
+							<FLocat LOCTYPE="URL" xlink:href="http://dlproj.library.ucla.edu/ethno/derivatives/jpg/mcphee197506_04_L0152_k.jpg"/>
+						</file>																
+					</fileGrp>
+					<fileGrp USE="MASTERS_McP"> 
+						<file ID="mcphee197506_04_L0151" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="DOI" xlink:href="mcphee197506_04_L0151_a.tif"/>
+						</file>		
+							<file ID="mcphee197506_04_L0152" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href="  http://digilib.library.ucla.edu/ethnomus/mcphee/masters/mcphee197506_04_L0152.tif"/>
+						</file>		
+					</fileGrp>
+					<fileGrp USE="SUBMASTER"> 
+						<file ID="mcphee197506_04_L0151_a" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="DOI" xlink:href="mcphee197506_04_L0151_a.tif"/> 
+						</file>	
+						<file ID="mcphee197506_04_L0152_a" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="DOI" xlink:href="mcphee197506_04_L0152_a.tif"/> 
+						</file>	
+					</fileGrp>
+					<fileGrp USE="THUMBNAIL"> 
+						<file ID="mcphee197506_04_L0151_i" MIMETYPE="image/gif">
+							<FLocat LOCTYPE="URL" xlink:href="http://dlproj.library.ucla.edu/ethno/derivatives/gif/mcphee197506_04_L0151_i.gif "/>
+						</file>	
+						<file ID="mcphee197506_04_L0152_i" MIMETYPE="image/gif">
+							<FLocat LOCTYPE="URL" xlink:href="http://dlproj.library.ucla.edu/ethno/derivatives/gif/mcphee197506_04_L0152_i.gif"/>
+						</file>		
+					</fileGrp>
+			</fileSec>
+			<structMap TYPE="physical">
+				     
+					  <div ID="div-DivID-300" LABEL="Colin McPhee collection"	TYPE="collection" ORDER="1">
+							<div ID="div-mcphee197506_04_L0151" LABEL="Two Men Playing Suling Gambuh Flutes" TYPE="image set">
+									<div ID="div-mcphee197506_04_L0151_k" TYPE="image" />
+									<div ID="div-mcphee197506_04_L0151_mcp" TYPE="image" />
+									<div ID="div-mcphee197506_04_L0151_a" TYPE="image" />
+									<div ID="div-mcphee197506_04_L0151_i"  TYPE="image" />
+							</div>
+							<div ID="div-mcphee197506_04_L0152" LABEL="Gambuh Ensemble" TYPE="image set">
+									<div ID="div-mcphee197506_04_L0152_k" TYPE="image" />
+									<div ID="div-MASTERS_McP-mcphee197506_04_L0152" TYPE="image" />
+									<div ID="div-mcphee197506_04_L0152_a" TYPE="image" />
+									<div ID="div-mcphee197506_04_L0152_i"  TYPE="image" />
+							</div>
+					 </div>			
+					
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	
+	<Appendix NUMBER="6" ID="Example6">
+		<mets OBJID="" LABEL="apam collection" TYPE="Manuscript group" PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+			<metsHdr CREATEDATE="2006-02-24T14:30:05" RECORDSTATUS="Production">
+				<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+					<name>UCLA Digital Library</name>
+					<note>Test Deposit</note>
+				</agent>
+			</metsHdr>
+			<dmdSec ID="S01042119">
+				<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+					<xmlData>
+						<mods:mods>
+							<mods:titleInfo type="work"  ID="S01042119" lang="English">
+								<mods:title>I love to fox-trot </mods:title>								
+							</mods:titleInfo>	
+							<mods:name>	
+								<displayForm>Von Tilzer, Albert </displayForm>
+								<role> composer </role>							
+							</mods:name>	
+							<mods:name>	
+								<displayForm>	Fleeson, Neville </displayForm>
+								<role> lyricist </role>							
+							</mods:name>	
+						
+							
+							<mods:relatedItem ID="BRFOX" type="page set">
+												<tlteInfor>
+													<title>I love to fox-trot</title>																												
+												</tlteInfor>
+												<mods:name>
+														<displayForm>Von Tilzer, Albert </displayForm>
+														<role> composer </role>							
+												</mods:name>	
+												<mods:name>	
+														<displayForm>	Fleeson, Neville </displayForm>
+														<role> lyricist </role>							
+												</mods:name>	
+												<OriginInfor> 
+													<publisher>New York : Artmusic, Inc.	</publisher>
+													<copyrightDate>1920</copyrightDate>
+												</OriginInfor>
+												<language>English</language>
+												<note type="Tempo">Allegretto moderato</note>
+												<note type="Key">E flat Major</note>
+												<note>Broadway Music Corporation</note>
+												<note>from Honey girl, a musical version of </note>
+												<mods:relatedItem ID="BRFOX_cv01" type="image">
+														<tlteInfor>
+															<title>I love to fox-trot</title>																												
+														</tlteInfor>
+														<mods:name>
+																	<displayForm>Barbelle</displayForm>
+																	<role> graphic artist </role>	
+																	<subject>Flowers [TGM] </subject>						
+														</mods:name>														
+														<language>English</language>
+												</mods:relatedItem>
+							</mods:relatedItem>
+						
+							<mods:relatedItem ID="SY118329" type="page set">
+												<tlteInfor>
+													<title>I love to fox-trot</title>																																					
+												</tlteInfor>
+												<titleInfo> 
+													  <title type="alternativeUniform" >Honey girl</title> 
+												</titleInfo> 
+												<titleInfo> 
+													  <title type="alternativeFirstLine">Most ev'ry one has a hobby I know golfing and swimming are most apropos </title> 
+												</titleInfo> 
+												<titleInfo> 
+													  <title type="alternativeChorusFirstLine">I love to fox-trot I like the way they do it </title> 
+												</titleInfo> 
+												<mods:name>
+														<displayForm>Von Tilzer, Albert </displayForm>
+														<role> composer </role>							
+												</mods:name>	
+												<mods:name>	
+														<displayForm>Fleeson, Neville </displayForm>
+														<role> lyricist </role>							
+												</mods:name>	
+												<OriginInfor> 
+													<publisher>New York : Artmusic, Inc.	</publisher>
+													<copyrightDate>1920</copyrightDate>
+												</OriginInfor>
+												<language>English</language>
+												<note type="Tempo">Allegretto moderato</note>
+												<note type="Key"> E flat Major </note>
+												<mods:relatedItem ID="SY118329_c00" type="image">
+														<tlteInfor>
+															<title>I love to fox-trot</title>																												
+														</tlteInfor>
+														<language>English</language>
+												</mods:relatedItem>
+							</mods:relatedItem>								
+
+							<mods:relatedItem ID="SY118330" type="page set">
+												<tlteInfor>
+													<title>I love to fox-trot</title>																																					
+												</tlteInfor>
+												<titleInfo> 
+													  <title type="alternativeUniform" >Honey girl</title> 
+												</titleInfo> 
+												<titleInfo> 
+													  <title type="alternativeFirstLine">Most ev'ry one has a hobby I know golfing and swimming are most apropos </title> 
+												</titleInfo> 
+												<titleInfo> 
+													  <title type="alternativeChorusFirstLine">I love to fox-trot I like the way they do it </title> 
+												</titleInfo> 
+												<mods:name>
+														<displayForm>Von Tilzer, Albert </displayForm>
+														<role> composer </role>							
+												</mods:name>	
+												<mods:name>	
+														<displayForm>Fleeson, Neville </displayForm>
+														<role> lyricist </role>							
+												</mods:name>	
+												<OriginInfor> 
+													<publisher>New York : Artmusic, Inc.	</publisher>
+													<copyrightDate>1920</copyrightDate>
+												</OriginInfor>
+														<language>English</language>
+												<note type="Tempo">Allegretto moderato</note>
+												<note type="Key"> E flat Major </note>
+												<mods:relatedItem ID="SY118330_c00" type="image">
+														<tlteInfor>
+															<title>I love to fox-trot</title>																												
+														</tlteInfor>
+														<language>English</language>
+												</mods:relatedItem>
+							</mods:relatedItem>
+						</mods:mods>
+					</xmlData>
+				</mdWrap>
+			</dmdSec>				
+			<fileSec>
+			
+					<fileGrp USE="archive image">
+						<file ID="BRFOX003" MIMETYPE="image/bmp">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/brfox003.bmp"/>
+						</file>
+						<file ID="BRFOX004" MIMETYPE="image/bmp">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/brfox004.bmp"/>
+						</file>
+						<file ID="BRFOX005" MIMETYPE="image/bmp">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/brfox005.bmp"/>
+						</file>
+					</fileGrp>
+				
+					<fileGrp USE="archive image">
+						<file ID="SY118329_30" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118329_30.tif"/>
+						</file>
+						<file ID="SY118329_31" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118329_31.tif"/>
+						</file>
+						<file ID="SY118329_32" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118329_32.tif"/>
+					</file>
+						<file ID="SY118330_30" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118330_30.tif"/>
+						</file>
+						<file ID="SY118330_31" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118330_31.tif"/>
+						</file>
+						<file ID="SY118330_32" MIMETYPE="image/tiff">
+								<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118330_32.tif"/>
+						</file>
+				</fileGrp>
+				
+				<fileGrp USE="text">
+		
+				 <file ID="BRFOXPDF" MIMETYPE="text/pdf">
+							<FLocat LOCTYPE="URL" xlink:href="brfox.pdf " />
+					</file>
+					<file ID="SY118329PDF" MIMETYPE="text/pdf">
+							<FLocat LOCTYPE="URL" xlink:href="sy118329.pdf"/>
+					</file>
+					<file ID="SY118330PDF " MIMETYPE="text/pdf">
+							<FLocat LOCTYPE="URL" xlink:href="sy118330.pdf "/>
+					</file>
+				</fileGrp>
+	
+				<fileGrp USE="archive image">
+					<file ID="BRFOX_cv01" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/brfox_cv01.tif"/>
+					</file>
+					<file ID="SY118329_c00" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118329_c00.tif"/>
+					</file>
+					<file ID="SY118330_c00" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href="http://apam.library.ucla.edu/sheetmusic/masters/sy118330_c00.tif"/>
+					</file>
+				</fileGrp>
+				
+				<fileGrp USE="archive image">
+					<file ID="BRFOX_cv01_a" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href="brfox_cv01_a.tif"/>
+					</file>
+					<file ID="SY118329_c00_a" MIMETYPE="image/tiff">
+							<FLocat LOCTYPE="URL" xlink:href=" sy118329_c00_a.tif "/>
+					</file>
+				</fileGrp>
+			</fileSec>
+			<structMap TYPE="physical">
+				<div LABEL="I love to fox-trot" TYPE="work">		
+							<div LABEL="I love to fox-trot" TYPE="page set">	
+								<fptr FILEID="BRFOX003"/>
+								<fptr FILEID="BRFOX004"/>
+								<fptr FILEID="BRFOX005"/>
+								<div LABEL="I love to fox-trot" TYPE="image">	
+									<fptr FILEID="BRFOX_cv01"/>
+								</div>							
+							</div>	
+							<div LABEL="I love to fox-trot" TYPE="page set">							
+								<fptr FILEID="SY118329_30"/>
+								<fptr FILEID="SY118329_31"/>
+								<fptr FILEID="SY118329_32"/>
+								<div LABEL="I love to fox-trot" TYPE="image">	
+									<fptr FILEID="SY118329_c00"/>
+								</div>	
+							</div>	
+							<div LABEL="I love to fox-trot" TYPE="page set">	
+								<fptr FILEID="SY118330_30"/>
+								<fptr FILEID="SY118330_31"/>
+								<fptr FILEID="SY118330_32"/>
+								<div LABEL="I love to fox-trot" TYPE="image">							
+									<fptr FILEID="SY118330_c00"/>
+								</div>	
+							</div>								
+				</div>
+			</structMap>
+		</mets>
+	</Appendix>
+	
+	<Appendix NUMBER="7" ID="Example7">
+			<mets OBJID="" LABEL="frontera collection" TYPE="Manuscript group" PROFILE="http://digidev.library.ucla.edu/mets/profiles/ucla_dpr.xml" xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rts="http://cosimo.stanford.edu/sdr/metsrights/" xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+				<metsHdr CREATEDATE="2006-03-03T14:30:05" RECORDSTATUS="Production">
+					<agent ROLE="DISSEMINATOR" TYPE="OTHER" OTHERTYPE="depositingAgent">
+						<name>UCLA Digital Library</name>
+						<note>Test Deposit</note>
+					</agent>
+				</metsHdr>
+			<dmdSec ID="De_21217A_69625A">
+						<mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+							<xmlData>
+								<mods:mods>
+									<mods:titleInfo type="collection"  ID="De_21217A_69625A" lang="Spanish" >
+										<mods:title>Barlovento</mods:title>								
+									</mods:titleInfo>	
+									<mods:name>	
+										<mods:displayForm>Serrano, Eduardo </mods:displayForm>
+										<mods:role> composer </mods:role>							
+									</mods:name>	
+									<mods:name>	
+										<mods:displayForm>Los Llaneros</mods:displayForm>
+										<mods:role> artistLabel </mods:role>							
+									</mods:name>	
+									<mods:typeOfResource> sound recording </mods:typeOfResource> 
+									<mods:subject>Love</mods:subject>
+									<mods:subject>Love--Abandonment </mods:subject>
+									<mods:subject>Love complaint </mods:subject>
+									<mods:subject>Love--Despair </mods:subject>							
+									<mods:originInfo>	
+										<mods:publisher>Decca 21217A</mods:publisher>														
+									</mods:originInfo>									
+									<mods:identifier type="matrix number"> Mex-2110 </mods:identifier> 		
+									<mods:note>Cantado Por El Llanerito. Song praise national food of Venezuela. </mods:note>
+									<mods:location>
+										<mods:physicalLocation>UCLA Library</mods:physicalLocation>
+										<mods:url/>
+									</mods:location>
+									<mods:relatedItem type="related" label="Other side of disc: ">
+										<mods:titleInfo displayLabel ="Caraotas Negras" ID="De_21217B_69627A"></mods:titleInfo>
+									</mods:relatedItem>										
+								</mods:mods>
+							</xmlData>
+						</mdWrap>
+					</dmdSec>	
+			<fileSec>			
+			
+				
+				<fileGrp USE="archive image">
+							<file ID="De_21217A_69625A_t" MIMETYPE="image/tiff" >
+									<FLocat LOCTYPE="URL" xlink:href="http://frontera.library.ucla.edu/image/masters/de_21217a_69625a.tif"/>
+							</file>
+				</fileGrp>
+				<fileGrp USE="archive audio">
+							<file ID="De_21217A_69625A_w" MIMETYPE="audio/x-wav" >
+									<FLocat LOCTYPE="URL" xlink:href="http://frontera.library.ucla.edu/audio/masters/de_21217a_69625a.wav"/>
+							</file>
+				</fileGrp>
+			
+		    </fileSec>
+			<structMap TYPE="physical">
+				<div LABEL="Barlovento" TYPE="collection">					
+						<fptr FILEID="De_21217A_69625A_t" />
+						<fptr FILEID="De_21217A_69625A_w"/>						
+				</div>
+			</structMap>
+			</mets>
+	
+	</Appendix>
+	
+</METS_Profile>
