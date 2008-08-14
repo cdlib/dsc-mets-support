@@ -103,10 +103,14 @@ use="'count'"/ -->
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
+	<!-- test for PDF -->
+	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1">
+	  <xsl:text>metadata</xsl:text>
+  </xsl:when>
 	<!-- xsl:when test="count(key('thumbCount','count')) = 1" --> 
 	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"> 
 	  <xsl:text>image-simple</xsl:text>
-        </xsl:when>
+  </xsl:when>
 	<xsl:otherwise>
 	  <xsl:text>image-complex</xsl:text>
 	</xsl:otherwise>
@@ -203,7 +207,38 @@ use="'count'"/ -->
 																				else if ($page/m:mets/meta) number(1)
 																				else number(0)"/ -->
    <xsl:choose>
+	 <!-- test for a pdf -->
+   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file) = 1">
+			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
+	format-number(
+		(($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@SIZE)
+		,'###,###'
+		)"/> bytes)
+
+<!-- image/thumbnail -->
+
+  <xsl:variable name="use" select="'thumbnail'"/>
+  <xsl:variable name="xy">
+    <xsl:call-template name="scale-maxXY">
+      <xsl:with-param name="maxX" select="@maxX"/>
+      <xsl:with-param name="maxY" select="@maxY"/>
+      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:X)"/>
+      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
+    </xsl:call-template>
+  </xsl:variable>
+
+
+			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@ID}">
+  <img  border="0"
+	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	width="{$xy/xy/@width}"
+	height="{$xy/xy/@height}"
+  /></a>
+
+   </xsl:when>
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
+
+
   <xsl:variable name="use" select="@use"/>
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">
