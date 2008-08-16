@@ -92,6 +92,8 @@ function populateMetadata() {
 <xsl:choose><!-- to layout options @shape="wide" or its not -->
  <!-- MOA2 extracted from EAD don't get the print link -->
  <xsl:when test="contains($page/m:mets/@PROFILE, 'kt3q2nb7vz') and $MOA2 = 'MOA2'"/>
+ <!-- test for pdf -->
+ <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
  <xsl:when test="@shape='wide'">
   <div id="print-control" class="nifty4">
             <div class="box4">
