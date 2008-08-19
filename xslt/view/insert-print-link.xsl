@@ -163,13 +163,13 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($
 </xsl:if>
 <div class="identifier">
 
-<xsl:value-of 
-   select="replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1] | ($page/TEI.2/xtf:meta/identifier)[1]
-		,'^http://ark.cdlib.org/','http://content.cdlib.org/')"/>
-<xsl:if test="$brand">
-	<xsl:text>/?brand=</xsl:text>
-          <xsl:value-of select="$brand"/>
-</xsl:if>
+<xsl:variable name="url">
+<xsl:value-of select="normalize-space(replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1] | ($page/TEI.2/xtf:meta/identifier)[1] ,'^http://ark.cdlib.org/','http://content.cdlib.org/'))"/>
+<xsl:value-of select="if ($brand) then concat('/?brand=',$brand) else ''"/>
+</xsl:variable>
+
+<a href="{$url}"><xsl:value-of select="$url"/></a>
+
 </div>
 </xsl:template>
 
