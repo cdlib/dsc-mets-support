@@ -1,13 +1,28 @@
 <xsl:stylesheet version="2.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:mets="http://www.loc.gov/METS/"
-><!-- copyright 2006 UC Regents; BSD License -->
+>
+
+
+<xsl:param name="developer"/>
+
+<xsl:variable name="layoutBase">
+	<xsl:choose>
+		<xsl:when test="$developer = ''">
+        <xsl:text>/findaid/local</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+        <xsl:text>/findaid/developers/</xsl:text>
+        <xsl:value-of select="$developer"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:variable>
+
 
 <!-- quick and dirty SSI hack -->
 <xsl:template match="comment()[starts-with(.,'#include virtual=')]">
         <xsl:variable name="ssi-html">
-                <xsl:text>/findaid/developers/</xsl:text>
-                <xsl:value-of select="$developer"/>
+                <xsl:value-of select="$layoutBase"/>
                 <xsl:text>/htdocs</xsl:text>
                 <xsl:value-of select="replace(normalize-space(.),'.*&quot;(.*)&quot;','$1')"/>
         </xsl:variable>
@@ -39,4 +54,11 @@ xmlns:mets="http://www.loc.gov/METS/"
 	</input>
 </xsl:template>
 
+<xsl:template name="copy-attributes">
+        <xsl:param name="element"/>
+<xsl:copy-of select="$element/@class | $element/@action | $element/@method | $element/@name"/>
+</xsl:template>
+
+
+<!-- BSD license copyright 2008 -->
 </xsl:stylesheet>
