@@ -56,6 +56,7 @@
 	<xsl:apply-templates 
 		select="mods:titleInfo, 
 			mods:name,
+			mods:location,
 			mods:abstract,
 			mods:originInfo/mods:dateCreated[1],
 			mods:originInfo/mods:dateIssued[1],
@@ -225,7 +226,17 @@
 
 <xsl:template match="mods:role[mods:roleTerm]" mode="viewMODS">
 	<xsl:text>, </xsl:text>
-        <xsl:value-of select="mods:roleTerm"/>
+        <xsl:apply-templates select="mods:roleTerm" mode="relator"/>
+</xsl:template>
+
+<xsl:template match="mods:roleTerm" mode="relator">
+	<xsl:choose>
+		<!-- Correspondent [crp] -->
+		<xsl:when test=".='crp'">Correspondent</xsl:when>
+		<!-- Compiler [com] -->
+		<xsl:when test=".='com'">Compiler</xsl:when>
+		<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <!-- Type typeOfResource genere heading -->
@@ -437,7 +448,7 @@
 	<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
-<xsl:template match="mods:location[1]" mode="viewMODS">
+<xsl:template match="mods:location" mode="viewMODS">
 	<h2>Location:</h2>
 	<xsl:apply-templates mode="viewMODS"/>
 </xsl:template>
