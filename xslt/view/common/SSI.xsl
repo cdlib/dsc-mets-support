@@ -39,7 +39,7 @@ xmlns:mets="http://www.loc.gov/METS/"
 
 <xsl:template match="form[@name='search-form']" mode="ssi-identity">
         <form action="/search" method="GET" class="search-form" name="search-form">
-                <input type="hidden" name="style" value="oac4"/>
+                <!-- input type="hidden" name="style" value="oac4"/ -->
                 <input type="hidden" name="developer" value="{$developer}"/>
                 <xsl:apply-templates mode="ssi-identity"/>
         </form>
