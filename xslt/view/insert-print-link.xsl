@@ -7,7 +7,6 @@
    xmlns:m="http://www.loc.gov/METS/"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         exclude-result-prefixes="#all"  >
-
 <xsl:param name="http.URL"/>
 <xsl:param name="zoomBase.value"/>
 <xsl:param name="zoomOn.value"/> 
@@ -125,7 +124,7 @@ function populateMetadata() {
           <div id="print-control">
             <div class="nifty4">
               <div class="box4">
-                <img src="http://dali.cdlib.org/~esatzman/calisphere/dev/images/headings_text/printable_version.gif" width="110" height="16" alt="Printable Version" title="Printable Version" />
+                <img src="/default/images/icons/headings_text/printable_version.gif" width="110" height="16" alt="Printable Version" title="Printable Version" />
                 <table border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td align="left" valign="middle">
