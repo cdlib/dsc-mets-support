@@ -71,6 +71,14 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
+  <mets-profile-driver pref="./profiles/00000017.xml" frameworkID="UCSDComplexObjectProfile">
+    <PROFILE>http://www.loc.gov/mets/profiles/00000017.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000017.xml</PROFILE>
+    <PROFILE>UCSD Complex Object Profile</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
   <mets-profile-driver pref="./profiles/00000003.profile.xml" frameworkID="UCBPagedTextObjectProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000003.xml</PROFILE>
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000003.xml</PROFILE>
