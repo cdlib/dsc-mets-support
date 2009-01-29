@@ -127,6 +127,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt1g5010zb</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/ddi-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/DDI-tbl.html.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
   <!--
