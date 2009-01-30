@@ -4,11 +4,11 @@ xmlns:mets="http://www.loc.gov/METS/"
 >
 
 
-<xsl:param name="developer"/>
+<xsl:param name="developer" select="'local'"/>
 
 <xsl:variable name="layoutBase">
 	<xsl:choose>
-		<xsl:when test="$developer = ''">
+		<xsl:when test="$developer = 'local'">
         <xsl:text>/findaid/local</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
@@ -56,7 +56,7 @@ xmlns:mets="http://www.loc.gov/METS/"
 
 <xsl:template name="copy-attributes">
         <xsl:param name="element"/>
-<xsl:copy-of select="$element/@class | $element/@action | $element/@method | $element/@name"/>
+<xsl:copy-of select="$element/@class | $element/@action | $element/@method | $element/@name | $element/@onSubmit"/>
 </xsl:template>
 
 
