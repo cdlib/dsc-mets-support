@@ -242,6 +242,7 @@ POSSIBILITY OF SUCH DAMAGE.
   <mets-profile-driver label="removed" pref="./profiles/Removed.profile.xml">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4199q42g</PROFILE>
     <tool type="xslt" role="toHTML">./xslt/view/removed.html.xslt</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/removed.qdc.xslt</tool>
   </mets-profile-driver>
 
   <mets-profile-driver label="WAS" pref="./profiles/kt4p3021sx" frameworkID="kt4p3021sx">
