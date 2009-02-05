@@ -33,15 +33,18 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
 </xsl:template>
 
 <xsl:template name="title">
+	<xsl:variable name="blank" select="''"/>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
 		<xsl:with-param name="node" select="
-	if ( /m:mets/@TYPE = 'archival collection' and /m:mets/@LABEL )
+	if ( /m:mets/@TYPE = 'archival collection' and not( /m:mets/@LABEL = $blank)  )
 	then /m:mets/@LABEL
 	else
 	if  (/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did//e:unittitle/text()) 
-	then /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did//e:unittitle
-	else /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:series/e:unittitle[position()=last()]
+	then 
+	/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:did//e:unittitle
+	else 
+	/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/e:series/e:unittitle[position()=last()]
 "/>
 	</xsl:call-template>
 </xsl:template>
