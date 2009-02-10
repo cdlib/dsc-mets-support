@@ -5,11 +5,12 @@ xmlns:mets="http://www.loc.gov/METS/"
 
 
 <xsl:param name="developer" select="'local'"/>
+<xsl:param name="defaultLayoutBase.value"/>
 
 <xsl:variable name="layoutBase">
 	<xsl:choose>
 		<xsl:when test="$developer = 'local'">
-        <xsl:text>/findaid/local</xsl:text>
+	<xsl:value-of select="$defaultLayoutBase.value"/>
 		</xsl:when>
 		<xsl:otherwise>
         <xsl:text>/findaid/developers/</xsl:text>
