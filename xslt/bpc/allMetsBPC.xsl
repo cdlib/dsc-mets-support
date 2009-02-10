@@ -17,7 +17,7 @@
     </axsl:template>
     <axsl:template match="mets:mets" priority="4000" mode="M5">
         <axsl:choose>
-            <axsl:when test="@OBJID or @ALTRECORDID"/>
+	    <axsl:when test="@OBJID or mets:metsHdr/mets:altRecordID"/>
             <axsl:otherwise>
                 <xsl:element name="mets-001"/>
             </axsl:otherwise>
