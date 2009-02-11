@@ -129,6 +129,12 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="toHTML">./xslt/view/DDI-tbl.html.xsl</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
+ 
+  <mets-profile-driver label="coca study" pref="./profiles/coca-study.profile.xml" frameworkID="COCAStudy">
+    <PROFILE>http://countingcalifornia.cdlib.org/mets/profile/data-study/</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
 
   <!--
   -->
