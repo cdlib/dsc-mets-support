@@ -254,6 +254,7 @@ POSSIBILITY OF SUCH DAMAGE.
   <mets-profile-driver label="WAS" pref="./profiles/kt4p3021sx" frameworkID="kt4p3021sx">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4p3021sx</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/admin-dcMODS.qdc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
 </mets-profiles>
