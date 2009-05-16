@@ -56,7 +56,6 @@
 	<xsl:apply-templates 
 		select="mods:titleInfo, 
 			mods:name,
-			mods:location,
 			mods:abstract,
 			mods:originInfo/mods:dateCreated[1],
 			mods:originInfo/mods:dateIssued[1],
@@ -265,7 +264,7 @@
 </xsl:template>
 
 <!-- Language language heading -->
-<xsl:template match="mods:language[1]" mode="viewMODS">]
+<xsl:template match="mods:language[1]" mode="viewMODS">
 	<h2>Language:</h2>
 	<xsl:for-each select="mods:languageTerm[1], (./following-sibling::mods:language)/mods:languageTerm[1]">
 <div>
