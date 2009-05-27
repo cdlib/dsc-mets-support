@@ -1,6 +1,7 @@
 <xsl:stylesheet version="2.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:mets="http://www.loc.gov/METS/"
+exclude-result-prefixes="#all"
 >
 
 
@@ -33,14 +34,13 @@ xmlns:mets="http://www.loc.gov/METS/"
 
 <xsl:template match="*" mode="ssi-identity">
         <xsl:element name="{name()}">
-                <xsl:copy-of select="@*"/>
+                <xsl:copy-of copy-namespaces="no" select="@*"/>
                 <xsl:apply-templates mode="ssi-identity"/>
         </xsl:element>
 </xsl:template>
 
 <xsl:template match="form[@name='search-form']" mode="ssi-identity">
         <form action="/search" method="GET" class="search-form" name="search-form">
-                <!-- input type="hidden" name="style" value="oac4"/ -->
                 <input type="hidden" name="developer" value="{$developer}"/>
                 <xsl:apply-templates mode="ssi-identity"/>
         </form>
