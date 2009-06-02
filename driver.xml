@@ -95,7 +95,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <mets-profile-driver pref="./profiles/00000010.xml" frameworkID="CDL7TrainProfile">
     <PROFILE>http://www.loc.gov/mets/profiles/00000010.xml</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/7train-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
     <tool type="xslt" role="toJsod">./xslt/jsod/7train.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
