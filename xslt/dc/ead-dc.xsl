@@ -50,7 +50,7 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
 </xsl:template>
 
 <xsl:template match="e:unittitle">
-<xsl:apply-templates select="text()|e:lb"/>
+<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="e:lb">
