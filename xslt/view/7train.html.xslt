@@ -376,9 +376,20 @@
                 </xsl:for-each>
 </xsl:variable>
 
+<xsl:variable name="thisTranscriptionID">
+	<xsl:value-of select="$focusDiv/m:div[@TYPE='transcription']/m:fptr/@FILEID"/>
+</xsl:variable>
+
 <div id="{@css-id}" class="nifty1" xmlns="http://www.w3.org/1999/xhtml">
             <div class="metadata-text">
         <xsl:if test="not($order = '1')">
+
+		<xsl:if test="$thisTranscriptionID">
+			<div><h2>Transcription:</h2>
+			<xsl:apply-templates select="$page/key('md',$thisTranscriptionID)" mode="transcription"/>
+			</div>
+		</xsl:if>
+
                 <div><h2>Title:</h2>
                 <xsl:value-of select="$focusDiv/@LABEL"/>
                 </div>
@@ -396,6 +407,11 @@
 </div>
 </xsl:template>
 
+<xsl:template match="transcription" mode="transcription">
+	<div>
+		<xsl:apply-templates mode="transcription"/>
+	</div>
+</xsl:template>
 
 <xsl:template match="m:mdRef" mode="link">
 <p>
