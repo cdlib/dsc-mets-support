@@ -80,7 +80,7 @@ supports profiles for EAD Collections and EAD Extracted Components w/ dao*s
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
                 <xsl:with-param name="qualifier">abstract</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:abstract"/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c//e:abstract[1]"/>
         </xsl:call-template>
    <xsl:if test="not(/m:mets[@TYPE='archival collection'])">
 	<xsl:call-template name="element">
