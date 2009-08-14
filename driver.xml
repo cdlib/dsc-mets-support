@@ -254,6 +254,13 @@ POSSIBILITY OF SUCH DAMAGE.
   <mets-profile-driver label="WAS" pref="./profiles/kt4p3021sx" frameworkID="kt4p3021sx">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4p3021sx</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/admin-dcMODS.qdc.xsl</tool>
+  </mets-profile-driver>
+
+  <mets-profile-driver label="digitool">
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000021.xml</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/7train-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/7train.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
