@@ -275,10 +275,18 @@
   </a>
   </xsl:when>
   <xsl:otherwise>
- 	<xsl:apply-templates
-	  select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]" 
-	  mode="viewMODS"
-	/>
+	<xsl:variable name="string" select="$page/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:publisher"/>
+	<xsl:choose>
+               <xsl:when test="substring-after($string,'http://')">
+                        <a target="_top" href="http://{substring-after(normalize-space($string),'http://')}">
+                        <xsl:value-of select="substring-before(normalize-space($string),'http://')"/>
+                        </a>
+                </xsl:when>
+                        <!-- to do, clean up trailing semi colons -->
+                <xsl:otherwise>
+                        <xsl:value-of select="$string"/>
+                </xsl:otherwise>
+	</xsl:choose>
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -290,11 +298,7 @@
     <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData//dc:title"/>
   </xsl:when>
   <xsl:otherwise>
- 	<xsl:value-of
-	  select="
-		replace(normalize-space(
-($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) , 'http://.*$' , '')" 
-	/>
+     <xsl:value-of select="$page/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:publisher"/>
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
