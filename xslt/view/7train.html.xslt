@@ -123,6 +123,9 @@
 
 <xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
+<xsl:variable name="thisTranscriptionID">
+<xsl:value-of select="$focusDiv//m:div[@TYPE='transcription']/m:fptr/@FILEID"/>
+</xsl:variable>
 
 <xsl:choose>
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
@@ -141,6 +144,13 @@
         <div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
         </div>
+	<xsl:if test="$thisTranscriptionID and $thisTranscriptionID != ''">
+		<div><h2>Transcription:</h2>
+		<xsl:apply-templates 
+			select="$page/key('md',$thisTranscriptionID)" 
+			mode="transcription"/>
+		</div>
+	</xsl:if>
   </xsl:otherwise>
  </xsl:choose>
 
