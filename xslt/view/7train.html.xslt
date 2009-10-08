@@ -398,7 +398,7 @@
             <div class="metadata-text">
         <xsl:if test="not($order = '1')">
 
-		<xsl:if test="$thisTranscriptionID">
+		<xsl:if test="$thisTranscriptionID and $thisTranscriptionID != ''">
 			<div><h2>Transcription:</h2>
 			<xsl:apply-templates select="$page/key('md',$thisTranscriptionID)" mode="transcription"/>
 			</div>
