@@ -285,7 +285,7 @@
   </a>
   </xsl:when>
   <xsl:otherwise>
-	<xsl:variable name="string" select="$page/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:publisher"/>
+	<xsl:variable name="string" select="$page/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:publisher[1]"/>
 	<xsl:choose>
                <xsl:when test="substring-after($string,'http://')">
                         <a target="_top" href="http://{substring-after(normalize-space($string),'http://')}">
