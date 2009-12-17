@@ -35,6 +35,28 @@ xmlns:mets="http://www.loc.gov/METS/"
 	</xsl:element>
 </xsl:template>
 
+<!-- a template to make switching paths for img tags easy. Needed by pdf_gen -->
+<xsl:template name="portable-img">
+    <xsl:param name="img_src" select="'/images/icons/sq-eye_icon.gif'"/>
+    <xsl:param name="height" select="'20'"/>
+    <xsl:param name="width" select="'41'"/>
+    <xsl:param name="border" select="'0'"/>
+    <xsl:param name="class" select="'eye-icon'"/>
+    <xsl:param name="title" />
+    <xsl:param name="alt" />
+    <xsl:element name="img">
+        <xsl:if test="$alt">
+            <xsl:attribute name="alt" select="$alt"/>
+        </xsl:if>
+        <xsl:if test="$title">
+            <xsl:attribute name="title" select="$title"/>
+        </xsl:if>
+        <xsl:attribute name="height" select="$height"/>
+        <xsl:attribute name="width" select="$width"/>
+        <xsl:attribute name="border" select="$border"/>
+        <xsl:attribute name="src" select="$img_src"/>
+    </xsl:element>
+</xsl:template>
 
 <!-- BSD license copyright 2009 -->
 </xsl:stylesheet>
