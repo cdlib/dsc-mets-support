@@ -41,7 +41,9 @@ exclude-result-prefixes="#all"
 
 <xsl:template match="form[@name='search-form']" mode="ssi-identity">
         <form action="/search" method="GET" class="search-form" name="search-form">
-                <input type="hidden" name="developer" value="{$developer}"/>
+		<xsl:if test="$developer != 'local'">
+                  <input type="hidden" name="developer" value="{$developer}"/>
+		</xsl:if>
                 <xsl:apply-templates mode="ssi-identity"/>
         </form>
 </xsl:template>
