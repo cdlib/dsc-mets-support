@@ -162,8 +162,19 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($
 </xsl:if>
 <div class="identifier">
 
-<xsl:variable name="url">
+<xsl:variable name="url-pre">
 <xsl:value-of select="normalize-space(replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1] | ($page/TEI.2/xtf:meta/identifier)[1] ,'^http://ark.cdlib.org/','http://content.cdlib.org/'))"/>
+</xsl:variable>
+
+<xsl:variable name="url">
+  <xsl:choose>
+    <xsl:when test="$brand = 'oac4'">
+<xsl:value-of select="replace($url-pre,'content.cdlib.org','www.oac.cdlib.org')"/>
+    </xsl:when>
+    <xsl:otherwise>
+<xsl:value-of select="$url-pre"/>
+    </xsl:otherwise>
+  </xsl:choose>
 <xsl:value-of select="if ($brand) then concat('/?brand=',$brand) else ''"/>
 </xsl:variable>
 
