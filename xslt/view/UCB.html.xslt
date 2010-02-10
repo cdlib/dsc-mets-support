@@ -302,7 +302,8 @@ use="'count'"/ -->
   </xsl:when>
   <xsl:otherwise>
  	<xsl:apply-templates
-	  select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]" 
+	  select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1] |
+		  ($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:relatedItem[@type='original']/mods:location[1]/mods:physicalLocation[1]" 
 	  mode="viewMODS"
 	/>
   </xsl:otherwise>
