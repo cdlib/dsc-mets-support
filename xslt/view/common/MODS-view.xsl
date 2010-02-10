@@ -98,7 +98,7 @@
 </xsl:template>
 
 <!-- supplied label -->
-<xsl:template match="*[@displayLabel]" mode="viewMODS">
+<xsl:template match="*[@displayLabel][not(local-name()='physicalLocation')]" mode="viewMODS">
 	<xsl:comment><xsl:value-of select="name()"/></xsl:comment>
 	<div>
 	<h2><xsl:value-of select="view_:displayLabelClean(@displayLabel)"/></h2>
@@ -214,18 +214,25 @@
 <!-- Contributor name heading -->
 <xsl:template match="mods:name[1][parent::mods:mods]" mode="viewMODS">
 	<div><h2>Creator/Contributor:</h2>
-	<xsl:apply-templates mode="viewMODS"/>
+	<xsl:apply-templates select="mods:namePart, mods:role" mode="viewMODS"/>
 	</div>
 </xsl:template>
 
 <xsl:template match="mods:namePart" mode="viewMODS">
         <xsl:value-of select="."/>
-	<xsl:if test="following-sibling::mods:namePart"><xsl:text> </xsl:text></xsl:if>
+	<xsl:if test="following-sibling::mods:namePart"><xsl:text>, </xsl:text></xsl:if>
 </xsl:template>
 
 <xsl:template match="mods:role[mods:roleTerm]" mode="viewMODS">
 	<xsl:text>, </xsl:text>
-        <xsl:apply-templates select="mods:roleTerm" mode="relator"/>
+	<xsl:choose>
+	<xsl:when test="mods:roleTerm[@type='text']">
+        <xsl:apply-templates select="mods:roleTerm[@type='text']" mode="relator"/>
+	</xsl:when>
+	<xsl:otherwise>
+        <xsl:apply-templates select="mods:roleTerm[1]" mode="relator"/>
+	</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="mods:roleTerm" mode="relator">
