@@ -218,6 +218,12 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="mods:name" mode="viewMODS">
+	<div>
+	<xsl:apply-templates select="mods:namePart, mods:role" mode="viewMODS"/>
+	</div>
+</xsl:template>
+
 <xsl:template match="mods:namePart" mode="viewMODS">
         <xsl:value-of select="."/>
 	<xsl:if test="following-sibling::mods:namePart"><xsl:text>, </xsl:text></xsl:if>
