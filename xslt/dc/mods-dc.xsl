@@ -65,10 +65,38 @@ MODS
         </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="mods:name[./mods:role/mods:roleTerm]">
-	<xsl:value-of select="mods:namePart"/>,
-	<xsl:value-of select="mods:role/mods:roleTerm"/>
+<xsl:template match="mods:name">
+	<xsl:apply-templates select="mods:namePart, mods:role"/>
 </xsl:template>
+
+<xsl:template match="mods:namePart">
+        <xsl:value-of select="."/>
+        <xsl:if test="following-sibling::mods:namePart"><xsl:text>, </xsl:text></xsl:if>
+</xsl:template>
+
+<xsl:template match="mods:role[mods:roleTerm]">
+        <xsl:text>, </xsl:text>
+        <xsl:choose>
+        <xsl:when test="mods:roleTerm[@type='text']">
+        <xsl:apply-templates select="mods:roleTerm[@type='text']" mode="relator"/>
+        </xsl:when>
+        <xsl:otherwise>
+        <xsl:apply-templates select="mods:roleTerm[1]" mode="relator"/>
+        </xsl:otherwise>
+        </xsl:choose>
+</xsl:template>
+
+<!-- need to refactor relator code look up -->
+<xsl:template match="mods:roleTerm" mode="relator">
+        <xsl:choose>
+                <!-- Correspondent [crp] -->
+                <xsl:when test=".='crp'">Correspondent</xsl:when>
+                <!-- Compiler [com] -->
+                <xsl:when test=".='com'">Compiler</xsl:when>
+                <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+        </xsl:choose>
+</xsl:template>
+
 
 <xsl:template name="subject">
         <xsl:call-template name="element">
@@ -127,6 +155,7 @@ MODS
                 <xsl:with-param name="node" select="
 	 /m:mets/m:dmdSec[@ID='repo']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:title,
 	  (//mods:mods)[1]/mods:location/mods:physicalLocation,
+          (//mods:mods)[1]/mods:relatedItem[@type='original']/mods:location/mods:physicalLocation,
  	  (//mods:mods)[1]/mods:originInfo[mods:publisher or mods:place] 
 "/>
 	<!-- | (//mods:mods)[1]/mods:location/mods:physicalLocation -->
