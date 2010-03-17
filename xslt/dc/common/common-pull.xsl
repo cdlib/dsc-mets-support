@@ -66,7 +66,7 @@ Element template <$element qualifier="$qualifier">; in a for-each loop of $node
 <!-- xsl:param name="mode" in the future? -->
 
 <xsl:if test="$node">
-	<xsl:for-each select="$node">
+	<xsl:for-each select="($node)[text()]">
 		<!-- put in a line return -->
 		<xsl:text><![CDATA[
 ]]></xsl:text>
