@@ -264,4 +264,11 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
+  <mets-profile-driver pref="./profiles/00000026.xml" frameworkID="UCSDElectronicThesesAndDissertationsProfile">
+    <PROFILE>http://www.loc.gov/mets/profiles/00000026.xml</PROFILE>
+    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000026.xml</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
 </mets-profiles>
