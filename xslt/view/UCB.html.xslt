@@ -244,8 +244,8 @@ use="'count'"/ -->
     <xsl:call-template name="scale-maxXY">
       <xsl:with-param name="maxX" select="@maxX"/>
       <xsl:with-param name="maxY" select="@maxY"/>
-      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:X)"/>
-      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
+      <xsl:with-param name="x" select="number(($page/m:mets/m:structMap[1]//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:X)"/>
+      <xsl:with-param name="y" select="number(($page/m:mets/m:structMap[1]//m:div[contains(@TYPE,$use)])[1]/m:fptr/@cdl2:Y)"/>
     </xsl:call-template>
   </xsl:variable>
 
@@ -253,11 +253,11 @@ use="'count'"/ -->
 <xsl:text>/</xsl:text>
 <xsl:value-of select="$page/m:mets/@OBJID"/>
 <xsl:text>/</xsl:text>
-<xsl:value-of select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
+<xsl:value-of select="$page/m:mets/m:structMap[1]//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
   </xsl:variable>
 <a id="zoomMe" href="{$largerImageLink}" title="Larger Image">
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap[1]//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
@@ -311,16 +311,16 @@ use="'count'"/ -->
 </xsl:template>
 
 <xsl:template match="insert-institution-name" name="insert-institution-name">
-<xsl:comment>insert-institution-url</xsl:comment>
+<xsl:comment>insert-institution-name</xsl:comment>
 <xsl:choose>
   <xsl:when test="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData">
     <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData/*/dc:title"/>
   </xsl:when>
   <xsl:otherwise>
+	<xsl:variable name="modsLocation" select="if (($page//mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) then (($page//mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) else ($page//mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:relatedItem[@type='original']/mods:location[1]/mods:physicalLocation[1]"/>
  	<xsl:value-of
 	  select="
-		replace(normalize-space(
-($page//mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location[1]/mods:physicalLocation[1]) , 'http://.*$' , '')" 
+		replace(normalize-space($modsLocation) , '\(?http://.*$' , '')" 
 	/>
   </xsl:otherwise>
 </xsl:choose>

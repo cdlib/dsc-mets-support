@@ -1,5 +1,5 @@
 <mets-profiles>
-<!-- $Id$ $Name$ -->
+<!-- $Id: driver.xml,v 1.35.2.1 2010/05/10 18:50:55 tingle Exp $ $Name: OAC_4_1_2009_Dec_branch $ -->
 <!--
  This is a mets profile driver file.  Its purpose it to provide a
  mapping of METS PROFILES to files needed to support use of the
@@ -258,16 +258,18 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <mets-profile-driver label="digitool">
     <PROFILE>http://www.loc.gov/standards/mets/profiles/00000021.xml</PROFILE>
-    <tool type="xslt" role="toQDC">./xslt/dc/7train-dc.xsl</tool>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
     <tool type="xslt" role="toJsod">./xslt/jsod/7train.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
-  <mets-profile-driver pref="./profiles/00000026.xml" frameworkID="UCSDElectronicThesesAndDissertationsProfile">
-    <PROFILE>http://www.loc.gov/mets/profiles/00000026.xml</PROFILE>
-    <PROFILE>http://www.loc.gov/standards/mets/profiles/00000026.xml</PROFILE>
+  <mets-profile-driver label="ucsd">
+    <PROFILE>http://www.loc.gov/mets/profiles/00000027.html</PROFILE>
+    <PROFILE>Archivists' Toolkit Profile</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/UCB.jsod.xslt</tool>
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 

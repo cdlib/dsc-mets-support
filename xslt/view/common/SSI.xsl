@@ -6,12 +6,12 @@ exclude-result-prefixes="#all"
 
 
 <xsl:param name="developer" select="'local'"/>
-<xsl:param name="defaultLayoutBase.value"/>
+<xsl:param name="defaultLayoutBase" select="System:getenv('OAC_TEMPLATE_BASE')" xmlns:System="java:java.lang.System"/>
 
 <xsl:variable name="layoutBase">
 	<xsl:choose>
 		<xsl:when test="$developer = 'local'">
-	<xsl:value-of select="$defaultLayoutBase.value"/>
+	<xsl:value-of select="$defaultLayoutBase"/>
 		</xsl:when>
 		<xsl:otherwise>
         <xsl:text>/findaid/developers/</xsl:text>
@@ -25,7 +25,7 @@ exclude-result-prefixes="#all"
 <xsl:template match="comment()[starts-with(.,'#include virtual=')]">
         <xsl:variable name="ssi-html">
                 <xsl:value-of select="$layoutBase"/>
-                <xsl:text>/htdocs</xsl:text>
+                <!-- xsl:text>/htdocs</xsl:text -->
                 <xsl:value-of select="replace(normalize-space(.),'.*&quot;(.*)&quot;','$1')"/>
         </xsl:variable>
 <xsl:comment><xsl:value-of select="$ssi-html"/></xsl:comment>

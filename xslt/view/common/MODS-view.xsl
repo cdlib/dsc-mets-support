@@ -349,8 +349,15 @@
 
 <!-- Physical Description physicalDescription heading -->
 <xsl:template match="mods:physicalDescription[1]" mode="viewMODS">
-	<h2>Physical Description:</h2>
-	<xsl:apply-templates mode="viewMODS"/>
+  <h2>
+    <xsl:choose>
+      <xsl:when test="child::*[1]/@displayLabel"/>
+      <xsl:otherwise>
+        <xsl:text>Physical Description:</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </h2>
+  <xsl:apply-templates mode="viewMODS"/>
 </xsl:template>
 
 <xsl:template match="mods:abstract[1]" mode="viewMODS">
@@ -370,8 +377,17 @@
 </xsl:template>
 
 <xsl:template match="mods:note[1][parent::mods:mods]" mode="viewMODS">
-	<h2>Note:</h2>
-	<div><xsl:apply-templates mode="viewMODS"/></div>
+  <h2>
+    <xsl:choose>
+      <xsl:when test="@displayLabel">
+        <xsl:value-of select="@displayLabel"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>Note:</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </h2>
+<div><xsl:apply-templates mode="viewMODS"/></div>
 </xsl:template>
 
 <xsl:template match="mods:subject[1]" mode="viewMODS">
@@ -490,7 +506,7 @@
 <xsl:template priority="-0.25" match="*[substring-after(text(),'http://')][parent::mods:location]" mode="viewMODS">
 	<xsl:comment>magic <xsl:value-of select="name()"/></xsl:comment>
 	<xsl:variable name="string">
-                <xsl:value-of select="text()"/>
+                <xsl:value-of select="replace(replace(normalize-space(text()),'\)$',''),' \(http:',' http:')"/>
         </xsl:variable>
         <xsl:choose>
                 <xsl:when test="substring-after($string,'http://')">
