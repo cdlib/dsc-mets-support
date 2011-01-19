@@ -9,6 +9,7 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	 exclude-result-prefixes="#all"	>
 
+<xsl:param name="http.referer"/>
 <xsl:param name="http.Referer"/>
 <xsl:param name="root.path"/>
 <xsl:variable name="theHost" select="replace($root.path , ':[0-9]+.+' , '')"/> 
@@ -198,12 +199,12 @@ cause the queryURL to be set to the referer -->
 
 <xsl:if test="session:isEnabled() 
 		and 
-			(not (matches($http.Referer, $theHost))
-			 or (matches($http.Referer, '/test/qa.html$'))
+			(not (matches($http.referer, $theHost))
+			 or (matches($http.referer, '/test/qa.html$'))
 			)
-		and (normalize-space($http.Referer) != '')"
+		and (normalize-space($http.referer) != '')"
 	     use-when="function-available('session:setData')">
-          <xsl:value-of select="session:setData('queryURL',$http.Referer)"/>
+          <xsl:value-of select="session:setData('queryURL',$http.referer)"/>
 <xsl:comment>session queryURL reset</xsl:comment>
 </xsl:if>
 
@@ -265,15 +266,6 @@ and the referer is on-site -->
       <p>
         <a class="highlight" href="{$queryURL}">
           <xsl:text>Back</xsl:text>
-		<!-- xsl:if test="not (session:isEnabled()
-                and
-                        (not (matches($http.Referer, concat($theHost,'/search')))
-                         or (matches($http.Referer, '/test/qa.html$'))
-                        )
-                and (normalize-space($http.Referer) != ''))
-		">
- 		<xsl:text> to Search Results</xsl:text>
-		</xsl:if -->
         </a>
       </p>
     </xsl:if>
