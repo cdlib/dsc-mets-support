@@ -156,11 +156,11 @@
 
 <xsl:template match="contributor | coverage | creator | date | description | format[@q!='x'] | identifier | language
 | publisher | relation | rights | source | subject | title | type" mode="dcq-html">
-	<meta xmlns="http://www.w3.org/1999/xhtml" name="DC.{name()}" value="{normalize-space(.)}"/>
+	<meta xmlns="http://www.w3.org/1999/xhtml" name="DC.{name()}" content="{normalize-space(.)}"/>
 </xsl:template>
 
 <xsl:template match="*" mode="dcq-html">
-	<meta xmlns="http://www.w3.org/1999/xhtml" name="XTF.{name()}" value="{normalize-space(.)}"/>
+	<meta xmlns="http://www.w3.org/1999/xhtml" name="XTF.{name()}" content="{normalize-space(.)}"/>
 </xsl:template>
 
 <xsl:template match="*" mode="fullDC">
