@@ -17,6 +17,7 @@
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
 <xsl:import href="./common/brandCommon.xsl"/>
+<xsl:import href="./common/google-tracking.xsl"/>
 <xsl:import href="./common/scaleImage.xsl"/>
 <xsl:import href="./common/MODS-view.xsl"/>
 <xsl:include href="structMap.xsl"/>
@@ -166,6 +167,10 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:template match="insert-brand-footer">
 <xsl:comment>insert-brand-footer</xsl:comment>
  <xsl:copy-of select="$brand.footer"/>
+  <xsl:call-template name="insert-google-tracking">
+    <xsl:with-param name="brand" select="$brand"/>
+    <xsl:with-param name="onContent" select="'onContent'"/>
+  </xsl:call-template>
 </xsl:template>
 
   <xsl:template match="insert-head-title">
