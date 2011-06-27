@@ -12,7 +12,24 @@
 <xsl:param name="http.referer"/>
 <xsl:param name="http.Referer"/>
 <xsl:param name="root.path"/>
+<xsl:param name="a2a.on"/>
+<xsl:param name="moreLike.on"/>
+
 <xsl:variable name="theHost" select="replace($root.path , ':[0-9]+.+' , '')"/> 
+
+<xsl:template match="*:a2a">
+  <xsl:if test="$a2a.on='on'">
+    <xsl:apply-templates/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="insert-moreLike">
+<xsl:if test="$moreLike.on='on'">
+<xsl:comment>insert-moreLike</xsl:comment>
+<div xmlns="http://www.w3.org/1999/xhtml" id="moreLike"/>
+<script xmlns="http://www.w3.org/1999/xhtml"> var objid = "<xsl:value-of select="$page/m:mets/@OBJID"/>"; </script>
+</xsl:if>
+</xsl:template>
 
 <xsl:template match="insert-metadataLink">
 <xsl:comment>insert-metadataLink</xsl:comment>
