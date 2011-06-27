@@ -164,15 +164,6 @@ brand: <xsl:value-of select="$brand"/>
  <xsl:copy-of select="$brand.header"/>
 </xsl:template>
 
-<xsl:template match="insert-brand-footer">
-<xsl:comment>insert-brand-footer</xsl:comment>
- <xsl:copy-of select="$brand.footer"/>
-  <xsl:call-template name="insert-google-tracking">
-    <xsl:with-param name="brand" select="$brand"/>
-    <xsl:with-param name="onContent" select="'onContent'"/>
-  </xsl:call-template>
-</xsl:template>
-
   <xsl:template match="insert-head-title">
 <xsl:comment>insert-head-title</xsl:comment>
     <title><xsl:value-of select="$page/mets:mets/@LABEL"/></title>
