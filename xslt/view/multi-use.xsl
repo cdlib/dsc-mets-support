@@ -179,9 +179,30 @@
 </xsl:template>
 
 <xsl:template match="insert-dcq-html">
+<xsl:apply-templates select="$page/m:mets/@OBJID" mode="cannonical"/>
 <xsl:apply-templates 
 	select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/* | $page/TEI.2/xtf:meta/*" 
 	mode="dcq-html"/>
+</xsl:template>
+
+<xsl:template match="@OBJID" mode="cannonical">
+  <xsl:variable name="param">
+    <xsl:if test="number($order) &gt; 1">
+      <xsl:text>?order=</xsl:text>
+      <xsl:value-of select="$order"/>
+    </xsl:if>
+    <xsl:if test="$layout = 'metadata'">
+      <xsl:text>?layout=</xsl:text>
+      <xsl:value-of select="$layout"/>
+    </xsl:if>
+  </xsl:variable>
+  <link 
+    rel="canonical" 
+    href="http://content.cdlib.org/{
+      replace(concat(.,'/'),'/+$','/') 
+    }{
+      $param
+    }" /><!-- replace regex/ should end in one slash -->
 </xsl:template>
 
 <xsl:template match="contributor | coverage | creator | date | description | format[@q!='x'] | identifier | language
