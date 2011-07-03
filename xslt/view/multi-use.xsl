@@ -196,7 +196,7 @@
       <xsl:value-of select="$layout"/>
     </xsl:if>
   </xsl:variable>
-  <link 
+  <link xmlns="http://www.w3.org/1999/xhtml"
     rel="canonical" 
     href="http://content.cdlib.org/{
       replace(concat(.,'/'),'/+$','/') 
