@@ -11,6 +11,7 @@
 <xsl:comment>
 var _gaq = _gaq || [];
 _gaq.push( ['_gat._anonymizeIp'], ['cst._setAccount', 'UA-438369-1']);
+_gaq.push(['cst._trackPageLoadTime']);
 _gaq.push(['cst._setCustomVar', 1, 'brand', '<xsl:value-of select="$brand"/>', 3 ]);
 
       <xsl:choose>
