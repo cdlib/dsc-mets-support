@@ -18,7 +18,7 @@ _gaq.push(['cst._setCustomVar', 1, 'brand', '<xsl:value-of select="$brand"/>', 3
         <xsl:when test="$onContent='onContent'">
 /* page can be served via reverse proxy from multiple hosts */
 if (window.location.host.indexOf("calisphere") != -1) { // .contains http://stackoverflow.com/questions/1789945/
-  _gaq.push( ['cst._setAllowHash', false], ['cst._trackPageview']);
+  _gaq.push( ['cst._setAllowHash', false], ['cst._trackPageview'], ['cst._setAllowLinker', true]);
 } else {
   _gaq.push( ['cst._setDomainName', 'none'], ['cst._setAllowLinker', true], ['cst._trackPageview']);
   $("a[href^='http://www.calisphere']").click(function () {
