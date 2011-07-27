@@ -185,7 +185,12 @@
 	mode="dcq-html"/>
 </xsl:template>
 
-<xsl:template match="@OBJID" mode="cannonical">
+<xsl:template 
+  match="@OBJID" 
+  mode="cannonical" 
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions" 
+>
   <xsl:variable name="param">
     <xsl:if test="number($order) &gt; 1">
       <xsl:text>?order=</xsl:text>
@@ -196,13 +201,15 @@
       <xsl:value-of select="$layout"/>
     </xsl:if>
   </xsl:variable>
-  <link xmlns="http://www.w3.org/1999/xhtml"
-    rel="canonical" 
-    href="http://content.cdlib.org/{
-      replace(concat(.,'/'),'/+$','/') 
-    }{
-      $param
-    }" /><!-- replace regex/ should end in one slash -->
+  <xsl:variable name="canonical">
+    <xsl:text>http://content.cdlib.org/</xsl:text>
+    <xsl:value-of select="replace(concat(.,'/'),'/+$','/')"/><!-- replace regex/ should end in one slash -->
+    <xsl:value-of select="$param"/>
+  </xsl:variable>
+  <xsl:variable name="amp" select="'&amp;'"></xsl:variable>
+  <link rel="canonical" href="{$canonical}"/>
+  <link rel="alternate" type="application/json+oembed" href="/search?url={fn:encode-for-uri($canonical)}{$amp}format=json"/>
+  <link rel="alternate" type="text/xml+oembed" href="/search?url={fn:encode-for-uri($canonical)}{$amp}format=xml"/>
 </xsl:template>
 
 <xsl:template match="contributor | coverage | creator | date | description | format[@q!='x'] | identifier | language
