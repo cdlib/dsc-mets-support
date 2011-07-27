@@ -29,11 +29,9 @@ function populateMetadata() {
 
 	document.title =  '<xsl:value-of select='replace( normalize-space($label), "&apos;" , "\\&apos;" )'/>';
 	var metadata  = YAHOO.util.Dom.get('printable-description');
-	// var insertCredit  = YAHOO.util.Dom.get('insertCredit');
 	var string = '<xsl:apply-templates select="$credit" mode="xmlInJs"/>';
   string += '<![CDATA[</div>]]>';
 	if (metadata) metadata.innerHTML = string;
-	// insertCredit.innerHTML = '<![CDATA[<div class="publisher">Courtesy of ]]><xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1]"/><![CDATA[</div>]]>';
 }
 </xsl:template>
 
@@ -155,15 +153,26 @@ function populateMetadata() {
 </xsl:template>
 
 <xsl:template match="insert-printable-credit" name="insert-printable-credit">
-<xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1] | ($page/TEI.2/xtf:meta/publisher)[1]">
+  <xsl:variable name="facet-institution" 
+    select="($page/mets:mets/facet-institution | $page/TEI.2/xtf:meta/facet-institution )"
+  />
+  <xsl:choose>
+    <xsl:when test="$facet-institution">
+      <div class="publisher">
+        Courtesy of <xsl:value-of select="replace($facet-institution,'::',', ')"/>
+      </div>
+    </xsl:when>
+    <xsl:otherwise><xsl:if test="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1] | ($page/TEI.2/xtf:meta/publisher)[1]">
 <div class="publisher">
 Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($page/../TEI.2/xtf:meta/publisher)[1] | ($page/TEI.2/xtf:meta/publisher)[1]"/>
 </div>
-</xsl:if>
+    </xsl:if></xsl:otherwise>
+  </xsl:choose>
 <div class="identifier">
 
 <xsl:variable name="url-pre">
 <xsl:value-of select="normalize-space(replace(($page/mets:mets/identifier[@xtf:meta] | $page/../TEI.2/xtf:meta/identifier)[1] | ($page/TEI.2/xtf:meta/identifier)[1] ,'^http://ark.cdlib.org/','http://content.cdlib.org/'))"/>
+<xsl:value-of select="if ($order) then concat('/?order=',$order) else ''"/>
 </xsl:variable>
 
 <xsl:variable name="url">
@@ -175,7 +184,6 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($
 <xsl:value-of select="$url-pre"/>
     </xsl:otherwise>
   </xsl:choose>
-<xsl:value-of select="if ($brand) then concat('/?brand=',$brand) else ''"/>
 </xsl:variable>
 
 <a href="{$url}"><xsl:value-of select="$url"/></a>
