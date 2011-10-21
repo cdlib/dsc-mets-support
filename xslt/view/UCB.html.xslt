@@ -225,8 +225,13 @@ use="'count'"/ -->
 
 
 			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@ID}">
+  <xsl:variable 
+    name="myFileId" 
+    select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID"
+  />
+  <xsl:variable name="ext" select="res:getExt($page/key('md',$myFileId)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	src="/{$page/m:mets/@OBJID}/{$myFileId}{$ext}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
@@ -252,8 +257,10 @@ use="'count'"/ -->
 <xsl:value-of select="$page/m:mets/m:structMap[1]//m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
   </xsl:variable>
 <a id="zoomMe" href="{$largerImageLink}" title="Larger Image">
+  <xsl:variable name="myFileId" select="$page/m:mets/m:structMap[1]//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID"/>
+  <xsl:variable name="ext" select="res:getExt($page/key('md',$myFileId)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap[1]//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	src="/{$page/m:mets/@OBJID}/{$myFileId}{$ext}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>

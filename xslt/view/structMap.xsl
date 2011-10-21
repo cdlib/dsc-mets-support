@@ -2,7 +2,7 @@
 
 <!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xlink="http://www.w3.org/TR/xlink"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mets="http://www.loc.gov/METS/"
                 xmlns:m="http://www.loc.gov/METS/"
                 xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/"
@@ -645,13 +645,20 @@ sa<xsl:value-of select="$selfAction"/>]]
 <xsl:text>/</xsl:text>
 <xsl:value-of select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID"/>
   </xsl:variable>
+
+  <xsl:variable 
+    name="myFileId" 
+    select="$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID"
+  />
+  <xsl:variable name="ext" select="res:getExt($page/key('md',$myFileId)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
+
 <a id="zoomMe" href="{$largerImageLink}" title="Larger Image">
   <img
-        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference') or @TYPE='image/reference'][position()=1]/m:fptr/@FILEID}"
+        src="/{$page/m:mets/@OBJID}/{$myFileId}{$ext}"
         width="{$xy/xy/@width}"
         height="{$xy/xy/@height}"
 	border="0"
-  /></a>
+  /></a> 
 <xsl:call-template name="complex-image-zoom"/>
 	</div>
      </div>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xlink="http://www.w3.org/TR/xlink"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mets="http://www.loc.gov/METS/"
                 xmlns:m="http://www.loc.gov/METS/"
                 xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/"
@@ -234,8 +234,14 @@
     </xsl:call-template>
   </xsl:variable>
 <a id="zoomMe" href="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}" title="Larger Image">
+
+  <xsl:variable
+    name="myFileId"
+    select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)][1]/m:fptr/@FILEID"
+  />
+  <xsl:variable name="ext" select="res:getExt($page/key('md',$myFileId)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use)][1]/m:fptr/@FILEID}" alt="Larger Image"
+	src="/{$page/m:mets/@OBJID}/{$myFileId}{$ext}" alt="Larger Image"
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
@@ -254,8 +260,13 @@
     </xsl:call-template>
   </xsl:variable>
   <a href="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=(last() - number($mrsid-hack))]/m:fptr/@FILEID}">
+  <xsl:variable
+    name="myFileId"
+    select="$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]/m:fptr/@FILEID"
+  />
+  <xsl:variable name="ext" select="res:getExt($page/key('md',$myFileId)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
   <img
-        src="/{$page/m:mets/@OBJID}/{$focusDiv/m:div[starts-with(@TYPE,'reference')][position()=1]/m:fptr/@FILEID}"
+        src="/{$page/m:mets/@OBJID}/{$myFileId}{$ext}"
         width="{$xy/xy/@width}"
         height="{$xy/xy/@height}"
         border="0"

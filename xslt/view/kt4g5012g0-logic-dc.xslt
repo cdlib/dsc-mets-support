@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- object viewer -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xlink="http://www.w3.org/TR/xlink"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:mets="http://www.loc.gov/METS/"
                 xmlns:m="http://www.loc.gov/METS/"
                 xmlns:cdl="http://ark.cdlib.org/schemas/appqualifieddc/"
@@ -217,6 +217,7 @@ brand: <xsl:value-of select="$brand"/>
    <xsl:otherwise/>
   </xsl:choose>
 </xsl:variable>
+<xsl:variable name="ext" select="res:getExt($page/key('md',$use)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">
       <xsl:with-param name="maxX" select="@maxX"/>
@@ -227,7 +228,7 @@ brand: <xsl:value-of select="$brand"/>
   </xsl:variable>
 <a id="zoomMe" href="/{$page/m:mets/@OBJID}/hi-res">
   <img  border="0"
-	src="/{$page/m:mets/@OBJID}/{$use}" 
+	src="/{$page/m:mets/@OBJID}/{$use}{$ext}" 
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
