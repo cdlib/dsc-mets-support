@@ -294,7 +294,13 @@ use="'count'"/ -->
 
 <xsl:template match="insert-institution-url" name="insert-institution-url">
 <xsl:comment>insert-institution-url</xsl:comment>
+<xsl:variable name="insert-good-institution-url">
+  <xsl:call-template name="insert-good-institution-url"/>
+</xsl:variable>
 <xsl:choose>
+  <xsl:when test="$insert-good-institution-url!=''">
+    <xsl:copy-of select="$insert-good-institution-url"/>
+  </xsl:when>
   <xsl:when test="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData">
  <a>
     <xsl:attribute name="href">
@@ -315,7 +321,13 @@ use="'count'"/ -->
 
 <xsl:template match="insert-institution-name" name="insert-institution-name">
 <xsl:comment>insert-institution-name</xsl:comment>
+<xsl:variable name="insert-good-institution-name">
+  <xsl:call-template name="insert-good-institution-name"/>
+</xsl:variable>
 <xsl:choose>
+  <xsl:when test="$insert-good-institution-name!=''">
+    <xsl:copy-of select="$insert-good-institution-name"/>
+  </xsl:when>
   <xsl:when test="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData">
     <xsl:value-of select="$page/mets:mets/mets:dmdSec[@ID='repo']/mets:mdWrap[@MDTYPE='DC']/mets:xmlData/*/dc:title"/>
   </xsl:when>

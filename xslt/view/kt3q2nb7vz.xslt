@@ -143,7 +143,18 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:template>
 
 <xsl:template match="insert-institution-name" name="insert-institution-name">
+<xsl:comment>insert-institution-name</xsl:comment>
+<xsl:variable name="insert-good-institution-name">
+  <xsl:call-template name="insert-good-institution-name"/>
+</xsl:variable>
+ <xsl:choose>
+  <xsl:when test="$insert-good-institution-name!=''">
+    <xsl:copy-of select="$insert-good-institution-name"/>
+  </xsl:when>
+  <xsl:otherwise>  
     <xsl:value-of select="$page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
+  </xsl:otherwise>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
@@ -1260,10 +1271,19 @@ brand: <xsl:value-of select="$brand"/>
 
 
 <xsl:template match="insert-institution-url">
-<xsl:comment>insert-institution-url</xsl:comment>
- <xsl:apply-templates
-select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location/mods:physicalLocation" mode="mods"/>
-
+  <xsl:comment>insert-institution-url</xsl:comment>
+  <xsl:variable name="insert-good-institution-url">
+    <xsl:call-template name="insert-good-institution-url"/>
+  </xsl:variable>
+  <xsl:choose>
+   <xsl:when test="$insert-good-institution-url!=''">
+     <xsl:copy-of select="$insert-good-institution-url"/>
+   </xsl:when>
+   <xsl:otherwise>
+   <xsl:apply-templates
+     select="($page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods)[1]/mods:location/mods:physicalLocation" mode="mods"/>
+   </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <!-- calisphere design -->

@@ -260,6 +260,17 @@ brand: <xsl:value-of select="$brand"/>
 
 
 <xsl:template match="insert-institution-url" name="insert-institution-url">
+<xsl:comment>insert-institution-url</xsl:comment>
+<xsl:variable name="insert-good-institution-url">
+  <xsl:call-template name="insert-good-institution-url"/>
+</xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="$insert-good-institution-url!=''">
+      <xsl:copy-of select="$insert-good-institution-url"/>
+    </xsl:when>
+    <xsl:otherwise>
+
     <xsl:for-each select="$page/mets:mets/mets:dmdSec[@ID='repo']">
       <a>
         <xsl:attribute name="href">
@@ -268,13 +279,26 @@ brand: <xsl:value-of select="$brand"/>
         <xsl:value-of select="mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
       </a>
     </xsl:for-each>
-  </xsl:template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
 <xsl:template match="insert-institution-name" name="insert-institution-name">
+<xsl:comment>insert-institution-name</xsl:comment>
+<xsl:variable name="insert-good-institution-name">
+  <xsl:call-template name="insert-good-institution-name"/>
+</xsl:variable>
+  <xsl:choose>
+    <xsl:when test="$insert-good-institution-name!=''">
+      <xsl:copy-of select="$insert-good-institution-name"/>
+    </xsl:when>
+    <xsl:otherwise>
     <xsl:for-each select="$page/mets:mets/mets:dmdSec[@ID='repo']">
         <xsl:value-of select="mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
     </xsl:for-each>
-  </xsl:template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
 <!-- calisphere design -->
 
