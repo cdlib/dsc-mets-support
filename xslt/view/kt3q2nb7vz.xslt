@@ -134,12 +134,23 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:template match="nbsp"><xsl:text disable-output-escaping='yes'><![CDATA[&nbsp;]]></xsl:text></xsl:template>
 
 <xsl:template match="insert-institution-url" name="insert-institution-url">
+<xsl:comment>insert-institution-url</xsl:comment>
+<xsl:variable name="insert-good-institution-url">
+  <xsl:call-template name="insert-good-institution-url"/>
+</xsl:variable>
+<xsl:choose>
+  <xsl:when test="$insert-good-institution-url!=''">
+    <xsl:copy-of select="$insert-good-institution-url"/>
+  </xsl:when>
+  <xsl:otherwise>
   <a>
     <xsl:attribute name="href">
       <xsl:value-of select="$page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:identifier[2]"/>
     </xsl:attribute>
     <xsl:value-of select="$page/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/cdl:qualifieddc/dc:title"/>
   </a>
+  </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="insert-institution-name" name="insert-institution-name">
