@@ -191,4 +191,31 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($
 </div>
 </xsl:template>
 
+<xsl:template match="insert-good-institution-url" name="insert-good-institution-url">
+  <xsl:variable 
+    name="url" 
+    select="$page/mets:mets/institution-url | $page/TEI.2/xtf:meta/institution-url" />
+  <xsl:choose>
+    <xsl:when test="$url!=''">
+      <a href="{$url}">
+        <xsl:call-template name="insert-good-institution-name"/>
+      </a>
+    </xsl:when>
+    <xsl:otherwise/>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="insert-good-institution-url" name="insert-good-institution-name">
+  <xsl:variable name="facet-institution"
+    select="($page/mets:mets/facet-institution | $page/TEI.2/xtf:meta/facet-institution )"
+  />
+  <xsl:choose>
+    <xsl:when test="$facet-institution">
+        <xsl:value-of select="replace($facet-institution,'::',', ')"/>
+    </xsl:when>
+    <xsl:otherwise/>
+  </xsl:choose>
+</xsl:template>
+
+
 </xsl:stylesheet>

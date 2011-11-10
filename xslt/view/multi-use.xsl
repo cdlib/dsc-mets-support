@@ -43,6 +43,7 @@
   <xsl:call-template name="insert-google-tracking">
     <xsl:with-param name="brand" select="$brand"/>
     <xsl:with-param name="onContent" select="'onContent'"/>
+    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
   </xsl:call-template>
 </xsl:template>
 
@@ -52,6 +53,7 @@
   <xsl:call-template name="insert-google-tracking">
     <xsl:with-param name="brand" select="$brand"/>
     <xsl:with-param name="onContent" select="'onContent'"/>
+    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
   </xsl:call-template>
 </xsl:template>
 
