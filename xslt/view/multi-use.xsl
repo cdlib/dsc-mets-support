@@ -33,7 +33,13 @@
 
 <xsl:template match="insert-metadataLink">
 <xsl:comment>insert-metadataLink</xsl:comment>
-<p class="more-info"><a href="/{$page/m:mets/@OBJID}/?layout=metadata{$brandCgi}">More information about this image</a></p>
+  <script type="text/javascript">
+    <xsl:comment>
+  _gaq = _gaq || [];
+  _gaq.push(['cst._setCustomVar', 3, 'mini-metadata', 'mini-metadata', 3 ]);
+    </xsl:comment>
+  </script>
+<p class="more-info"><a href="/{$page/m:mets/@OBJID}/?layout=metadata{$brandCgi}" onclick="_gaq.push(['cst._trackEvent', 'more-information', 'more-information', window.title ]);">More information about this image</a></p>
 </xsl:template>
 
 <xsl:template match="insert-print-footer">

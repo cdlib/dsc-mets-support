@@ -92,6 +92,12 @@ function populateMetadata() {
  <!-- test for pdf -->
  <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
  <xsl:when test="@shape='wide'">
+  <script type="text/javascript">
+    <xsl:comment>
+  _gaq = _gaq || [];
+  _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-wide', 3 ]);
+    </xsl:comment>
+  </script>
   <div id="print-control" class="nifty4">
             <div class="box4">
               <table cellspacing="0" cellpadding="0">
@@ -102,14 +108,18 @@ function populateMetadata() {
                   <td align="left" valign="middle">
                     <div class="button nifty6">
                       <div class="box6">
-                        <a href="?{$printableCgi}">image only</a>
+                        <a href="?{$printableCgi}" 
+onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image only', window.title ]);"
+                        >image only</a>
                       </div>
                     </div>
                   </td>
                   <td align="left" valign="middle">
                     <div class="button nifty6">
                       <div class="box6">
-                        <a href="?{$printableCgi}-details">image with details</a>
+                        <a href="?{$printableCgi}-details"
+onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', window.title ]);"
+                         >image with details</a>
                       </div>
                     </div>
                   </td>
@@ -119,6 +129,12 @@ function populateMetadata() {
           </div>
  </xsl:when>
  <xsl:otherwise>
+  <script type="text/javascript">
+    <xsl:comment>
+  _gaq = _gaq || [];
+  _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-not-wide', 3 ]);
+    </xsl:comment>
+  </script>
           <div id="print-control">
             <div class="nifty4">
               <div class="box4">
@@ -129,7 +145,9 @@ function populateMetadata() {
                       <div class="button">
                         <div class="nifty6">
                           <div class="box6">
-                            <a href="?{$printableCgi}">image only</a>
+                            <a href="?{$printableCgi}"
+onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image only', window.title ]);"
+                            >image only</a>
                           </div>
                         </div>
                       </div>
@@ -138,7 +156,9 @@ function populateMetadata() {
                       <div class="button">
                         <div class="nifty6">
                           <div class="box6">
-                            <a href="?{$printableCgi}-details">image with details</a>
+                            <a href="?{$printableCgi}-details"
+onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', window.title ]);"
+                            >image with details</a>
                           </div>
                         </div>
                       </div>
