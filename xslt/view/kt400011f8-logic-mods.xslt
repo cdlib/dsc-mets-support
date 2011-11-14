@@ -154,16 +154,6 @@ brand: <xsl:value-of select="$brand"/>
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="insert-brand-links">
-<xsl:comment>insert-brand-links</xsl:comment>
- <xsl:copy-of select="$brand.links"/>
-</xsl:template>
-
-<xsl:template match="insert-brand-head">
-<xsl:comment>insert-brand-head</xsl:comment>
- <xsl:copy-of select="$brand.header"/>
-</xsl:template>
-
   <xsl:template match="insert-head-title">
 <xsl:comment>insert-head-title</xsl:comment>
     <title><xsl:value-of select="$page/mets:mets/@LABEL"/></title>

@@ -35,7 +35,7 @@
 <xsl:comment>insert-metadataLink</xsl:comment>
   <script type="text/javascript">
     <xsl:comment>
-  _gaq = _gaq || [];
+  var _gaq = _gaq || [];
   _gaq.push(['cst._setCustomVar', 3, 'mini-metadata', 'mini-metadata', 3 ]);
     </xsl:comment>
   </script>
@@ -46,21 +46,11 @@
 <xsl:comment>insert-print-footer</xsl:comment>
 <!-- set up variables, fill out template  -->
 <xsl:copy-of select="$brand.print.footer"/>
-  <xsl:call-template name="insert-google-tracking">
-    <xsl:with-param name="brand" select="$brand"/>
-    <xsl:with-param name="onContent" select="'onContent'"/>
-    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
-  </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="insert-brand-footer">
 <xsl:comment>insert-brand-footer</xsl:comment>
  <xsl:copy-of select="$brand.footer"/>
-  <xsl:call-template name="insert-google-tracking">
-    <xsl:with-param name="brand" select="$brand"/>
-    <xsl:with-param name="onContent" select="'onContent'"/>
-    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
-  </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="insert-sitesearch">
@@ -192,6 +182,22 @@
 	select="$page/m:mets/*[@xtf:meta] | $page/../TEI.2/xtf:meta/* | $page/TEI.2/xtf:meta/*" 
 	mode="dcq-html"/>
 </xsl:template>
+
+<xsl:template match="insert-brand-links">
+  <xsl:comment>insert-brand-links</xsl:comment>
+  <xsl:apply-templates select="$brand.links"/>
+  <xsl:call-template name="insert-google-tracking">
+    <xsl:with-param name="brand" select="$brand"/>
+    <xsl:with-param name="onContent" select="'onContent'"/>
+    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="insert-brand-head">
+  <xsl:comment>insert-brand-head</xsl:comment>
+  <xsl:copy-of select="$brand.header"/>
+</xsl:template>
+
 
 <xsl:template 
   match="@OBJID" 

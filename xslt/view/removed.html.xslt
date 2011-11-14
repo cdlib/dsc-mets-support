@@ -123,27 +123,6 @@ brand: <xsl:value-of select="$brand"/>
 <xsl:apply-templates select="$page/mets:mets/mets:dmdSec[1]/mets:mdWrap[1]/mets:xmlData[1]/qdc/*" mode="fullDC"/>
 </xsl:template>
 
-<xsl:template match="insert-brand-links">
-<xsl:comment>insert-brand-links</xsl:comment>
- <xsl:copy-of select="$brand.links"/>
-<xsl:if test="$rico='rico'">
-    <script type="text/javascript" src="/js3p/prototype.js"></script>
-    <script type="text/javascript" src="/js3p/rico.js"></script>
-    <script type="text/javascript">
-        window.onload=function(){new Rico.Accordion( $('ricoStructMap') )}
-    </script>
-</xsl:if>
-<xsl:if test="$structMap='alt1'">
-    <script type="text/javascript" src="/js3p/aqlists/aqtree3clickable.js"></script>
-	<link rel="stylesheet" href="/js3p/aqlists/aqtree3clickable.css"/>
-</xsl:if>
-</xsl:template>
-
-<xsl:template match="insert-brand-head">
-<xsl:comment>insert-brand-head</xsl:comment>
- <xsl:copy-of select="$brand.header"/>
-</xsl:template>
-
 <xsl:template match="@*" mode="attrComments">
 @<xsl:value-of select="name()"/> <xsl:value-of select="."/>
 </xsl:template>

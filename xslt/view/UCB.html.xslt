@@ -169,17 +169,6 @@ use="'count'"/ -->
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="insert-brand-links">
-<xsl:comment>insert-brand-links</xsl:comment>
- <xsl:apply-templates select="$brand.links"/>
-
-</xsl:template>
-
-<xsl:template match="insert-brand-head">
-<xsl:comment>insert-brand-head</xsl:comment>
- <xsl:copy-of select="$brand.header"/>
-</xsl:template>
-
 <xsl:template match="@*" mode="attrComments">
 @<xsl:value-of select="name()"/> <xsl:value-of select="."/>
 </xsl:template>

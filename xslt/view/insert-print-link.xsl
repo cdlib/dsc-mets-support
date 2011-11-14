@@ -94,7 +94,7 @@ function populateMetadata() {
  <xsl:when test="@shape='wide'">
   <script type="text/javascript">
     <xsl:comment>
-  _gaq = _gaq || [];
+  var _gaq = _gaq || [];
   _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-wide', 3 ]);
     </xsl:comment>
   </script>
@@ -131,7 +131,7 @@ onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', wind
  <xsl:otherwise>
   <script type="text/javascript">
     <xsl:comment>
-  _gaq = _gaq || [];
+  var _gaq = _gaq || [];
   _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-not-wide', 3 ]);
     </xsl:comment>
   </script>
