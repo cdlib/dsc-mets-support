@@ -10,6 +10,7 @@
 <xsl:param name="http.URL"/>
 <xsl:param name="zoomBase.value"/>
 <xsl:param name="zoomOn.value"/> 
+<xsl:param name="creditExperiment.on"/>
 <xsl:template name="jsod-printable-metadata">
 <xsl:variable name="credit"><xsl:call-template name="insert-printable-credit"/></xsl:variable>
 <xsl:variable name="label">
@@ -67,6 +68,19 @@ function populateMetadata() {
 </xsl:comment>
 </script>
 </xsl:if>
+</xsl:template>
+
+<xsl:template match="*:p[@id='clicktext']">
+  <xsl:choose>
+    <xsl:when test="$creditExperiment.on='on'">
+<p>
+http://content.cdlib.org/<xsl:value-of select="$page/m:mets/@OBJID"/> courtesy of <xsl:call-template name="insert-good-institution-name"/>
+</p>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="."/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="insert-print-links">

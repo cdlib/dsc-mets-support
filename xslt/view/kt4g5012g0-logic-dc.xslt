@@ -145,6 +145,12 @@ brand: <xsl:value-of select="$brand"/>
 	<div><h2>Contributing Institution:</h2>
         <xsl:call-template name="insert-institution-url"/>
         </div>
+        <xsl:if test="$creditExperiment.on='on'">
+          <div>
+            <h2>Persistent URL:</h2>
+            http://content.cdlib.org/<xsl:value-of select="$page/m:mets/@OBJID"/>
+          </div>
+        </xsl:if>
   </xsl:otherwise>
  </xsl:choose>
 
