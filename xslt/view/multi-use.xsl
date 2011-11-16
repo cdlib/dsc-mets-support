@@ -14,6 +14,7 @@
 <xsl:param name="root.path"/>
 <xsl:param name="a2a.on"/>
 <xsl:param name="moreLike.on"/>
+<xsl:param name="popUpSurvey.on"/>
 
 <xsl:variable name="theHost" select="replace($root.path , ':[0-9]+.+' , '')"/> 
 
@@ -51,6 +52,10 @@
 <xsl:template match="insert-brand-footer">
 <xsl:comment>insert-brand-footer</xsl:comment>
  <xsl:copy-of select="$brand.footer"/>
+  <xsl:if test="$popUpSurvey.on='on'">
+                 <script src="http://cdn.calisphere.org/json4lib/survey/jfc/src/swfstore.js"></script>
+                  <script src="http://cdn.calisphere.org/json4lib/survey/pop-up-survey.js"></script>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="insert-sitesearch">
