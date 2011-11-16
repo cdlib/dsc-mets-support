@@ -56,6 +56,9 @@
                  <script src="http://cdn.calisphere.org/json4lib/survey/jfc/src/swfstore.js"></script>
                   <script src="http://cdn.calisphere.org/json4lib/survey/pop-up-survey.js"></script>
   </xsl:if>
+<script><xsl:comment>
+_gaq.push(['cst._trackPageview']);
+</xsl:comment></script>
 </xsl:template>
 
 <xsl:template match="insert-sitesearch">
