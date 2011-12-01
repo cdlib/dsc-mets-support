@@ -26,17 +26,6 @@ function domainStrip() {
 }
 var domainName = domainStrip();
 _gaq.push( ['cst._setDomainName', domainName ], ['cst._trackPageview'], ['cst._setAllowLinker', true]);
-for(var i = 0; i &lt; document.links.length; i++) {
-  if ( 
-       (document.links[i].pathname.indexOf('/ark:/') == 0 &amp;&amp; domainName==".universityofcalifornia.edu")    
-       ||
-       (document.links[i].hostname.indexOf('.cdlib.org') &gt; 1 &amp;&amp; domainName==".universityofcalifornia.edu") 
-       || 
-       (document.links[i].hostname.indexOf('.universityofcalifornia.edu') &gt; 1 &amp;&amp; domainName==".cdlib.org") 
-     ) {
-    document.links[i].setAttribute('onclick',"_gaq.push(['cst._link', this.href]); return false;");
-  }
-}
 
 
 // google async load
@@ -45,6 +34,17 @@ for(var i = 0; i &lt; document.links.length; i++) {
     ga.src = ('https:'   == document.location.protocol ? 'https://ssl'   : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     var href = window.location.href;
+   /*  for(var i = 0; i &lt; document.links.length; i++) {
+      if ( 
+           (document.links[i].pathname.indexOf('/ark:/') == 0 &amp;&amp; domainName==".universityofcalifornia.edu")    
+           ||
+           (document.links[i].hostname.indexOf('.cdlib.org') &gt; 1 &amp;&amp; domainName==".universityofcalifornia.edu") 
+           || 
+           (document.links[i].hostname.indexOf('.universityofcalifornia.edu') &gt; 1 &amp;&amp; domainName==".cdlib.org") 
+         ) {
+        document.links[i].setAttribute('onclick',"_gaq.push(['cst._link', this.href]); return false;");
+      }
+    } */
 })();
 </xsl:comment>
 </script>
