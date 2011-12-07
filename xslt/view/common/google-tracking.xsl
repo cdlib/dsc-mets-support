@@ -17,7 +17,7 @@ _gaq.push( ['_gat._anonymizeIp'], ['cst._setAccount', 'UA-438369-1']);
 _gaq.push(['cst._trackPageLoadTime']);
 _gaq.push(['cst._setCustomVar', 1, 'brand', '<xsl:value-of select="$brand"/>', 3 ]);
       <xsl:if test="$google_analytics_tracking_code != ''">
-_gaq.push( ['contrib._setAccount', '<xsl:value-of select="$google_analytics_tracking_code"/>'] );
+_gaq.push( ['contrib._setAccount', '<xsl:value-of select="$google_analytics_tracking_code"/>'],['contrib._trackPageview'] );
       </xsl:if>
 /* page can be served via reverse proxy from multiple hosts */
 function domainStrip() {
