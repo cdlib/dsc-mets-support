@@ -210,6 +210,7 @@ for(var i = 0; i &lt; document.links.length; i++) {
     <xsl:with-param name="brand" select="$brand"/>
     <xsl:with-param name="onContent" select="'onContent'"/>
     <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
+    <xsl:with-param name="google_analytics_institution" select="$page/m:mets/facet-institution"/>
   </xsl:call-template>
 </xsl:template>
 
