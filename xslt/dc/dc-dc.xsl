@@ -53,7 +53,7 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="subject">
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:subject | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:subject | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:subject"/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:subject | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:subject | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:subject"/>
         </xsl:call-template>
         <xsl:call-template name="element">
                 <xsl:with-param name="element">subject</xsl:with-param>
@@ -65,29 +65,44 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="description">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">description</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:description | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:description | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:description "/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:description | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:description | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:description "/>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="publisher">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">publisher</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:publisher | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:publisher | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:publisher"/>
+                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:publisher | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:publisher | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:publisher"/>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="contributor">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element">contributor</xsl:with-param>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:contributor | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:contributor | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:contributor"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:contributor | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:contributor | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:contributor"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="date">
 	<xsl:call-template name="element">
-                <xsl:with-param name="element">date</xsl:with-param>
-                <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:date | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:date| /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:date"/>
-        </xsl:call-template>
+       <xsl:with-param name="element">date</xsl:with-param>
+       <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:date | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:date| /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:date"/>
+    </xsl:call-template>
+	<xsl:call-template name="element">
+       <xsl:with-param name="element">date</xsl:with-param>
+       <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:created | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:created | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dcterms:created"/>
+       <xsl:with-param name="qualifier">created</xsl:with-param>
+    </xsl:call-template>
+	<xsl:call-template name="element">
+       <xsl:with-param name="element">date</xsl:with-param>
+       <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:issued | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:issued | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dcterms:issued"/>
+       <xsl:with-param name="qualifier">issued</xsl:with-param>
+    </xsl:call-template>
+	<xsl:call-template name="element">
+       <xsl:with-param name="element">date</xsl:with-param>
+       <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:copyrighted | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:copyrighted | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dcterms:copyrighted"/>
+       <xsl:with-param name="qualifier">copyrighted</xsl:with-param>
+    </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="type">
@@ -99,14 +114,14 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
                 <xsl:with-param name="element">type</xsl:with-param>
                 <xsl:with-param name="qualifier">dc</xsl:with-param>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:type | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:type | 
-/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:type"/>
+/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:type"/>
         </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="format">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element" select="'format'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:format | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:format"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:format | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:format"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -119,28 +134,28 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'identifier'"/>
 		<xsl:with-param name="qualifier" select="'local'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:identifier | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:identifier"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:identifier | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:identifier | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:identifier"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="source">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'source'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:source | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:source | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:source"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:source | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:source | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:source"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="language">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'language'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:language | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:language | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:language"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:language | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:language | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:language"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="relation">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:relation | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:relation | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:relation"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:relation | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:relation | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:relation"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
@@ -165,14 +180,14 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="coverage">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'coverage'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:coverage | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:coverage | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:coverage"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:coverage | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:coverage | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:coverage"/>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="rights">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'rights'"/>
-		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:rights | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:rights | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:rights"/>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:rights | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:rights | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData//dc:rights"/>
 	</xsl:call-template>
 </xsl:template>
 
