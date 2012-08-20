@@ -178,6 +178,7 @@ POSSIBILITY OF SUCH DAMAGE.
   <mets-profile-driver label="lsta DC" pref="./profiles/kt4g5012g0.profile.xml" frameworkID="kt4g5012g0">
     <PROFILE>http://ark.cdlib.org/ark:/13030/kt4g5012g0</PROFILE>
     <PROFILE>/ark:/13030/kt4g5012g0</PROFILE>
+    <PROFILE>pamela://year1</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/kt4g5012g0-logic-dc.xslt</tool>
     <tool type="xslt" role="toJsod">./xslt/jsod/kt4g5012g0.jsod.xslt</tool>
