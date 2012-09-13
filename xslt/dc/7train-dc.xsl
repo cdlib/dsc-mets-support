@@ -49,6 +49,11 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 		<xsl:with-param name="node" 
 			select="/m:mets/m:amdSec/m:rightsMD/m:mdWrap[@MDTYPE='OTHER'][@OTHERMDTYPE='METSRights']/m:xmlData/*:RightsDeclarationMD/*:Context/*:Constraints/*:ConstraintDescription"/>
 	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'rights'"/>
+		<xsl:with-param name="qualifier" select="'dcterms:rightsHolder'"/>
+       <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:rightsHolder | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:rightsHolder | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dcterms:rightsHolder"/>
+	</xsl:call-template>
 </xsl:template>
 
 </xsl:stylesheet>
