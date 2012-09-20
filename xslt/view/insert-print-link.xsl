@@ -34,6 +34,14 @@ function populateMetadata() {
   string += '<![CDATA[</div>]]>';
 	if (metadata) metadata.innerHTML = string;
 }
+
+  <xsl:call-template name="insert-google-tracking-no-wrap">
+    <xsl:with-param name="brand" select="$brand"/>
+    <xsl:with-param name="onContent" select="'onContent'"/>
+    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
+    <xsl:with-param name="google_analytics_institution" select="$page/m:mets/facet-institution"/>
+  </xsl:call-template>
+
 </xsl:template>
 
 <xsl:template match="*" mode="xmlInJs">

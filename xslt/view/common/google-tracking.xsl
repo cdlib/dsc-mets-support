@@ -13,6 +13,21 @@
     <xsl:param name="google_analytics_institution"/>
     <script>
 <xsl:comment>
+        <xsl:call-template name="insert-google-tracking-no-wrap">
+            <xsl:with-param name="brand" select="$brand"/>
+            <xsl:with-param name="onContent" select="$onContent"/>
+            <xsl:with-param name="google_analytics_tracking_code" select="$google_analytics_tracking_code"/>
+            <xsl:with-param name="google_analytics_institution" select="$google_analytics_institution"/>
+        </xsl:call-template>
+</xsl:comment>
+    </script>
+</xsl:template>
+
+<xsl:template name="insert-google-tracking-no-wrap">
+    <xsl:param name="brand"/>
+    <xsl:param name="onContent"/>
+    <xsl:param name="google_analytics_tracking_code"/>
+    <xsl:param name="google_analytics_institution"/>
 var _gaq = _gaq || [];
 _gaq.push( ['_gat._anonymizeIp'], ['cst._setAccount', 'UA-438369-1']);
 _gaq.push(['cst._trackPageLoadTime']);
@@ -38,8 +53,6 @@ _gaq.push( ['cst._setDomainName', domainName ], ['cst._trackPageview'], ['cst._s
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     var href = window.location.href;
 })();
-</xsl:comment>
-</script>
   </xsl:template>
 
 </xsl:stylesheet>
