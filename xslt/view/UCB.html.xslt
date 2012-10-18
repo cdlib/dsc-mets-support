@@ -15,6 +15,7 @@
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 version="2.0"
 		xmlns:exslt="http://exslt.org/common"
+        xmlns:FileUtils="java:org.cdlib.xtf.xslt.FileUtils"
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
 <xsl:import href="./common/scaleImage.xsl"/>
@@ -195,10 +196,9 @@ use="'count'"/ -->
 	 <!-- test for a pdf -->
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file) = 1">
 			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
-	format-number(
+	FileUtils:humanFileSize(
 		(($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@SIZE)
-		,'###,###'
-		)"/> bytes)
+		)"/>)
 
 <!-- image/thumbnail -->
 
