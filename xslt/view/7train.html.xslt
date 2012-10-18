@@ -85,6 +85,9 @@
 <!-- template specifies .xhtml template file -->
 <xsl:param name="layout">
    <xsl:choose>
+       <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'reference')]/m:file[@MIMETYPE='application/pdf']) = 1"> 
+           <xsl:text>metadata</xsl:text>
+       </xsl:when>
 	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')]/m:file) = 1"> 
 	  <xsl:text>image-simple</xsl:text>
         </xsl:when>
@@ -203,6 +206,15 @@
 </xsl:comment>
    <xsl:choose>
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
+
+   <xsl:if test="count($page/m:mets/m:fileSec//m:fileGrp[starts-with(@USE,'reference')]/m:file[@MIMETYPE='application/pdf']) = 1"> 
+			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'reference')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
+	format-number(
+		(($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'reference')]/m:file)[1]/@SIZE)
+		,'###,###'
+		)"/> bytes)
+   </xsl:if>
+
   <xsl:variable name="use" select="@use"/>
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">

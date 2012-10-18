@@ -113,6 +113,7 @@ http://content.cdlib.org/<xsl:value-of select="$page/m:mets/@OBJID"/> courtesy o
  <xsl:when test="contains($page/m:mets/@PROFILE, 'kt3q2nb7vz') and $MOA2 = 'MOA2'"/>
  <!-- test for pdf -->
  <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
+ <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'reference')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
  <xsl:when test="@shape='wide'">
   <script type="text/javascript">
     <xsl:comment>
