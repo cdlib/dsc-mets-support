@@ -38,7 +38,9 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 <xsl:template name="title">
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'title'"/>
-		<xsl:with-param name="node" select="/m:mets/@LABEL"/>
+		<xsl:with-param name="node" select="if (/m:mets/@LABEL) 
+			then (/m:mets/@LABEL)
+			else (/m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dc:title)"/>
 	</xsl:call-template>
 </xsl:template>
 
