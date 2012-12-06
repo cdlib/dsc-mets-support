@@ -234,21 +234,37 @@ Courtesy of <xsl:value-of select="($page/mets:mets/publisher[@xtf:meta])[1] | ($
 </div>
 </xsl:template>
 
+<xsl:template name="insert-good-institution-name">
+  <xsl:choose>
+    <xsl:when test="$brand='calisphere'">
+        <xsl:call-template name="insert-good-institution-url"/>
+    </xsl:when>
+    <xsl:otherwise>
+        <xsl:call-template name="insert-good-institution-name-orig"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <xsl:template match="insert-good-institution-url" name="insert-good-institution-url">
+  <xsl:variable name="facet-institution"
+    select="($page/mets:mets/facet-institution | $page/TEI.2/xtf:meta/facet-institution )"
+  />
   <xsl:variable 
     name="url" 
     select="$page/mets:mets/institution-url | $page/TEI.2/xtf:meta/institution-url" />
   <xsl:choose>
-    <xsl:when test="$url!=''">
-      <a href="{$url}">
-        <xsl:call-template name="insert-good-institution-name"/>
+    <xsl:when test="$facet-institution or $url!=''">
+      <a href="{if ($facet-institution and $brand='calisphere') 
+                then replace(concat('http://',System:getenv('PUBLICDL_HOSTNAME'),'/institutions/',$facet-institution),' ','+') 
+                else $url}" xmlns:System="java:java.lang.System">
+        <xsl:call-template name="insert-good-institution-name-orig"/>
       </a>
     </xsl:when>
     <xsl:otherwise/>
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="insert-good-institution-url" name="insert-good-institution-name">
+<xsl:template match="insert-good-institution-url" name="insert-good-institution-name-orig">
   <xsl:variable name="facet-institution"
     select="($page/mets:mets/facet-institution | $page/TEI.2/xtf:meta/facet-institution )"
   />
