@@ -244,15 +244,19 @@ brand: <xsl:value-of select="$brand"/>
 <link rel="stylesheet" href="http://calispherel-dev.cdlib.org/avdemo/mediaelement/build/mediaelementplayer.css" />
 <div align="center">
 <xsl:for-each select="$page/m:mets/m:structMap/m:div[1]/m:fptr/@FILEID">
-<video class="video-js vjs-default-skin" controls="controls" id="video"
-  preload="auto" width="640" height="480" poster="my_video_poster.png"
-  >
+<video controls="controls" preload="auto" width="640" height="480">
   <source src="{$av_cdn}{.}" type='video/mp4'></source>
 </video>
 </xsl:for-each>
 <script><xsl:comment>
-// new MediaElementPlayer('video',{mode:'shim'});
-$('video').mediaelementplayer({mode:'shim'});
+  // check if the native video player will work
+  // http://stackoverflow.com/questions/3572113/how-to-check-if-the-browser-can-play-mp4-via-html5-video-tag
+  var v = document.createElement('video');
+  var opts = {};
+  if(! (v.canPlayType &amp;&amp; v.canPlayType('video/mp4').replace(/no/, '')) ) {
+    opts = {mode:'shim'};
+  }
+  $('video').mediaelementplayer(opts);
 </xsl:comment></script>
 </div>
       </xsl:otherwise>
