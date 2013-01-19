@@ -110,6 +110,12 @@ http://content.cdlib.org/<xsl:value-of select="$page/m:mets/@OBJID"/> courtesy o
 
 <xsl:choose><!-- to layout options @shape="wide" or its not -->
  <!-- MOA2 extracted from EAD don't get the print link -->
+ <xsl:when test="$page/m:mets/@PROFILE='pamela://year1' and lower-case($page/m:mets/@TYPE)='sound'">
+  <xsl:call-template name="audio-link"/>
+ </xsl:when>
+ <xsl:when test="$page/m:mets/@PROFILE='pamela://year1'">
+  <xsl:call-template name="video-link"/>
+ </xsl:when>
  <xsl:when test="contains($page/m:mets/@PROFILE, 'kt3q2nb7vz') and $MOA2 = 'MOA2'"/>
  <!-- test for pdf -->
  <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
@@ -194,6 +200,24 @@ onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', wind
  </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
+
+<xsl:template name="video-link">
+                <div id="print-control">
+                   <div class="nifty4">
+                      <div class="box4" style="padding-left: 1em;">
+ <p><a href="/{$page/m:mets/@OBJID}/?layout=printable-details">view video</a></p>
+                      </div>
+                   </div>
+                </div>
+</xsl:template>
+<xsl:template name="audio-link">
+                <div id="print-control">
+                   <div class="nifty4">
+                      <div class="box4" style="padding-left: 1em;">audio file</div>
+                   </div>
+                </div>
+</xsl:template>
+
 
 <xsl:template match="insert-printable-credit" name="insert-printable-credit">
   <xsl:variable name="facet-institution" 

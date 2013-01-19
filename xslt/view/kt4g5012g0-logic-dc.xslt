@@ -79,6 +79,10 @@
 
   <xsl:variable name="page" select="/"/>
 <!-- template specifies .xhtml template file -->
+
+<xsl:variable name="av_content" select="if ($page/m:mets/@PROFILE='pamela://year1') then 'true' else ''"/>
+<xsl:variable name="av_cdn" select="'http://d1kpbc66j2ghwa.cloudfront.net/'"/>
+
 <xsl:param name="layout">
    <xsl:choose>
  	<xsl:when test="count(
@@ -86,6 +90,9 @@
                 $page/m:mets/m:fileSec//m:fileGrp/m:file[starts-with(@USE,'thumbnail')][1]
                 ) = 1">
           <xsl:text>image-simple</xsl:text>
+        </xsl:when>
+        <xsl:when test="$av_content!=''">
+          <xsl:text>metadata</xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>image-complex</xsl:text>
@@ -125,9 +132,11 @@ brand: <xsl:value-of select="$brand"/>
 
   <xsl:template match="nbsp"><xsl:text disable-output-escaping='yes'><![CDATA[&nbsp;]]></xsl:text></xsl:template>
 
+<xsl:template match="insert-audio" name="insert-audio">
+</xsl:template>
+
 <xsl:template match="insert-metadataPortion" name="insert-metadataPortion">
 <xsl:comment>insert-metadataPortion (image-simple)</xsl:comment>
-
 <xsl:choose>
   <xsl:when test="$page/mets:mets/*/@xtf:meta and not($layout='metadata') and not($layout='iframe')">
         <xsl:comment>@xtf:meta found</xsl:comment>
@@ -153,7 +162,6 @@ brand: <xsl:value-of select="$brand"/>
         </xsl:if>
   </xsl:otherwise>
  </xsl:choose>
-
 </xsl:template>
 
 <xsl:template match="@*" mode="attrComments">
@@ -182,23 +190,91 @@ brand: <xsl:value-of select="$brand"/>
 	<xsl:value-of select="@maxY"/>
 </xsl:comment>
 <xsl:choose>
-  <xsl:when test="count($page/m:mets/m:fileSec/m:fileGrp//m:file[@USE='thumbnail']) = 1">
-  <!-- simple object -->
-<xsl:variable name="use">
-  <xsl:choose>
-   <xsl:when test="@use = 'thumbnail'">
-	<xsl:value-of select="@use"/>
-   </xsl:when>
-   <xsl:when test="@use = 'reference'">
+  <xsl:when test="$page/m:mets/@PROFILE='pamela://year1' and lower-case($page/m:mets/@TYPE)='sound'">
+<link xmlns="" rel="stylesheet"
+                  href="http://calispherel-dev.cdlib.org/avdemo/mediaelement/build/mediaelementplayer.css"></link>
+  <xsl:for-each select="$page/m:mets/m:structMap/m:div[1]/m:fptr/@FILEID">
+    <audio src="{$av_cdn}{.}" 
+      type="audio/mp3"
+      width="219" controls="controls" preload="auto" autobuffer="autobuffer">
+    </audio>
+  </xsl:for-each>
+    <script><xsl:comment>
+    // new MediaElementPlayer('audio',{mode:'shim'});
+    $('audio').mediaelementplayer({audioWidth: 219,});
+    </xsl:comment></script>
+  </xsl:when>
+  <!-- video thumbnail -->
+  <xsl:when test="$page/m:mets/@PROFILE='pamela://year1'">
+    <xsl:variable name="use" select="'thumbnail'"/>
       <xsl:choose>
-	<xsl:when test="$focusDiv/m:div/m:fptr[@FILEID='med-res'] and not ($focusDiv/m:div/m:fptr[@FILEID='hi-res'])">
+       <xsl:when test="@use = 'thumbnail'">
+        <xsl:variable name="ext" select="res:getExt($page/key('md',$use)/m:FLocat[1]/@xlink:href)" xmlns:res="x-hack:res"/>
+        <xsl:variable name="xy">
+          <xsl:call-template name="scale-maxXY">
+            <xsl:with-param name="maxX" select="@maxX"/>
+            <xsl:with-param name="maxY" select="@maxY"/>
+            <xsl:with-param name="x" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:X)"/>
+            <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
+          </xsl:call-template>
+        </xsl:variable>
+        <a id="zoomMe" href="/{$page/m:mets/@OBJID}/?layout=printable-details" style="text-decoration: none; display: block; position:relative;">
+          <div><img  border="0"
+	    src="/{$page/m:mets/@OBJID}/{$use}{$ext}" 
+	    width="{$xy/xy/@width}"
+	    height="{$xy/xy/@height}"
+        /></div>
+        <div class="play" style="
+      position: absolute; color: #000;
+      top: 40px;
+      left: 100px;
+      margin: auto;
+      width: 2em; 
+      line-height:2em;  
+      border: 1px solid;
+      background: #FFFFFF; opacity:0.6;filter:alpha(opacity=60)
+    ">▶</div>
+    </a>
+      </xsl:when>
+      <!-- insert video -->
+      <xsl:otherwise>
+        <xsl:variable name="data-setup">
+          <xsl:text>{'techOrder': ['flash', 'html5']}</xsl:text>
+        </xsl:variable>
+<link rel="stylesheet" href="http://calispherel-dev.cdlib.org/avdemo/mediaelement/build/mediaelementplayer.css" />
+<div align="center">
+<xsl:for-each select="$page/m:mets/m:structMap/m:div[1]/m:fptr/@FILEID">
+<video class="video-js vjs-default-skin" controls="controls" id="video"
+  preload="auto" width="640" height="480" poster="my_video_poster.png"
+  >
+  <source src="{$av_cdn}{.}" type='video/mp4'></source>
+</video>
+</xsl:for-each>
+<script><xsl:comment>
+// new MediaElementPlayer('video',{mode:'shim'});
+$('video').mediaelementplayer({mode:'shim'});
+</xsl:comment></script>
+</div>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:when>
+  <xsl:when test="count($page/m:mets/m:fileSec/m:fileGrp//m:file[@USE='thumbnail' or @ID='thumbnail']) = 1">
+    <!-- simple object -->
+    <xsl:variable name="use">
+      <xsl:choose>
+       <xsl:when test="@use = 'thumbnail'">
+	    <xsl:value-of select="@use"/>
+       </xsl:when>
+       <xsl:when test="@use = 'reference'">
+        <xsl:choose>
+	  <xsl:when test="$focusDiv/m:div/m:fptr[@FILEID='med-res'] and not ($focusDiv/m:div/m:fptr[@FILEID='hi-res'])">
 		<xsl:text>med-res</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
+	  </xsl:when>
+	  <xsl:otherwise>
 		<xsl:text>hi-res</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-   </xsl:when>
+	  </xsl:otherwise>
+        </xsl:choose>
+     </xsl:when>
    <xsl:otherwise/>
   </xsl:choose>
 </xsl:variable>
