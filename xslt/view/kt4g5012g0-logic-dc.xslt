@@ -82,6 +82,7 @@
 
 <xsl:variable name="av_content" select="if ($page/m:mets/@PROFILE='pamela://year1') then 'true' else ''"/>
 <xsl:variable name="av_cdn" select="'http://d1kpbc66j2ghwa.cloudfront.net/'"/>
+<xsl:variable name="av_stream" select="'rtmp://s20gtrn0ijmety.cloudfront.net/cfx/st/'"/>
 
 <xsl:param name="layout">
    <xsl:choose>
@@ -193,15 +194,40 @@ brand: <xsl:value-of select="$brand"/>
   <xsl:when test="$page/m:mets/@PROFILE='pamela://year1' and lower-case($page/m:mets/@TYPE)='sound'">
 <link xmlns="" rel="stylesheet"
                   href="http://calispherel-dev.cdlib.org/avdemo/mediaelement/build/mediaelementplayer.css"></link>
-  <xsl:for-each select="$page/m:mets/m:structMap/m:div[1]/m:fptr/@FILEID">
-    <audio src="{$av_cdn}{.}" 
-      type="audio/mp3"
-      width="219" controls="controls" preload="auto" autobuffer="autobuffer">
-    </audio>
-  </xsl:for-each>
+		  <xsl:apply-templates select="$page/m:mets/m:structMap/m:div[1]/m:fptr[1]/@FILEID" mode="audio-element"/>
+<xsl:apply-templates select="$page/m:mets/m:structMap/m:div[1]/m:fptr[position()&gt;1]/@FILEID" mode="audio-element-extra"/>
     <script><xsl:comment>
     // new MediaElementPlayer('audio',{mode:'shim'});
-    $('audio').mediaelementplayer({audioWidth: 219,});
+    // http://stackoverflow.com/questions/6190831/mediaelement-js-malfunction-in-ie-no-flashback-works
+var opts = {
+  /* enablePluginDebug: true,
+  success: function(media, node, player) {
+    if (media.pluginType == 'flash' &amp;&amp; node.getAttribute('data-rtmp')) {
+      media.setSrc(node.getAttribute('data-rtmp'));
+      media.load();
+      media.play();
+    }
+  }, */
+  audioWidth: 219, 
+  pauseOtherPlayers: true, 
+  features: ['playpause','progress','current','duration','tracks','volume','googleanalytics']
+};
+// ie9 needs this try/catch
+// see: https://github.com/Modernizr/Modernizr/issues/224
+try {
+    // check if the native video player will work
+    // http://stackoverflow.com/questions/3572113/how-to-check-if-the-browser-can-play-mp4-via-html5-video-tag
+    var a = document.createElement('audio');
+    if(! (a.canPlayType &amp;&amp; a.canPlayType('audio/mp3').replace(/no/, '')) ) {
+      opts.mode = 'shim';
+    }
+} catch(e) { }
+/*@cc_on
+  @if (@_jscript_version == 9)
+    opts.mode = 'shim';
+  @end
+@*/
+$($('audio').mediaelementplayer(opts));
     </xsl:comment></script>
   </xsl:when>
   <!-- video thumbnail -->
@@ -224,16 +250,14 @@ brand: <xsl:value-of select="$brand"/>
 	    width="{$xy/xy/@width}"
 	    height="{$xy/xy/@height}"
         /></div>
-        <div class="play" style="
-      position: absolute; color: #000;
+        <div class="play" style="position: absolute; color: #000;
       top: 40px;
       left: 100px;
       margin: auto;
       width: 2em; 
       line-height:2em;  
       border: 1px solid;
-      background: #FFFFFF; opacity:0.6;filter:alpha(opacity=60)
-    ">▶</div>
+      background: #FFFFFF; opacity:0.6;filter:alpha(opacity=60)">▶</div>
     </a>
       </xsl:when>
       <!-- insert video -->
@@ -243,20 +267,38 @@ brand: <xsl:value-of select="$brand"/>
         </xsl:variable>
 <link rel="stylesheet" href="http://calispherel-dev.cdlib.org/avdemo/mediaelement/build/mediaelementplayer.css" />
 <div align="center">
-<xsl:for-each select="$page/m:mets/m:structMap/m:div[1]/m:fptr/@FILEID">
-<video controls="controls" preload="auto" width="640" height="480">
-  <source src="{$av_cdn}{.}" type='video/mp4'></source>
-</video>
-</xsl:for-each>
+<xsl:apply-templates select="$page/m:mets/m:structMap/m:div[1]/m:fptr[1]/@FILEID" mode="video-element"/>
+<xsl:apply-templates select="$page/m:mets/m:structMap/m:div[1]/m:fptr[position()&gt;1]/@FILEID" mode="video-element-extra"/>
 <script><xsl:comment>
-  // check if the native video player will work
-  // http://stackoverflow.com/questions/3572113/how-to-check-if-the-browser-can-play-mp4-via-html5-video-tag
-  var v = document.createElement('video');
-  var opts = {};
-  if(! (v.canPlayType &amp;&amp; v.canPlayType('video/mp4').replace(/no/, '')) ) {
-    opts = {mode:'shim'};
-  }
-  $('video').mediaelementplayer(opts);
+var opts = {
+  // http://stackoverflow.com/questions/9113633/replacing-media-source-http-with-rtmp-in-mediaelementsjs-based-on-browser-capa
+  success: function(media, node, player) {
+    if (media.pluginType == 'flash' &amp;&amp; node.getAttribute('data-rtmp')) {
+      media.setSrc(node.getAttribute('data-rtmp'));
+      media.load();
+      media.play();
+    }
+  }, 
+  features: ['playpause','progress','current','duration','tracks','volume','fullscreen' ,'googleanalytics'],
+  pauseOtherPlayers: true
+};
+// ie9 needs this try/catch
+// see: https://github.com/Modernizr/Modernizr/issues/224
+try {
+    // check if the native video player will work
+    // http://stackoverflow.com/questions/3572113/how-to-check-if-the-browser-can-play-mp4-via-html5-video-tag
+    var v = document.createElement('video');
+    if(! (v.canPlayType &amp;&amp; v.canPlayType('video/mp4').replace(/no/, '')) ) {
+      opts.mode = 'shim';
+    }
+} catch(e) { } 
+// http://stackoverflow.com/questions/6190831/mediaelement-js-malfunction-in-ie-no-flashback-works
+/*@cc_on
+  @if (@_jscript_version == 9)
+    opts.mode = 'shim';
+  @end
+@*/
+$($('video').mediaelementplayer(opts));
 </xsl:comment></script>
 </div>
       </xsl:otherwise>
@@ -323,6 +365,27 @@ brand: <xsl:value-of select="$brand"/>
 </xsl:choose>
 </xsl:template>
 
+<xsl:template match="@FILEID" mode="video-element">
+  <video controls="controls" width="640" height="480" preload="metadata" src="{$av_cdn}{.}" type="video/mp4" data-rtmp="{$av_stream}mp4:{.}">
+  </video>
+</xsl:template>
+
+<xsl:template match="@FILEID" mode="video-element-extra">
+  <video controls="controls" width="640" height="480" preload="metadata" src="{$av_cdn}{.}" type="video/mp4" data-rtmp="{$av_stream}mp4:{.}">
+  </video>
+</xsl:template>
+
+<xsl:template match="@FILEID" mode="audio-element">
+    <audio src="{$av_cdn}{.}" type="audio/mpeg"
+      width="219" controls="controls" preload="none" data-rtmp="{$av_stream}mp3:{.}">
+    </audio>
+</xsl:template>
+
+<xsl:template match="@FILEID" mode="audio-element-extra">
+    <audio src="{$av_cdn}{.}" type="audio/mpeg" data-rtmp="{$av_stream}mp3:{.}"
+      width="219" controls="controls" preload="none">
+    </audio>
+</xsl:template>
 
 <xsl:template match="insert-institution-url" name="insert-institution-url">
 <xsl:comment>insert-institution-url</xsl:comment>

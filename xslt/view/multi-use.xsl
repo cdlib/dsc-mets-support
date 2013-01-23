@@ -52,10 +52,6 @@
 <xsl:template match="insert-brand-footer">
 <xsl:comment>insert-brand-footer</xsl:comment>
  <xsl:copy-of select="$brand.footer"/>
-  <xsl:if test="$popUpSurvey.on='on'">
-                 <script src="http://cdn.calisphere.org/json4lib/survey/jfc/src/swfstore.js"></script>
-                  <script src="http://cdn.calisphere.org/json4lib/survey/pop-up-survey.js"></script>
-  </xsl:if>
 <script><xsl:comment>
 _gaq.push(['cst._trackPageview']);
 for(var i = 0; i &lt; document.links.length; i++) {
@@ -212,6 +208,17 @@ for(var i = 0; i &lt; document.links.length; i++) {
     <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
     <xsl:with-param name="google_analytics_institution" select="$page/m:mets/facet-institution"/>
   </xsl:call-template>
+  <xsl:if test="$page/m:mets/@PROFILE='pamela://year1'">
+    <script
+      src="http://cdn.calisphere.org/mediaelementjs/build/mediaelement-and-player.min.js"
+      type="text/javascript"></script>
+    <script
+      src="http://cdn.calisphere.org/mediaelementjs/build/mep-feature-googleanalytics.js"
+      type="text/javascript"></script>
+    <script
+      src="http://cdn.calisphere.org/flowplayer/flowplayer-3.2.11.min.js"
+      type="text/javascript"></script>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="insert-brand-head">
