@@ -81,8 +81,8 @@
 <!-- template specifies .xhtml template file -->
 
 <xsl:variable name="av_content" select="if ($page/m:mets/@PROFILE='pamela://year1') then 'true' else ''"/>
-<xsl:variable name="av_cdn" select="'http://d1kpbc66j2ghwa.cloudfront.net/'"/>
-<xsl:variable name="av_stream" select="'rtmp://s20gtrn0ijmety.cloudfront.net/cfx/st/'"/>
+<xsl:variable name="av_cdn" select="'http://av-cdn.calisphere.org/'"/>
+<xsl:variable name="av_stream" select="'rtmp://av-stream.calisphere.org/cfx/st/'"/>
 
 <xsl:param name="layout">
    <xsl:choose>
