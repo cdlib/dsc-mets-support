@@ -244,7 +244,7 @@ $($('audio').mediaelementplayer(opts));
             <xsl:with-param name="y" select="number(($page/m:mets/m:structMap//m:div/m:fptr[@FILEID=$use])[1]/@cdl2:Y)"/>
           </xsl:call-template>
         </xsl:variable>
-        <a id="zoomMe" href="/{$page/m:mets/@OBJID}/?layout=printable-details" style="text-decoration: none; display: block; position:relative;">
+        <a id="zoomMe" href="/{$page/m:mets/@OBJID}/?layout=printable-details{if($brand!='calisphere') then concat('&amp;brand=',$brand) else ''}" style="text-decoration: none; display: block; position:relative;">
           <div><img  border="0"
 	    src="/{$page/m:mets/@OBJID}/{$use}{$ext}" 
 	    width="{$xy/xy/@width}"
