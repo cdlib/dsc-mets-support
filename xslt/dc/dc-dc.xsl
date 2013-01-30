@@ -131,6 +131,18 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
                 <xsl:with-param name="element" select="'format'"/>
                 <xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dc:format | /m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/record/dc:format | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dc:format | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/dc:format"/>
 	</xsl:call-template>
+        <!-- dcterms:medium -->
+	<xsl:call-template name="element">
+		<xsl:with-param name="element">format</xsl:with-param>
+		<xsl:with-param name="qualifier">dcterms:medium</xsl:with-param>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:medium | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:medium | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dcterms:medium | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/dcterms:medium"/>
+	</xsl:call-template>
+        <!-- dcterms:extent -->
+	<xsl:call-template name="element">
+		<xsl:with-param name="element">format</xsl:with-param>
+		<xsl:with-param name="qualifier">dcterms:extent</xsl:with-param>
+		<xsl:with-param name="node" select="/m:mets/m:dmdSec[@ID='dc']/m:mdWrap/m:xmlData/cdl:qualifieddc/dcterms:extent | /m:mets/m:dmdSec[@ID='DC']/m:mdWrap/m:xmlData/dcterms:extent | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/record/dcterms:extent | /m:mets/m:dmdSec/m:mdWrap[@MDTYPE='DC']/m:xmlData/dcterms:extent"/>
+	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="identifier">
