@@ -205,7 +205,7 @@ onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', wind
                 <div id="print-control">
                    <div class="nifty4">
                       <div class="box4" style="padding-left: 1em;">
- <p><a href="/{$page/m:mets/@OBJID}/?layout=printable-details">view video</a></p>
+ <p><a href="/{$page/m:mets/@OBJID}/?layout=printable-details{if($brand!='calisphere') then concat('&amp;brand=',$brand) else ''}">view video</a></p>
                       </div>
                    </div>
                 </div>
