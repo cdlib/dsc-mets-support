@@ -280,24 +280,11 @@ var opts = {
     }
   }, 
   features: ['playpause','progress','current','duration','tracks','volume','fullscreen' ,'googleanalytics'],
-  pauseOtherPlayers: true
+  pauseOtherPlayers: true,
 };
-// ie9 needs this try/catch
-// see: https://github.com/Modernizr/Modernizr/issues/224
-try {
-    // check if the native video player will work
-    // http://stackoverflow.com/questions/3572113/how-to-check-if-the-browser-can-play-mp4-via-html5-video-tag
-    var v = document.createElement('video');
-    if(! (v.canPlayType &amp;&amp; v.canPlayType('video/mp4').replace(/no/, '')) ) {
-      opts.mode = 'shim';
-    }
-} catch(e) { } 
-// http://stackoverflow.com/questions/6190831/mediaelement-js-malfunction-in-ie-no-flashback-works
-/*@cc_on
-  @if (@_jscript_version == 9)
-    opts.mode = 'shim';
-  @end
-@*/
+if(FlashDetect.installed){
+  opts.mode='shim';
+}
 $($('video').mediaelementplayer(opts));
 </xsl:comment></script>
 </div>

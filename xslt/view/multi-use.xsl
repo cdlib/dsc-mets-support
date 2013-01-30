@@ -216,7 +216,7 @@ for(var i = 0; i &lt; document.links.length; i++) {
       src="http://cdn.calisphere.org/mediaelementjs/build/mep-feature-googleanalytics.js"
       type="text/javascript"></script>
     <script
-      src="http://cdn.calisphere.org/flowplayer/flowplayer-3.2.11.min.js"
+      src="http://cdn.calisphere.org/mediaelementjs/build/flash_detect_min.js"
       type="text/javascript"></script>
   </xsl:if>
 </xsl:template>
