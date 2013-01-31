@@ -40,9 +40,11 @@
      <xsl:otherwise>0</xsl:otherwise>
    </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="focusDivShowsChild" select="key('divShowsChild',$order)"/>
+  <xsl:variable name="at_profile"><xsl:text>Archivists' Toolkit Profile</xsl:text></xsl:variable>
+  <xsl:variable name="isData" select="boolean($page/m:mets/@PROFILE = $at_profile and $page/m:mets/m:fileSec/m:fileGrp//m:file[matches(@USE,'Data')])"/>
+  <xsl:variable name="focusDivShowsChild" select="if ($isData != false) then key('divShowsChild',$order) else false"/>
   <xsl:variable name="focusDivShowsChildStrict" select="key('divShowsChildStrict',$order)"/>
-  <xsl:variable name="focusDivIsImage" select="key('absPosItem', $order)"/>
+  <xsl:variable name="focusDivIsImage" select="if ($isData != false) then key('absPosItem', $order) else false"/>
   
 <xsl:template match="insert-structMap">
 <xsl:comment>insert-structMap <xsl:apply-templates select="@*" mode="attrComments"/></xsl:comment>
@@ -81,7 +83,7 @@
 <xsl:param name="depth"/>
 <xsl:variable name="A" select="count(../m:div[@ORDER or @LABEL][m:div/m:fptr])"/>
 <xsl:variable name="focusDivOrderInSiblingCount" select="count(./preceding-sibling::m:div[m:div//m:fptr]) + 1"/>
-<div class="structMap">
+<div class="structMap">A
 <xsl:if test="$order = @ORDER"><b>*</b></xsl:if>
 <xsl:value-of select="$depth"/><xsl:text> </xsl:text>
 <xsl:value-of select="@ORDER"/><xsl:text>.  </xsl:text>
@@ -124,7 +126,8 @@
 	<!-- one of my kids has the focus and content -->
 	<xsl:when test="m:div[. is $focusDiv]
 		and $focusDiv/m:div/m:fptr
-		and not ($focusDivShowsChild)">CtableIsNext</xsl:when>
+		and not ($focusDivShowsChild)
+		and not ($isData)">CtableIsNext</xsl:when>
 	<!-- follow the focus with recursion -->
 	<xsl:when test="$focusDecendsFromMe">Drecurse</xsl:when>
 	<!-- I am the focus div -->
@@ -292,12 +295,12 @@
 	<xsl:otherwise></xsl:otherwise>
  </xsl:choose>
   </xsl:variable>
-<!-- 
-  [[
+<!--   [[
 scs:<xsl:value-of select="$focusDivShowsChildStrict"/>|
-<xsl:value-of select="boolean($focusDiv/parent::m:structMap)"/>
+<xsl:value-of select="boolean($focusDiv/parent::m:structMap)"/> 
 sa<xsl:value-of select="$selfAction"/>]]
 -->
+
 <xsl:choose>
   <xsl:when test="($iAmFocusDiv) or ($focusDecendsFromMe) or ends-with($selfAction , 'headings')">
 
@@ -348,7 +351,6 @@ sa<xsl:value-of select="$selfAction"/>]]
 	  </xsl:when>
 	  <xsl:otherwise></xsl:otherwise>
 	</xsl:choose>
-
 
 </div>
  </xsl:when>
