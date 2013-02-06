@@ -38,7 +38,7 @@ _gaq.push(['contrib._setCustomVar', 1, 'cdl-institution', '<xsl:value-of select=
 _gaq.push(['contrib._trackPageview'] );
       </xsl:if>
       <xsl:if test="$google_analytics_institution != ''">
-_gaq.push(['cst._setCustomVar', 2, 'cdl-institution', '<xsl:value-of select="$google_analytics_institution"/>', 3 ]);
+_gaq.push(['cst._setCustomVar', 4, 'cdl-institution', '<xsl:value-of select="$google_analytics_institution"/>', 3 ]);
       </xsl:if>
 /* page can be served via reverse proxy from multiple hosts */
 function domainStrip() {
