@@ -42,9 +42,9 @@
   </xsl:variable>
   <xsl:variable name="at_profile"><xsl:text>Archivists' Toolkit Profile</xsl:text></xsl:variable>
   <xsl:variable name="isData" select="boolean($page/m:mets/@PROFILE = $at_profile and $page/m:mets/m:fileSec/m:fileGrp//m:file[matches(@USE,'Data')])"/>
-  <xsl:variable name="focusDivShowsChild" select="if ($isData != false) then key('divShowsChild',$order) else false"/>
+  <xsl:variable name="focusDivShowsChild" select="if (not($isData)) then key('divShowsChild',$order) else false"/>
   <xsl:variable name="focusDivShowsChildStrict" select="key('divShowsChildStrict',$order)"/>
-  <xsl:variable name="focusDivIsImage" select="if ($isData != false) then key('absPosItem', $order) else false"/>
+  <xsl:variable name="focusDivIsImage" select="if (not($isData)) then key('absPosItem', $order) else false"/>
   
 <xsl:template match="insert-structMap">
 <xsl:comment>insert-structMap <xsl:apply-templates select="@*" mode="attrComments"/></xsl:comment>
