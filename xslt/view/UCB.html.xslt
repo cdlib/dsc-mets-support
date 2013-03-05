@@ -33,7 +33,11 @@
 
 <!-- xsl:key name="thumbCount" match="m:fileGrp[contains(@USE,'thumbnail')][1]/m:file"
 use="'count'"/ -->
-
+<!-- test for pdf PDF -->
+<xsl:variable name="isPdf" select="boolean(
+	count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1
+	or count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')]) = 1
+                                          )"/>
 
 <!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
@@ -106,7 +110,7 @@ use="'count'"/ -->
 <xsl:param name="layout">
    <xsl:choose>
 	<!-- test for PDF -->
-	<xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf']) = 1">
+	<xsl:when test="$isPdf">
 	  <xsl:text>metadata</xsl:text>
   </xsl:when>
 	<!-- xsl:when test="count(key('thumbCount','count')) = 1" --> 
@@ -192,9 +196,11 @@ use="'count'"/ -->
 <!-- xsl:variable name="count-hack" select="if ($mrsid-hack) number($mrsid-hack)
 																				else if ($page/m:mets/meta) number(1)
 																				else number(0)"/ -->
+
    <xsl:choose>
 	 <!-- test for a pdf -->
-   <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file) = 1">
+   <xsl:when test="boolean($isPdf)">
+                   <xsl:if test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file) = 1"> <!-- change second test to FileExists -->
 			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
 	FileUtils:humanFileSize(
 		(($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@SIZE)
@@ -224,7 +230,10 @@ use="'count'"/ -->
 	width="{$xy/xy/@width}"
 	height="{$xy/xy/@height}"
   /></a>
-
+            </xsl:if><!-- - - - - -->
+            <xsl:if test="$page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')]">
+                <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/>
+            </xsl:if><!-- - - - - -->
    </xsl:when>
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
 
