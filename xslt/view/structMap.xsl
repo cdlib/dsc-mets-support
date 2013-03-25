@@ -19,7 +19,7 @@
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
  <xsl:key name="divByOrder" match="m:div[@ORDER]" use="@ORDER"/> 
- <xsl:key name="divShowsChild" match="m:div[m:div/m:div/m:fptr]">
+ <xsl:key name="divShowsChild" match="m:div[m:div/m:div[not(contains(lower-case(@TYPE),'data'))]/m:fptr]">
     <xsl:value-of select="count( preceding::m:div[@ORDER or @LABEL][m:div] | ancestor::m:div[@ORDER or @LABEL][m:div])+1"/>
   </xsl:key>
  <xsl:key name="divShowsChildStrict" match="m:div[m:div[@ORDER or @LABEL][1]/m:div[1]/m:fptr]">
@@ -42,8 +42,7 @@
   </xsl:variable>
   <xsl:variable name="at_profile"><xsl:text>Archivists' Toolkit Profile</xsl:text></xsl:variable>
   <xsl:variable name="isData" select="boolean($page/m:mets/@PROFILE = $at_profile and $page/m:mets/m:fileSec/m:fileGrp//m:file[matches(@USE,'Data')])"/>
-  <xsl:variable name="focusDivShowsChild" select="if (not($isData)) then key('divShowsChild',$order) else false"/>
-  <!-- xsl:variable name="focusDivShowsChild" select="key('divShowsChild',$order)"/ -->
+  <xsl:variable name="focusDivShowsChild" select="key('divShowsChild',$order)"/>
   <xsl:variable name="focusDivShowsChildStrict" select="key('divShowsChildStrict',$order)"/>
   <xsl:variable name="focusDivIsImage" select="if (not($isData)) then key('absPosItem', $order) else false"/>
   
@@ -185,6 +184,7 @@
     <xsl:when test="ends-with($selfAction , 'tableIsNext')">
 		<!-- and ($countKid = $countImg)"> -->
 		<table border="0">
+ <xsl:if test="$isData"><style>td { vertical-align: top !important;}</style></xsl:if>
 		  <xsl:apply-templates 
 			select="for $x in $startOfPage to $endOfPage return(m:div[@ORDER or @LABEL][m:div][position()=$x])" 
 			mode="image-table"/>
@@ -305,7 +305,7 @@
 sc:<xsl:value-of select="$focusDivShowsChild"/>|
 scs:<xsl:value-of select="$focusDivShowsChildStrict"/>|
 <xsl:value-of select="boolean($focusDiv/parent::m:structMap)"/> 
-sa<xsl:value-of select="$selfAction"/>]]
+sa<xsl:value-of select="$selfAction"/>]] 
 -->
 <xsl:choose>
     	<xsl:when test="$iAmFocusDiv">
@@ -565,6 +565,8 @@ sa<xsl:value-of select="$selfAction"/>]]
 		<img border="0" width="{$xy/xy/@width}" height="{$xy/xy/@height}" src="{$naillink}"
 			alt="{$node/@LABEL}"/>
 		</a>
+                <xsl:if test="$isData"><xsl:value-of select="$node/@LABEL"/>
+                </xsl:if>
 		<div>
 		<xsl:variable name="kidcount" select="count($node/m:div[m:div/m:fptr])"/>
 	<xsl:choose>
@@ -778,8 +780,13 @@ sa<xsl:value-of select="$selfAction"/>]]
             </div>
 </div>
 <xsl:if test="$isData">
-  <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/>
+  <xsl:apply-templates select="$page/key('md',$focusDiv/m:div[@TYPE='thumbnail']/m:fptr/@FILEID)/m:FLocat" mode="dataThumb"/>
+  <xsl:apply-templates select="$page/key('md',$focusDiv/m:div[@TYPE!='thumbnail']/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/>
 </xsl:if>
+</xsl:template>
+
+<xsl:template match="m:FLocat" mode="dataThumb">
+  <img style="margin-top: 1em; display: block;" alt="thumbnail" src="{@xlink:href}"/>
 </xsl:template>
 
 <xsl:template match="m:FLocat" mode="dataLink">
