@@ -209,6 +209,7 @@ use="'count'"/ -->
 <!-- image/thumbnail -->
 
   <xsl:variable name="use" select="'thumbnail'"/>
+  <xsl:if test="$page/m:mets/m:structMap//m:div[contains(@TYPE,$use)]">
   <xsl:variable name="xy">
     <xsl:call-template name="scale-maxXY">
       <xsl:with-param name="maxX" select="@maxX"/>
@@ -232,11 +233,11 @@ use="'count'"/ -->
   /></a>
             </xsl:if><!-- - - - - -->
             <xsl:if test="$page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')]">
-                <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/>
+                <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/> 
             </xsl:if><!-- - - - - -->
-   </xsl:when>
+      </xsl:if><!-- end of if thumnail -->
+   </xsl:when><!-- end of when pdf -->
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->
-
 
   <xsl:variable name="use" select="@use"/>
   <xsl:variable name="xy">
