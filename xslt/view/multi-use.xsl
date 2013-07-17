@@ -256,7 +256,11 @@ for(var i = 0; i &lt; document.links.length; i++) {
 
 <xsl:template match="contributor | coverage | creator | date | description | format[@q!='x'] | identifier | language
 | publisher | relation | rights | source | subject | title | type" mode="dcq-html">
-	<meta xmlns="http://www.w3.org/1999/xhtml" name="DC.{name()}" content="{normalize-space(.)}"/>
+	<meta xmlns="http://www.w3.org/1999/xhtml" name="{name()}" content="{normalize-space(.)}"/>
+</xsl:template>
+
+<xsl:template match="reference-image" mode="dcq-html">
+	<link href="{@src}" rel="image_src" xmlns="http://www.w3.org/1999/xhtml" />
 </xsl:template>
 
 <xsl:template match="*" mode="dcq-html">
