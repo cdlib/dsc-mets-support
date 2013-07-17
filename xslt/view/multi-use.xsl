@@ -259,7 +259,7 @@ for(var i = 0; i &lt; document.links.length; i++) {
 	<meta xmlns="http://www.w3.org/1999/xhtml" name="{name()}" content="{normalize-space(.)}"/>
 </xsl:template>
 
-<xsl:template match="reference-image" mode="dcq-html">
+<xsl:template match="reference-image[1]" mode="dcq-html">
 	<link href="{@src}" rel="image_src" xmlns="http://www.w3.org/1999/xhtml" />
 </xsl:template>
 
