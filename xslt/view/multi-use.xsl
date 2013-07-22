@@ -18,6 +18,20 @@
 
 <xsl:variable name="theHost" select="replace($root.path , ':[0-9]+.+' , '')"/> 
 
+
+<!-- root template -->
+<xsl:template match="/">
+        <xsl:comment>dynaXML xtf.sf.net
+        xml: <xsl:value-of select="base-uri($page)"/>
+        PROFILE: <xsl:value-of select="$page/m:mets/@PROFILE"/>
+        xslt: <xsl:value-of select="static-base-uri()"/>
+        layout: <xsl:value-of select="base-uri($layoutXML)"/>
+        brand: <xsl:value-of select="$brand"/>
+        dateStamp: <xsl:value-of select="$page/m:mets/dateStamp"/>
+</xsl:comment>
+        <xsl:apply-templates select="($layoutXML)//*[local-name()='html']"/>
+</xsl:template>
+
 <xsl:template match="*:a2a">
   <xsl:if test="$a2a.on='on'">
     <xsl:apply-templates/>
