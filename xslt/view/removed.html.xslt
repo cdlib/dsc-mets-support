@@ -93,6 +93,20 @@
 <xsl:variable name="fLayout"   select="replace($layout,'[^\w]','-')"/>
 <xsl:variable name="layoutXML" select="document(concat($fLayout,'.xhtml'))"/>
 
+  <xsl:template match="/">
+<xsl:comment> dynaXML xtf.sf.net
+xml: <xsl:value-of select="base-uri($page)"/>
+PROFILE: <xsl:value-of select="$page/m:mets/@PROFILE"/>
+xslt: <xsl:value-of select="static-base-uri()"/>
+layout: <xsl:value-of select="base-uri($layoutXML)"/>
+brand: <xsl:value-of select="$brand"/> 
+</xsl:comment>
+
+  <xsl:apply-templates 
+	select="($layoutXML)//*[local-name()='html']"/>
+  </xsl:template>
+
+
   <!-- default match identity transform -->
   <xsl:template match="@*|node()">
     <xsl:copy>
