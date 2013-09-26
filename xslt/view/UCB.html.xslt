@@ -188,10 +188,13 @@ use="'count'"/ -->
    <xsl:choose>
 	 <!-- test for a pdf -->
    <xsl:when test="boolean($isPdf)">
-                   <xsl:if test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file) = 1"> <!-- change second test to FileExists -->
-			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
+                   <xsl:if test="
+    count($page/m:mets/m:fileSec//m:fileGrp[contains(lower-case(@USE),'application')]/m:file) = 1
+    ">
+    <!-- change second test to FileExists -->
+			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(lower-case(@USE),'application')]/m:file[@MIMETYPE='application/pdf'])[1]/@ID}">Download PDF</a> (<xsl:value-of select="
 	FileUtils:humanFileSize(
-		(($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@SIZE)
+		(($page/m:mets/m:fileSec//m:fileGrp[contains(lower-case(@USE),'application')]/m:file)[1]/@SIZE)
 		)"/>)
 
 <!-- image/thumbnail -->
@@ -208,7 +211,7 @@ use="'count'"/ -->
   </xsl:variable>
 
 
-			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'application')]/m:file)[1]/@ID}">
+			<a href="/{$page/m:mets/@OBJID}/{($page/m:mets/m:fileSec//m:fileGrp[contains(lower-case(@USE),'application')]/m:file)[1]/@ID}">
   <xsl:variable 
     name="myFileId" 
     select="$page/m:mets/m:structMap//m:div[starts-with(@TYPE,$use) or @TYPE=concat('image/',$use)][1]/m:fptr/@FILEID"
@@ -220,9 +223,9 @@ use="'count'"/ -->
 	height="{$xy/xy/@height}"
   /></a>
             </xsl:if><!-- - - - - -->
-            <xsl:if test="$page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')]">
-                <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/> 
-            </xsl:if><!-- - - - - -->
+            <!-- xsl:if test="$page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')]">
+                <xsl:apply-templates select="$page/key('md',$focusDiv/m:div/m:fptr/@FILEID)/m:FLocat" mode="dataLink"/>
+            </xsl:if --><!-- - - - - -->
       </xsl:if><!-- end of if thumnail -->
    </xsl:when><!-- end of when pdf -->
    <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'thumbnail')][1]/m:file) = 1"><!-- simple object -->

@@ -267,6 +267,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
   <mets-profile-driver label="ucsd">
     <PROFILE>http://www.loc.gov/mets/profiles/00000027.html</PROFILE>
+    <PROFILE>http://www.loc.gov/mets/profiles/00000027.xml</PROFILE>
     <PROFILE>Archivists' Toolkit Profile</PROFILE>
     <tool type="xslt" role="toQDC">./xslt/dc/mods-dc.xsl</tool>
     <tool type="xslt" role="toHTML">./xslt/view/UCB.html.xslt</tool>
