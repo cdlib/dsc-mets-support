@@ -221,7 +221,7 @@ MODS
 <xsl:template name="type">
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">type</xsl:with-param>
-		<xsl:with-param name="node" select="/m:mets/@TYPE"/>
+		<xsl:with-param name="node" select="/m:mets/@TYPE[.!='generic']"/>
         </xsl:call-template>
 	<xsl:call-template name="element">
                 <xsl:with-param name="element">type</xsl:with-param>
