@@ -101,6 +101,14 @@ POSSIBILITY OF SUCH DAMAGE.
     <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
   </mets-profile-driver>
 
+  <mets-profile-driver>
+    <PROFILE>SobekCM</PROFILE>
+    <tool type="xslt" role="toQDC">./xslt/dc/dc-dc.xsl</tool>
+    <tool type="xslt" role="toHTML">./xslt/view/7train.html.xslt</tool>
+    <tool type="xslt" role="toJsod">./xslt/jsod/7train.jsod.xslt</tool>
+    <tool type="xslt" role="generalBPC">./xslt/bpc/allMetsBPC.xsl</tool>
+  </mets-profile-driver>
+
   <mets-profile-driver pref="./profiles/UCLADigitalLibraryProgramPreservationObjectProfile.xml" frameworkID="UCLAPreservationObjectProfile">
     <PROFILE>http://digital.library.ucla.edu/mets/profiles/ucla_dpr.xml</PROFILE>
     <PROFILE>http://digital2.library.ucla.edu/mets/profiles/ucla_mets_profile_001.xml</PROFILE>

@@ -212,7 +212,7 @@
 </xsl:template>
 
 <!-- Contributor name heading -->
-<xsl:template match="mods:name[1][parent::mods:mods]" mode="viewMODS">
+<xsl:template match="mods:name[parent::mods:mods]" mode="viewMODS">
 	<div><h2>Creator/Contributor:</h2>
 	<xsl:apply-templates select="mods:namePart, mods:role" mode="viewMODS"/>
 	</div>
