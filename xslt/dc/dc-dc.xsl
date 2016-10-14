@@ -191,7 +191,7 @@ supports profiles that are based on DC, including LSTA images and OAC TEXT DC
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'vc'"/>
-		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec[@ID='ead']/m:mdRef/@*[local-name(.)='href'])"/>
+		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec[@ID='ead']/m:mdRef/@*[local-name(.)='href'] | /m:mets/@OBJID)"/>
 	</xsl:call-template>
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>

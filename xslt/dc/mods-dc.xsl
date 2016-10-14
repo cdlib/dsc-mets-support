@@ -275,7 +275,7 @@ MODS
 	<xsl:call-template name="element">
 		<xsl:with-param name="element" select="'relation'"/>
 		<xsl:with-param name="qualifier" select="'vc'"/>
-		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href)"/>
+		<xsl:with-param name="node" select="vc:lookParent(/m:mets/m:dmdSec/m:mdWrap[@MDTYPE='EAD']/m:xmlData/e:c/@parent | /m:mets/m:dmdSec[@ID='ead']/m:mdRef/@xlink:href | /m:mets/@OBJID)"/>
 	</xsl:call-template>
 	<xsl:if
           test="(/m:mets/@PROFILE != 'http://ark.cdlib.org/ark:/13030/kt5z09p6zn')">
