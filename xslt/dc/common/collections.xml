@@ -647,6 +647,8 @@
 <!--UCI-->
 <vc>
 <added>http://seaa.lib.uci.edu</added>
+<when>ark:/13030/hb50000610</when>
+<when>ark:/13030/hb9000095r</when>
 <when>ark:/13030/hb8g500803</when>
 <when>ark:/13030/hb8k400907</when>
 <when>ark:/13030/hb896nb515</when>
