@@ -263,7 +263,7 @@ for(var i = 0; i &lt; document.links.length; i++) {
     <xsl:value-of select="$param"/>
   </xsl:variable>
   <xsl:variable name="amp" select="'&amp;'"></xsl:variable>
-  <link rel="canonical" href="{$canonical}"/>
+  <!-- link rel="canonical" href="{$canonical}"/ -->
   <link rel="alternate" type="application/json+oembed" href="/search?url={fn:encode-for-uri($canonical)}{$amp}format=json"/>
   <link rel="alternate" type="text/xml+oembed" href="/search?url={fn:encode-for-uri($canonical)}{$amp}format=xml"/>
 </xsl:template>
