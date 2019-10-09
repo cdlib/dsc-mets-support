@@ -254,6 +254,11 @@ MODS
 		<xsl:with-param name="qualifier" select="'mods'"/>
 		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:identifier"/>
 	</xsl:call-template>
+	<xsl:call-template name="element">
+		<xsl:with-param name="element" select="'identifier'"/>
+		<xsl:with-param name="qualifier" select="'local'"/>
+		<xsl:with-param name="node" select="(//mods:mods)[1]/mods:relatedItem[@type='original']/mods:identifier[@type='local']"/>
+	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="source">
