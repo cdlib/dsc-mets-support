@@ -25,7 +25,7 @@
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
 <xsl:param name="servlet.dir"/>
 <xsl:param name="debug"/>
-<xsl:param name="brand" select="'calisphere'"/>
+<xsl:param name="brand" select="'oac4'"/>
 <!-- temporary for oac -> oacui transition -->
   <xsl:param name="brand.file">
     <xsl:choose>

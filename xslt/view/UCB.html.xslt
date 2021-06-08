@@ -27,7 +27,7 @@
 <xsl:include href="insert-print-link.xsl"/>
 <xsl:param name="order" select="'1'"/><!-- defaults to first div with content -->
 <xsl:param name="debug"/>
-<xsl:param name="brand" select="'calisphere'"/>
+<xsl:param name="brand" select="'oac4'"/>
 <xsl:param name="servlet.dir"/>
 <xsl:param name="doc.view"/>
 
