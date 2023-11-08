@@ -17,7 +17,6 @@
                 extension-element-prefixes="exslt"
                 exclude-result-prefixes="#all">
 <xsl:import href="./common/brandCommon.xsl"/>
-<xsl:import href="./common/google-tracking.xsl"/>
 <xsl:import href="./common/scaleImage.xsl"/>
 <xsl:import href="./common/MODS-view.xsl"/>
 <xsl:include href="structMap.xsl"/>

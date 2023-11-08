@@ -35,13 +35,6 @@ function populateMetadata() {
 	if (metadata) metadata.innerHTML = string;
 }
 
-  <xsl:call-template name="insert-google-tracking-no-wrap">
-    <xsl:with-param name="brand" select="$brand"/>
-    <xsl:with-param name="onContent" select="'onContent'"/>
-    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
-    <xsl:with-param name="google_analytics_institution" select="$page/m:mets/facet-institution"/>
-  </xsl:call-template>
-
 </xsl:template>
 
 <xsl:template match="*" mode="xmlInJs">
@@ -122,12 +115,6 @@ http://content.cdlib.org/<xsl:value-of select="$page/m:mets/@OBJID"/> courtesy o
  <xsl:when test="count($page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'reference')]/m:file[@MIMETYPE='application/pdf']) = 1"/>
  <xsl:when test="$page/m:mets/m:fileSec//m:fileGrp[contains(@USE,'Application-PDF')] "/>
  <xsl:when test="@shape='wide'">
-  <script type="text/javascript">
-    <xsl:comment>
-  var _gaq = _gaq || [];
-  _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-wide', 3 ]);
-    </xsl:comment>
-  </script>
   <div id="print-control" class="nifty4">
             <div class="box4">
               <table cellspacing="0" cellpadding="0">
@@ -159,12 +146,6 @@ onclick="_gaq.push(['cst._trackEvent', 'print-links', 'image with details', wind
           </div>
  </xsl:when>
  <xsl:otherwise>
-  <script type="text/javascript">
-    <xsl:comment>
-  var _gaq = _gaq || [];
-  _gaq.push(['cst._setCustomVar', 2, 'insert-print-links', 'shown-not-wide', 3 ]);
-    </xsl:comment>
-  </script>
           <div id="print-control">
             <div class="nifty4">
               <div class="box4">

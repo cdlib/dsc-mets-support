@@ -216,12 +216,6 @@ for(var i = 0; i &lt; document.links.length; i++) {
 <xsl:template match="insert-brand-links">
   <xsl:comment>insert-brand-links</xsl:comment>
   <xsl:apply-templates select="$brand.links"/>
-  <xsl:call-template name="insert-google-tracking">
-    <xsl:with-param name="brand" select="$brand"/>
-    <xsl:with-param name="onContent" select="'onContent'"/>
-    <xsl:with-param name="google_analytics_tracking_code" select="$page/m:mets/google_analytics_tracking_code"/>
-    <xsl:with-param name="google_analytics_institution" select="$page/m:mets/facet-institution"/>
-  </xsl:call-template>
   <xsl:if test="$page/m:mets/@PROFILE='pamela://year1'">
     <script
       src="http://cdn.calisphere.org/mediaelementjs/build/mediaelement-and-player.min.js"
