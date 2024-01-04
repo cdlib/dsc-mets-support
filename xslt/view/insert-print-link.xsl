@@ -35,6 +35,11 @@ function populateMetadata() {
 	if (metadata) metadata.innerHTML = string;
 }
 
+<xsl:call-template name="insert-tracking">
+  <xsl:with-param name="brand" select="$brand"/>
+  <xsl:with-param name="onContent" select="'onContent'"/>
+  <xsl:with-param name="tracking_institution" select="$page/m:mets/facet-institution"/>
+</xsl:call-template>
 </xsl:template>
 
 <xsl:template match="*" mode="xmlInJs">
